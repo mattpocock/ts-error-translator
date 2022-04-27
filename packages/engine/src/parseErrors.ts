@@ -19,6 +19,7 @@ const toRegex = (key: string): RegExp => {
 };
 
 interface ParseInfo {
+  rawError: string;
   startIndex: number;
   endIndex: number;
   items: string[];
@@ -34,9 +35,10 @@ const parseErrorInfo = (errorToParse: string, regex: RegExp): ParseInfo => {
   const startIndex = match.index;
   const endIndex = match.index + match[0].length;
 
-  const [, ...items] = match;
+  const [matchedError, ...items] = match;
 
   return {
+    rawError: matchedError,
     startIndex,
     endIndex,
     items,
@@ -102,14 +104,16 @@ export const parseErrors = (
     },
   );
 
-  return Object.values(errorMessageByKey).map((error) => {
-    const parseInfo = parseErrorInfo(message, toRegex(error));
-    const code = tsErrorMessages[error].code;
-    return {
-      code,
-      error: error,
-      parseInfo,
-      improvedError: getImprovedMessage(dir, code, parseInfo.items),
-    };
-  });
+  return Object.values(errorMessageByKey)
+    .map((error) => {
+      const parseInfo = parseErrorInfo(message, toRegex(error));
+      const code = tsErrorMessages[error].code;
+      return {
+        code,
+        error: error,
+        parseInfo,
+        improvedError: getImprovedMessage(dir, code, parseInfo.items),
+      };
+    })
+    .sort((a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex);
 };
