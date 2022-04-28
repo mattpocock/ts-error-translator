@@ -25,6 +25,12 @@ interface ParseInfo {
   items: string[];
 }
 
+interface TsErrorMessage {
+  category: string;
+  code: number;
+  translate?: any
+}
+
 const parseErrorInfo = (errorToParse: string, regex: RegExp): ParseInfo => {
   const match = errorToParse.match(regex);
 
@@ -62,6 +68,7 @@ export interface ParseErrorsOpts {
 export const parseErrors = (
   message: string,
   opts?: ParseErrorsOpts,
+  language?: string,
 ): ErrorInfo[] => {
   const dir = opts?.dir ?? process.cwd();
   if ((tsErrorMessages as Record<string, any>)[message]) {
@@ -107,13 +114,31 @@ export const parseErrors = (
   return Object.values(errorMessageByKey)
     .map((error) => {
       const parseInfo = parseErrorInfo(message, toRegex(error));
-      const code = tsErrorMessages[error].code;
-      return {
+      const tsErrorMessage: TsErrorMessage = tsErrorMessages[error]; 
+      const code = tsErrorMessage.code;
+
+      let response = {
         code,
         error: error,
         parseInfo,
         improvedError: getImprovedMessage(dir, code, parseInfo.items),
       };
+
+      if(language && tsErrorMessage.translate) {
+        response = {
+          code,
+          error: error,
+          parseInfo: {
+            endIndex: parseInfo.endIndex,
+            items: parseInfo.items,
+            rawError: tsErrorMessage.translate[language],
+            startIndex: parseInfo.startIndex
+          },
+          improvedError: getImprovedMessage(dir, code, parseInfo.items),
+        }
+      }
+
+      return response
     })
     .sort((a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex);
 };

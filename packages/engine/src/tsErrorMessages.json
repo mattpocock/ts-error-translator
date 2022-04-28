@@ -1717,7 +1717,10 @@
   },
   "Conversion of type '{0}' to type '{1}' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.": {
     "category": "Error",
-    "code": 2352
+    "code": 2352,
+    "translate": {
+      "br": "A conversão do tipo '{0}' para o tipo '{1}' pode ser um erro porque nenhum tipo se sobrepõe suficientemente ao outro. Se isso foi intencional, converta a expressão para 'desconhecido' primeiro."
+    }
   },
   "Object literal may only specify known properties, and '{0}' does not exist in type '{1}'.": {
     "category": "Error",
