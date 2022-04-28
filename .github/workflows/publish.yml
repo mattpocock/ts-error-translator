@@ -12,6 +12,7 @@ jobs:
           cache: "yarn"
 
       - run: yarn
+      - run: yarn config set version-git-tag false
       - run: (cd apps/vscode && npx vsce package --yarn)
       - name: Setup git user
         run: |
