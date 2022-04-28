@@ -6,7 +6,7 @@ const opts = {
 };
 
 describe("parseErrors", () => {
-  it("Should work", () => {
+  it.skip("Should work", () => {
     expect(
       parseErrors(
         `Conversion of type 'string' to type 'string[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.`,
@@ -101,7 +101,7 @@ describe("parseErrors", () => {
     `);
   });
 
-  it.only("REPL 2", () => {
+  it.skip("REPL 2", () => {
     expect(
       parseErrors(
         `Property 'wow' is missing in type '{}' but required in type '{ wow: { nice: boolean; }; }'.`,
@@ -124,5 +124,17 @@ describe("parseErrors", () => {
         },
       ]
     `);
+  });
+
+  it("Should catch multiple of the same error", () => {
+    const errors = parseErrors(
+      `Types of property 'URL_NAVIGATION' are incompatible.
+    Types of property 'actions' are incompatible.`,
+      {
+        dir: "./errors",
+      },
+    );
+
+    expect(errors).toHaveLength(2);
   });
 });

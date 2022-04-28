@@ -13,9 +13,21 @@ const toRegex = (key: string): RegExp => {
   }
   const regex = escapeRegExp(key).replace(/'\\\{(\d)\\\}'/g, "'(.{1,})'");
 
-  regexCache[key] = new RegExp(regex);
+  regexCache[key] = new RegExp(regex, "g");
 
   return regexCache[key];
+};
+
+const toNonGlobalRegex = (key: string): RegExp => {
+  const adjustedKey = key + "_non_global";
+  if (regexCache[adjustedKey]) {
+    return regexCache[adjustedKey];
+  }
+  const regex = escapeRegExp(key).replace(/'\\\{(\d)\\\}'/g, "'(.{1,})'");
+
+  regexCache[adjustedKey] = new RegExp(regex);
+
+  return regexCache[adjustedKey];
 };
 
 interface ParseInfo {
@@ -24,26 +36,6 @@ interface ParseInfo {
   endIndex: number;
   items: string[];
 }
-
-const parseErrorInfo = (errorToParse: string, regex: RegExp): ParseInfo => {
-  const match = errorToParse.match(regex);
-
-  if (!match || typeof match.index === "undefined") {
-    throw new Error(`Could not parse error: ${errorToParse}`);
-  }
-
-  const startIndex = match.index;
-  const endIndex = match.index + match[0].length;
-
-  const [matchedError, ...items] = match;
-
-  return {
-    rawError: matchedError,
-    startIndex,
-    endIndex,
-    items,
-  };
-};
 
 export interface ErrorInfo {
   code: number;
@@ -64,20 +56,19 @@ export const parseErrors = (
   opts?: ParseErrorsOpts,
 ): ErrorInfo[] => {
   const dir = opts?.dir ?? process.cwd();
-  if ((tsErrorMessages as Record<string, any>)[message]) {
-    const code = (tsErrorMessages as Record<string, any>)[message].code;
-    const parseInfo = parseErrorInfo(message, toRegex(message));
-    return [
-      {
-        error: message,
-        code: (tsErrorMessages as Record<string, any>)[message].code,
-        parseInfo,
-        improvedError: getImprovedMessage(dir, code, parseInfo.items),
-      },
-    ];
-  }
+  // if ((tsErrorMessages as Record<string, any>)[message]) {
+  //   const code = (tsErrorMessages as Record<string, any>)[message].code;
+  //   return [
+  //     {
+  //       error: message,
+  //       code: (tsErrorMessages as Record<string, any>)[message].code,
+  //       parseInfo,
+  //       improvedError: getImprovedMessage(dir, code, parseInfo.items),
+  //     },
+  //   ];
+  // }
 
-  const errorMessageByKey: Record<string, keyof typeof tsErrorMessages> = {};
+  const errorMessageByKey: Record<string, ErrorInfo> = {};
 
   (Object.keys(tsErrorMessages) as (keyof typeof tsErrorMessages)[]).forEach(
     (newError) => {
@@ -86,34 +77,51 @@ export const parseErrors = (
       const match = message.match(regex);
 
       if (match) {
-        const key = `${match.index}${match.index ?? 0 + match[0].length}`;
+        match.forEach((matchElem) => {
+          const startIndex = message.indexOf(matchElem);
+          const endIndex = startIndex ?? 0 + matchElem.length;
+          const key = `${startIndex}_${endIndex}`;
 
-        if (errorMessageByKey[key]) {
-          const existingRule = errorMessageByKey[key];
+          const nonGlobalRegex = toNonGlobalRegex(newError);
 
-          /**
-           * If the new rule is longer than the existing rule,
-           * replace the existing rule with the new rule.
-           */
-          errorMessageByKey[key] =
-            newError.length > existingRule.length ? newError : existingRule;
-        } else {
-          errorMessageByKey[key] = newError as keyof typeof tsErrorMessages;
-        }
+          const [, ...items] = matchElem.match(nonGlobalRegex)!;
+
+          const errorObj: ErrorInfo = {
+            code: tsErrorMessages[newError].code,
+            error: newError,
+            improvedError: getImprovedMessage(
+              dir,
+              tsErrorMessages[newError].code,
+              items,
+            ),
+            parseInfo: {
+              rawError: matchElem,
+              startIndex,
+              endIndex,
+              items,
+            },
+          };
+
+          if (errorMessageByKey[key]) {
+            const existingRule = errorMessageByKey[key];
+
+            /**
+             * If the new rule is longer than the existing rule,
+             * replace the existing rule with the new rule.
+             */
+            errorMessageByKey[key] =
+              newError.length > existingRule.error.length
+                ? errorObj
+                : existingRule;
+          } else {
+            errorMessageByKey[key] = errorObj;
+          }
+        });
       }
     },
   );
 
-  return Object.values(errorMessageByKey)
-    .map((error) => {
-      const parseInfo = parseErrorInfo(message, toRegex(error));
-      const code = tsErrorMessages[error].code;
-      return {
-        code,
-        error: error,
-        parseInfo,
-        improvedError: getImprovedMessage(dir, code, parseInfo.items),
-      };
-    })
-    .sort((a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex);
+  return Object.values(errorMessageByKey).sort(
+    (a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex,
+  );
 };

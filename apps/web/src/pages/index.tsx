@@ -47,14 +47,14 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
       </div>
 
       <div className="max-w-2xl mx-auto space-y-16 text-xl leading-relaxed text-gray-800">
-        {props.errors?.map((error, index) => {
+        {props.errors?.map((error, index, array) => {
           return (
             <div>
               <div className="prose prose-code:before:hidden prose-code:after:hidden">
                 {/* <span className="inline-block px-2 py-1 mb-2 text-xs text-indigo-900 bg-indigo-100 rounded">
                   #{error.code}
                 </span> */}
-                <h1>Error #{index + 1}</h1>
+                <h1>Error #{array.length - index}</h1>
                 <div className="relative p-4 py-3 font-mono text-sm leading-relaxed text-gray-100 bg-gray-800 rounded">
                   {error.parseInfo.rawError}
                 </div>
@@ -94,41 +94,6 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
           );
         })}
       </div>
-
-      {/* <div className="max-w-xl mx-auto space-y-6">
-        {props?.errors.map((error) => {
-          return (
-            <div className="relative space-y-6">
-              <div>
-                <h3 className="mb-2 text-xl font-semibold">Old</h3>
-                <p className="pt-0 font-mono text-sm">
-                  {error.parseInfo.rawError}
-                </p>
-              </div>
-              <div>
-                <h3 className="mb-2 text-xl font-semibold">Translation</h3>
-                {error.improvedError && (
-                  <div className="pt-0">
-                    <ReactMarkdown>
-                      {error.improvedError?.excerpt}
-                    </ReactMarkdown>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      {props?.errors.map((error) => {
-        if (!error.improvedError) return null;
-        return (
-          <div className="prose">
-            <h1>{error.code}</h1>
-            <ReactMarkdown>{error.improvedError.excerpt}</ReactMarkdown>
-            <ReactMarkdown>{error.improvedError.body}</ReactMarkdown>
-          </div>
-        );
-      })} */}
     </div>
   );
 }
@@ -145,7 +110,7 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
       props: {
         errors: parseErrors(decodedError, {
           dir: path.resolve(process.cwd(), "../../packages/engine/errors"),
-        }),
+        }).reverse(),
         error: decodedError,
       },
     };
