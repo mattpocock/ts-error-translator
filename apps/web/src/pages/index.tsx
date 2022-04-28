@@ -17,7 +17,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const firstExcerpt = props.errors?.[0]?.improvedError?.excerpt;
   const firstErrorCode = props.errors?.[0]?.code;
 
-  const title = `TS Error Translator${
+  const title = `TypeScript Error Translator${
     firstErrorCode ? ` | Code #${firstErrorCode}` : ""
   }`;
 
