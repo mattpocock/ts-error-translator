@@ -1,25 +1,45 @@
 {
   "name": "ts-error-translator",
-  "displayName": "ts-error-translator",
-  "description": "",
+  "displayName": "TS Error Translator",
+  "description": "TypeScript errors, translated for humans",
+  "license": "MIT",
+  "author": "Matt Pocock",
   "version": "0.0.1",
+  "private": true,
   "engines": {
     "vscode": "^1.66.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattpocock/ts-error-translator"
+  },
+  "bugs": {
+    "url": "https://github.com/mattpocock/ts-error-translator/issues"
+  },
+  "galleryBanner": {
+    "color": "#fff"
+  },
   "categories": [
-    "Other"
+    "Education",
+    "Linters"
   ],
   "activationEvents": [
-    "onLanguage:typescript"
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
   ],
   "main": "./out/extension.js",
+  "keywords": [
+    "typescript"
+  ],
+  "publisher": "mattpocock",
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "publish": "npx vsce publish --yarn"
   },
   "devDependencies": {
     "@types/vscode": "^1.66.0",
