@@ -37,8 +37,8 @@
     "compile": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
     "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
+    "lint": "tsc",
+    "test:e2e": "node ./out/test/runTest.js",
     "publish": "npx vsce publish --yarn"
   },
   "devDependencies": {
