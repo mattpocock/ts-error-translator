@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: "yarn"
+
+      - run: yarn
+      - run: yarn turbo run lint test
+      - run: yarn extension:build
+      - run: (cd apps/vscode && npx vsce package --yarn)
+      - uses: actions/upload-artifact@v2
+        with:
+          name: xstate-tools
+          path: "apps/extension/*.vsix"
