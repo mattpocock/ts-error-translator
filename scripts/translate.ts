@@ -6,6 +6,7 @@ const errorCode = process.argv[2]
 
 if (!errorCode) {
   logger.error(`\nYou've to provide an error code for your translation!`)
+  process.exit(1);
   logger.info(`Example:`)
   logger.info(`  yarn translate 1006`)
 } else {

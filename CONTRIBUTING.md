@@ -1,4 +1,4 @@
-# How do I Contribute 💪
+# How do I contribute? 💪
 
 We're excited to have you on board!
 
@@ -32,7 +32,7 @@ defined ones and get the error code back then search for `<code>.md` to read the
 > 💡 Hint: To find the code for the error you're looking for, have a look inside [`tsErrorMessages.json`](https://github.com/mattpocock/ts-error-translator/blob/main/packages/engine/src/tsErrorMessages.json),
 > or check your console, you'll see this formatting `error TS<code>: <msg>`.
 
-- You have to follow our template by running the following command. This will write an example file at `packages/engine/errors/<code>.md` with placeholders on how the explanation should be written.
+- You can follow our template by running the following command. This will write an example file at `packages/engine/errors/<code>.md` with placeholders on how the explanation should be written.
 
 ```sh
 yarn translate <code>
