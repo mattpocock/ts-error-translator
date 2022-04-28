@@ -1,3 +1,5 @@
+<!-- Please check our translation style guide: https://bit.ly/3kiwzcd -->
+
 ---
 original: "Original error message"
 excerpt: "Simplified version of the error message (Use "you" as the pronoun because it feels friendly and talk as if you were the compiler)"
