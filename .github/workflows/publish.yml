@@ -12,8 +12,13 @@ jobs:
           cache: "yarn"
 
       - run: yarn
+      - run: (cd apps/vscode && npx vsce package --yarn)
       - run: yarn workspace ts-error-translator version --patch && git push
-      - run: (cd apps/vscode && npx vsce publish --yarn)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: (cd apps/vscode && npx vsce publish --packagePath $(find . -iname *.vsix))
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - uses: actions/upload-artifact@v2
         with:
           name: VSCode Preview VSIX

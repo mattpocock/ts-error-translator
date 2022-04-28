@@ -16,8 +16,6 @@ jobs:
 
       - run: yarn
       - run: (cd apps/vscode && npx vsce package --yarn)
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - uses: actions/upload-artifact@v2
         with:
           name: VSCode Preview VSIX
