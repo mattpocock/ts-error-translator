@@ -37,3 +37,41 @@ You'll find all of the errors' translations at `packages/engine/errors` and they
 ```sh
 yarn translate <code>
 ```
+
+## Translation style guide
+
+### You are the compiler
+
+Similar to Elm, you should address the user as though _you are the compiler_.
+
+Bad:
+
+`TypeScript thinks that this is a type, not a variable.`
+
+Good:
+
+`I think that this is a type, not a variable.`
+
+### Speak to the user directly
+
+In a similar vein, you should address the user directly whenever possible - this keeps it conversational and terse.
+
+Bad:
+
+`The code might have an unnecessary trailing comma.`
+
+Good:
+
+`You might have added an unnecessary trailing comma.`
+
+### Don't use `{0}` and `{1}` in excerpts
+
+Excerpts should always be short and sweet - `{0}` can expand to _enormous_ size and make even our pretty excerpts unreadable. You can use 'A' and 'B' instead if you like.
+
+Bad:
+
+`{0} can't be passed to a slot expecting {1}.`
+
+Good:
+
+`'A' can't be passed to a slot expecting 'B'.`
