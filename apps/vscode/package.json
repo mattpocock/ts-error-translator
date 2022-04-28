@@ -9,6 +9,7 @@
   "engines": {
     "vscode": "^1.66.0"
   },
+  "icon": "media/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/mattpocock/ts-error-translator"
