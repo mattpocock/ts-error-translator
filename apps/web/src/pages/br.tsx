@@ -18,13 +18,13 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
     <div className="px-6 py-6 pt-0 pb-20">
       <div className="py-20">
         <h2 className="mb-8 text-xl font-medium tracking-tight text-center text-indigo-600">
-          TypeScript errors in Plain English
+          Erros simples de TypeScript em Português Brasileiro
         </h2>
         <h2 className="mb-8 text-xl font-medium tracking-tight text-center text-indigo-600">
-          <a href="/br">Erros simples de TypeScript em Português Brasileiro</a>
+          <a href="/">TypeScript errors in Plain English</a>
         </h2>
         <h1 className="text-6xl font-bold tracking-tight text-center">
-          TypeScript Error Translator
+          Tradutor de erros do TypeScript
         </h1>
         <form
           className="flex flex-col items-center mt-12"
@@ -58,19 +58,19 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
                 {/* <span className="inline-block px-2 py-1 mb-2 text-xs text-indigo-900 bg-indigo-100 rounded">
                   #{error.code}
                 </span> */}
-                <h1>Error #{index + 1}</h1>
+                <h1>Erro #{index + 1}</h1>
                 <div className="relative p-4 py-3 font-mono text-sm leading-relaxed text-gray-100 bg-gray-800 rounded">
                   {error.parseInfo.rawError}
                 </div>
                 {error.improvedError && (
                   <>
-                    <h2>Translation</h2>
+                    <h2>Tradução</h2>
                     <div className="p-4 py-3 font-light text-gray-100 bg-gray-800 rounded prose-code:text-white prose-p:m-0">
                       <ReactMarkdown>
                         {error.improvedError.excerpt}
                       </ReactMarkdown>
                     </div>
-                    <h2>Explanation</h2>
+                    <h2>Explicação</h2>
                     <ReactMarkdown>{error.improvedError?.body}</ReactMarkdown>
                   </>
                 )}
@@ -129,8 +129,8 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
     return {
       props: {
         errors: parseErrors(decodedError, {
-          dir: path.resolve(process.cwd(), "../../packages/engine/errors"),
-        }),
+          dir: path.resolve(process.cwd(), "../../packages/engine/errors/br"),
+        }, 'br'),
         error: decodedError,
       },
     };
