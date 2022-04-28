@@ -1,0 +1,20 @@
+name: Publish VSCode (and patch)
+on: workflow_dispatch
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: "yarn"
+
+      - run: yarn
+      - run: yarn workspace ts-error-translator version --patch && git push
+      - run: (cd apps/vscode && npx vsce publish --yarn)
+      - uses: actions/upload-artifact@v2
+        with:
+          name: VSCode Preview VSIX
+          path: "apps/vscode/*.vsix"
