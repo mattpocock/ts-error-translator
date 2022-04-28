@@ -15,7 +15,7 @@
     "code": "1006"
   },
   "1009": {
-    "body": "You should remove the trailing comma where the typescript compiler is pointing to make Typescript happy :)\n",
+    "body": "You should remove the trailing comma where I'm pointing - otherwise, I won't be able to understand your code.\n",
     "excerpt": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
   },
