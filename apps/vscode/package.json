@@ -1,0 +1,39 @@
+{
+  "name": "ts-error-translator",
+  "displayName": "ts-error-translator",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.66.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
+    "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.66.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "14.x",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "glob": "^7.2.0",
+    "mocha": "^9.2.2",
+    "typescript": "^4.5.5",
+    "@vscode/test-electron": "^2.1.3",
+    "esbuild": "^0.14.38",
+    "esbuild-register": "^3.3.2"
+  }
+}

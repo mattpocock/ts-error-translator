@@ -2,7 +2,7 @@ import * as path from "path";
 import * as fs from "fs";
 import fm from "front-matter";
 
-export const getImprovedMessage = (
+export const getImprovedMessageFromMarkdown = (
   dir: string,
   code: number,
   items: string[],
@@ -17,19 +17,27 @@ export const getImprovedMessage = (
     let body = parseResult.body;
     let excerpt = parseResult.attributes.excerpt;
 
-    items.forEach((item, index) => {
-      const bodyRegex = new RegExp(`\\\{${index}\\\}`, "g");
-      body = body.replace(bodyRegex, item);
-      const excerptRegex = new RegExp(`'\\\{${index}\\\}'`, "g");
-      excerpt = excerpt.replace(excerptRegex, "`" + item + "`");
-    });
-
-    return {
-      body,
-      excerpt,
-    };
+    return fillBodyAndExcerptWithItems(body, excerpt, items);
   } catch (e) {
     console.log(e);
     return null;
   }
+};
+
+export const fillBodyAndExcerptWithItems = (
+  body: string,
+  excerpt: string,
+  items: string[],
+) => {
+  items.forEach((item, index) => {
+    const bodyRegex = new RegExp(`\\\{${index}\\\}`, "g");
+    body = body.replace(bodyRegex, item);
+    const excerptRegex = new RegExp(`'\\\{${index}\\\}'`, "g");
+    excerpt = excerpt.replace(excerptRegex, "`" + item + "`");
+  });
+
+  return {
+    body,
+    excerpt,
+  };
 };

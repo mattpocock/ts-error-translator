@@ -1,4 +1,3 @@
-import { getImprovedMessage } from "./getImprovedMessage";
 import tsErrorMessages from "./tsErrorMessages.json";
 
 function escapeRegExp(str: string) {
@@ -37,38 +36,25 @@ interface ParseInfo {
   items: string[];
 }
 
-export interface ErrorInfo {
+export interface ErrorInfoWithoutImprovedError {
   code: number;
   error: string;
   parseInfo: ParseInfo;
+}
+
+export interface ErrorInfo extends ErrorInfoWithoutImprovedError {
   improvedError: {
     body: string;
     excerpt: string;
   } | null;
 }
 
-export interface ParseErrorsOpts {
-  dir?: string;
-}
+export interface ParseErrorsOpts {}
 
 export const parseErrors = (
   message: string,
-  opts?: ParseErrorsOpts,
-): ErrorInfo[] => {
-  const dir = opts?.dir ?? process.cwd();
-  // if ((tsErrorMessages as Record<string, any>)[message]) {
-  //   const code = (tsErrorMessages as Record<string, any>)[message].code;
-  //   return [
-  //     {
-  //       error: message,
-  //       code: (tsErrorMessages as Record<string, any>)[message].code,
-  //       parseInfo,
-  //       improvedError: getImprovedMessage(dir, code, parseInfo.items),
-  //     },
-  //   ];
-  // }
-
-  const errorMessageByKey: Record<string, ErrorInfo> = {};
+): ErrorInfoWithoutImprovedError[] => {
+  const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
   (Object.keys(tsErrorMessages) as (keyof typeof tsErrorMessages)[]).forEach(
     (newError) => {
@@ -84,16 +70,13 @@ export const parseErrors = (
 
           const nonGlobalRegex = toNonGlobalRegex(newError);
 
-          const [, ...items] = matchElem.match(nonGlobalRegex)!;
+          let [, ...items] = matchElem.match(nonGlobalRegex)!;
 
-          const errorObj: ErrorInfo = {
+          items = Array.from(new Set(items));
+
+          const errorObj: ErrorInfoWithoutImprovedError = {
             code: tsErrorMessages[newError].code,
             error: newError,
-            improvedError: getImprovedMessage(
-              dir,
-              tsErrorMessages[newError].code,
-              items,
-            ),
             parseInfo: {
               rawError: matchElem,
               startIndex,

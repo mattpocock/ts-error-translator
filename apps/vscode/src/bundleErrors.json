@@ -1,0 +1,77 @@
+{
+  "1002": {
+    "body": "To fix this error, check if: \n\n- you have opening and closing quotes (single or double) for your string literal\n- you have escaped your string literal correctly (by prefixing it with `/`)\n- your string literal isn't split across multiple lines\n\n### Examples\n\nYou can't split a string across multiple lines like this in JavaScript:\n\n```js\nconst longString = 'This is a very long string which needs\n                  to wrap across multiple lines because\n                  otherwise my code is unreadable.';\n// 👎\n```\n\nInstead, use template literals, which are supported in ECMAScript 2015 environments:\n\n```js\nconst longString = `This is a very long string which needs\n                  to wrap across multiple lines because\n                  otherwise my code is unreadable.`;\n// ✅\n```\n",
+    "excerpt": "You've started a string (via a single or double quote) but haven't ended it.",
+    "code": "1002"
+  },
+  "1003": {
+    "body": "This means that your syntax is wrong and simply the compiler can't tokenize your code properly.\n",
+    "excerpt": "Your code doesn't comply with the syntax rules of the TypeScript language",
+    "code": "1003"
+  },
+  "1006": {
+    "body": "You can't use `/// <reference path=\"...\" />` for referencing the file itself.\n",
+    "excerpt": "You've got a triple-slash reference inside a file that's referencing itself.",
+    "code": "1006"
+  },
+  "1009": {
+    "body": "You should remove the trailing comma where the typescript compiler is pointing to make Typescript happy :)\n",
+    "excerpt": "You've added a trailing comma when you're not supposed to add it",
+    "code": "1009"
+  },
+  "2304": {
+    "body": "I tried to find\n\n```\n{0}\n```\n\nin the document, but I couldn't see it anywhere. Are you sure you imported/declared it?\n",
+    "excerpt": "I can't find the variable you're trying to access.",
+    "code": "2304"
+  },
+  "2322": {
+    "body": "You can assign variables types to give me hints about what kind of types you want to allow in that variable. For instance:\n\n```ts\nconst num: number = 0;\n```\n\nThis tells me that `num` will always be a `number`.\n\nBut sometimes, you'll break that pact you made with me. For instance:\n\n```ts\nconst num: number = \"some string\";\n```\n\nIn your case, you said that this type was the only thing assignable to that variable:\n\n```\n{1}\n```\n\nAnd you passed me this instead:\n\n```\n{0}\n```\n",
+    "excerpt": "I was expecting a type matching A, but instead you passed B.",
+    "code": "2322"
+  },
+  "2324": {
+    "body": "Oh dear\n",
+    "excerpt": "You haven't passed all the required parameters to '{1}' - you've missed out '{0}'",
+    "code": "2324"
+  },
+  "2326": {
+    "body": "More details, reproducible examples for the error and How the error should be fixed.\n",
+    "excerpt": "Simplified version of the error message (Use 'you' as the pronoun because it feels friendly)",
+    "code": "2326"
+  },
+  "2345": {
+    "body": "I was expecting\n\n```\n{1}\n```\n\nbut instead, I received\n\n```\n{0}\n```\n",
+    "excerpt": "I was expecting '{1}', but you passed '{0}'",
+    "code": "2345"
+  },
+  "2352": {
+    "body": "It looks like you're trying to use `as` to 'cast' one type into another. Your first type:\n\n```\n{0}\n```\n\ndoesn't match up with\n\n```\n{1}\n```\n\nbecause there isn't what I call 'sufficient overlap' between them. I.e. they don't look enough like each other.\n\nIf you really meant to do this, you should cast `{0}` to `unknown` first. For example, if I wanted to cast `string` to `string[]`, I'd need to write this code:\n\n```ts twoslash\nconst a = \"wow\" as unknown as string[];\n```\n",
+    "excerpt": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
+    "code": "2352"
+  },
+  "2590": {
+    "body": "",
+    "excerpt": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.",
+    "code": "2590"
+  },
+  "2693": {
+    "body": "I think you meant to assign a type to your declaration. So instead of,\n\n```ts\nclass Person {\n    name: string;\n}\n```\n\nyou wrote this,\n\n```ts\nclass Person {\n    name = string;\n}\n```\n\n",
+    "excerpt": "I was expecting A as a type declaration but it is being used as a value here.",
+    "code": "2693"
+  },
+  "2741": {
+    "body": "I can help enforce that objects have all the right properties. In this case, I'm looking at this object:\n\n```\n{2}\n```\n",
+    "excerpt": "You haven't passed all the required parameters to '{2}' -  '{1}' is missing the '{0}' property",
+    "code": "2741"
+  },
+  "5075": {
+    "body": "TODO\n",
+    "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
+    "code": "5075"
+  },
+  "7006": {
+    "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
+    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'.",
+    "code": "7006"
+  }
+}

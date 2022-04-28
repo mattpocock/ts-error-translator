@@ -1,4 +1,8 @@
-import { ErrorInfo, parseErrors } from "@ts-error-messages/engine";
+import {
+  ErrorInfo,
+  parseErrors,
+  getImprovedMessageFromMarkdown,
+} from "@ts-error-messages/engine";
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
@@ -164,9 +168,18 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
     const decodedError = decompressFromEncodedURIComponent(query.error)!;
     return {
       props: {
-        errors: parseErrors(decodedError, {
-          dir: path.resolve(process.cwd(), "../../packages/engine/errors"),
-        }).reverse(),
+        errors: parseErrors(decodedError)
+          .reverse()
+          .map((error): ErrorInfo => {
+            return {
+              ...error,
+              improvedError: getImprovedMessageFromMarkdown(
+                path.resolve(process.cwd(), "../../packages/engine/errors"),
+                error.code,
+                error.parseInfo.items,
+              ),
+            };
+          }),
         error: decodedError,
       },
     };
