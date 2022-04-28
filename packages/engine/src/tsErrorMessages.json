@@ -5695,23 +5695,6 @@
     "category": "Message",
     "code": 6803
   },
-
-  "one of:": {
-    "category": "Message",
-    "code": 6900
-  },
-  "one or more:": {
-    "category": "Message",
-    "code": 6901
-  },
-  "type:": {
-    "category": "Message",
-    "code": 6902
-  },
-  "default:": {
-    "category": "Message",
-    "code": 6903
-  },
   "module === \"system\" or esModuleInterop": {
     "category": "Message",
     "code": 6904

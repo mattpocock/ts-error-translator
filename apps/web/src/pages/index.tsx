@@ -13,7 +13,6 @@ import { z } from "zod";
 export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const router = useRouter();
 
-  console.log(props.errors);
   return (
     <div className="px-6 py-6 pt-0 pb-20">
       <div className="py-20">
@@ -69,6 +68,25 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
                     </div>
                     <h2>Explanation</h2>
                     <ReactMarkdown>{error.improvedError?.body}</ReactMarkdown>
+                  </>
+                )}
+                {!error.improvedError && (
+                  <>
+                    <h2>Translation</h2>
+                    <p>
+                      Could not find a translation for error code{" "}
+                      <span className="font-semibold">#{error.code}</span>:
+                    </p>
+                    <code>{error.error}</code>
+                    <p>
+                      <a
+                        href="https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Add a translation
+                      </a>
+                    </p>
                   </>
                 )}
               </div>
