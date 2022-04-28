@@ -24,4 +24,4 @@ jobs:
       - run: (cd apps/vscode && npx vsce publish --packagePath $(find . -iname *.vsix))
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - run: git push origin min
+      - run: git push origin main
