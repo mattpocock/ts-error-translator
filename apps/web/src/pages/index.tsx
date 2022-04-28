@@ -14,13 +14,22 @@ import { z } from "zod";
 export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const router = useRouter();
 
+  const firstExcerpt = props.errors?.[0]?.improvedError?.excerpt;
+  const firstErrorCode = props.errors?.[0]?.code;
+
+  const title = `TS Error Translator${
+    firstErrorCode ? ` | Code #${firstErrorCode}` : ""
+  }`;
+
   return (
     <>
       <Head>
-        <title>TS Error Translator</title>
+        <title>{title}</title>
         <meta
           name="description"
-          content={`Translate TypeScript Errors to plain English`}
+          content={
+            firstExcerpt || `Translate TypeScript Errors to plain English`
+          }
         />
 
         <meta property="og:type" content="website" />
@@ -28,13 +37,12 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
           property="og:url"
           content={`https://ts-error-translator.vercel.app`}
         />
-        <meta
-          property="og:title"
-          content={`Advanced TypeScript - Become a TS Wizard`}
-        />
+        <meta property="og:title" content={title} />
         <meta
           property="og:description"
-          content={`Translate TypeScript Errors to plain English`}
+          content={
+            firstExcerpt || `Translate TypeScript Errors to plain English`
+          }
         />
         <meta
           property="og:image"
@@ -46,13 +54,12 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
           name="twitter:image"
           content={`https://ts-error-translator.vercel.app/og-image.png`}
         />
-        <meta
-          name="twitter:title"
-          content={`Advanced TypeScript - Become a TS Wizard`}
-        />
+        <meta name="twitter:title" content={title} />
         <meta
           name="twitter:description"
-          content={`Translate TypeScript Errors to plain English`}
+          content={
+            firstExcerpt || `Translate TypeScript Errors to plain English`
+          }
         />
         <meta property="twitter:domain" content="vercel.app" />
         <meta
