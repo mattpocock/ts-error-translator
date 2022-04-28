@@ -18,5 +18,5 @@ jobs:
       - run: (cd apps/vscode && npx vsce package --yarn)
       - uses: actions/upload-artifact@v2
         with:
-          name: xstate-tools
+          name: VSCode Preview VSIX
           path: "apps/vscode/*.vsix"
