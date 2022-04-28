@@ -35,6 +35,6 @@ defined ones and get the error code back then search for `<code>.md` to read the
 - You have to follow our template by running the following command. This will write an example file at `packages/engine/errors/<code>.md` with placeholders on how the explanation should be written.
 
 ```sh
-yarn explain <code>
+yarn translate <code>
 ```
 
