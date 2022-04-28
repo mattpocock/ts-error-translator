@@ -7,12 +7,14 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "translate": "ts-node scripts/translate.ts",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^2.5.1",
+    "ts-node": "^10.7.0",
     "turbo": "latest"
   }
 }
