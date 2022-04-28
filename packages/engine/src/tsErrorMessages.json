@@ -1,4 +1,6 @@
 {
+  "__Source__": "https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json",
+  
   "Unterminated string literal.": {
     "category": "Error",
     "code": 1002
