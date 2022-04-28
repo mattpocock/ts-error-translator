@@ -16,6 +16,8 @@ jobs:
       - run: git config --global user.email "github@github.com"
       - run: git config --global user.name "Release Bot"
       - run: yarn workspace ts-error-translator version --patch && git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: (cd apps/vscode && npx vsce publish --packagePath $(find . -iname *.vsix))
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
