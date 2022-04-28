@@ -18,13 +18,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      - run: yarn workspace ts-error-translator version --patch && git push
+      - run: yarn workspace ts-error-translator version --patch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: (cd apps/vscode && npx vsce publish --packagePath $(find . -iname *.vsix))
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: VSCode Preview VSIX
-          path: "apps/vscode/*.vsix"
+      - run: git push origin min
