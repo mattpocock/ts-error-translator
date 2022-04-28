@@ -1096,37 +1096,9 @@
     "category": "Error",
     "code": 1363
   },
-  "Convert to type-only export": {
-    "category": "Message",
-    "code": 1364
-  },
-  "Convert all re-exported types to type-only exports": {
-    "category": "Message",
-    "code": 1365
-  },
-  "Split into two separate import declarations": {
-    "category": "Message",
-    "code": 1366
-  },
-  "Split all invalid type-only imports": {
-    "category": "Message",
-    "code": 1367
-  },
-  "Did you mean '{0}'?": {
-    "category": "Message",
-    "code": 1369
-  },
   "This import is never used as a value and must use 'import type' because 'importsNotUsedAsValues' is set to 'error'.": {
     "category": "Error",
     "code": 1371
-  },
-  "Convert to type-only import": {
-    "category": "Message",
-    "code": 1373
-  },
-  "Convert all imports not used as a value to type-only imports": {
-    "category": "Message",
-    "code": 1374
   },
   "'await' expressions are only allowed at the top level of a file when that file is a module, but this file has no imports or exports. Consider adding an empty 'export {}' to make this file a module.": {
     "category": "Error",
