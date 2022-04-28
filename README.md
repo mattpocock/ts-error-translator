@@ -1,12 +1,6 @@
-# Getting Started
+# Contributing
 
-Clone this repo and run `yarn` to install, then `yarn dev` to run the `next` app.
-
-## Adding/editing translations
-
-Add/edit translations at to the `packages/engine/errors`. Each markdown file must have an `excerpt` - see the existing errors for examples.
-
-Each error must be named with its code: `<code>.md`. To find the code for the error you're looking for, have a look inside `tsErrorMessages.json`, or check the console.
+Read the [Contributing guide](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md) to get started.
 
 ## Prepare for bugs!
 
