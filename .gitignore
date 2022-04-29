@@ -30,3 +30,6 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# IntelliJ
+.idea
