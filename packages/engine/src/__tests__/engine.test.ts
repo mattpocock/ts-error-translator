@@ -137,4 +137,58 @@ describe("parseErrors", () => {
 
     expect(errors).toHaveLength(2);
   });
+
+  it("should match diagnostic variadic arguments for quoted types and arbitrary (non-quoted) values", () => {
+    const input = `
+      Generic type 'T' requires between 5 and 10 type arguments.
+      Type 'B' is missing the following properties from type 'A': two, three
+      'T' refers to a value, but is being used as a type here. Did you mean 'typeof T'?
+    `;
+    const errors = parseErrors(input);
+
+    expect(errors).toMatchInlineSnapshot(`
+      [
+        {
+          "code": 2707,
+          "error": "Generic type '{0}' requires between {1} and {2} type arguments.",
+          "parseInfo": {
+            "endIndex": 7,
+            "items": [
+              "T",
+              "5",
+              "10",
+            ],
+            "rawError": "Generic type 'T' requires between 5 and 10 type arguments.",
+            "startIndex": 7,
+          },
+        },
+        {
+          "code": 2739,
+          "error": "Type '{0}' is missing the following properties from type '{1}': {2}",
+          "parseInfo": {
+            "endIndex": 72,
+            "items": [
+              "B",
+              "A",
+              "two, three",
+            ],
+            "rawError": "Type 'B' is missing the following properties from type 'A': two, three",
+            "startIndex": 72,
+          },
+        },
+        {
+          "code": 2749,
+          "error": "'{0}' refers to a value, but is being used as a type here. Did you mean 'typeof {0}'?",
+          "parseInfo": {
+            "endIndex": 149,
+            "items": [
+              "T",
+            ],
+            "rawError": "'T' refers to a value, but is being used as a type here. Did you mean 'typeof T'?",
+            "startIndex": 149,
+          },
+        },
+      ]
+    `);
+  });
 });
