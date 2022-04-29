@@ -10,7 +10,7 @@ const toRegex = (key: string): RegExp => {
   if (regexCache[key]) {
     return regexCache[key];
   }
-  const regex = escapeRegExp(key).replace(/'\\\{(\d)\\\}'/g, "'(.{1,})'");
+  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, "(.{1,})");
 
   regexCache[key] = new RegExp(regex, "g");
 
@@ -22,7 +22,7 @@ const toNonGlobalRegex = (key: string): RegExp => {
   if (regexCache[adjustedKey]) {
     return regexCache[adjustedKey];
   }
-  const regex = escapeRegExp(key).replace(/'\\\{(\d)\\\}'/g, "'(.{1,})'");
+  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, "(.{1,})");
 
   regexCache[adjustedKey] = new RegExp(regex);
 
