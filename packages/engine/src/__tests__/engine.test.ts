@@ -146,6 +146,7 @@ describe("parseErrors", () => {
     `;
     const errors = parseErrors(input);
 
+    // TODO - assert based on the items, not on the snapshot
     expect(errors).toMatchInlineSnapshot(`
       [
         {
