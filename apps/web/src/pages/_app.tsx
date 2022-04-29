@@ -1,6 +1,6 @@
-import Head from "next/head";
-import "../global.css";
-import "../twoslash-styles.css";
+import Head from 'next/head';
+import '../global.css';
+import '../twoslash-styles.css';
 
 function MyApp({ Component, pageProps }: any) {
   return (

@@ -1,12 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { parseErrors } from "../parseErrors";
+import { describe, expect, it } from 'vitest';
+import { parseErrors } from '../parseErrors';
 
 const opts = {
-  dir: "./errors",
+  dir: './errors',
 };
 
-describe("parseErrors", () => {
-  it.skip("Should work", () => {
+describe('parseErrors', () => {
+  it.skip('Should work', () => {
     expect(
       parseErrors(
         `Conversion of type 'string' to type 'string[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.`,
@@ -101,7 +101,7 @@ describe("parseErrors", () => {
     `);
   });
 
-  it.skip("REPL 2", () => {
+  it.skip('REPL 2', () => {
     expect(
       parseErrors(
         `Property 'wow' is missing in type '{}' but required in type '{ wow: { nice: boolean; }; }'.`,
@@ -126,19 +126,19 @@ describe("parseErrors", () => {
     `);
   });
 
-  it("Should catch multiple of the same error", () => {
+  it('Should catch multiple of the same error', () => {
     const errors = parseErrors(
       `Types of property 'URL_NAVIGATION' are incompatible.
     Types of property 'actions' are incompatible.`,
       {
-        dir: "./errors",
+        dir: './errors',
       },
     );
 
     expect(errors).toHaveLength(2);
   });
 
-  it("should match diagnostic variadic arguments for quoted types and arbitrary (non-quoted) values", () => {
+  it('should match diagnostic variadic arguments for quoted types and arbitrary (non-quoted) values', () => {
     const input = `
       Generic type 'T' requires between 5 and 10 type arguments.
       Type 'B' is missing the following properties from type 'A': two, three

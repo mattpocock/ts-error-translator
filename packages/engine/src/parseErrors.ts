@@ -1,7 +1,7 @@
-import tsErrorMessages from "./tsErrorMessages.json";
+import tsErrorMessages from './tsErrorMessages.json';
 
 function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 let regexCache: Record<string, RegExp> = {};
@@ -10,19 +10,19 @@ const toRegex = (key: string): RegExp => {
   if (regexCache[key]) {
     return regexCache[key];
   }
-  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, "(.{1,})");
+  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, '(.{1,})');
 
-  regexCache[key] = new RegExp(regex, "g");
+  regexCache[key] = new RegExp(regex, 'g');
 
   return regexCache[key];
 };
 
 const toNonGlobalRegex = (key: string): RegExp => {
-  const adjustedKey = key + "_non_global";
+  const adjustedKey = key + '_non_global';
   if (regexCache[adjustedKey]) {
     return regexCache[adjustedKey];
   }
-  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, "(.{1,})");
+  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, '(.{1,})');
 
   regexCache[adjustedKey] = new RegExp(regex);
 
