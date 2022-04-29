@@ -2,18 +2,18 @@ import {
   ErrorInfo,
   parseErrors,
   getImprovedMessageFromMarkdown,
-} from "@ts-error-messages/engine";
+} from '@ts-error-messages/engine';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
-} from "lz-string";
-import { GetServerSidePropsContext } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import * as path from "path";
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import { z } from "zod";
+} from 'lz-string';
+import { GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import * as path from 'path';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { z } from 'zod';
 
 export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const firstErrorCode = props.errors?.[0]?.code;
 
   const title = `TypeScript Error Translator${
-    firstErrorCode ? ` | Code #${firstErrorCode}` : ""
+    firstErrorCode ? ` | Code #${firstErrorCode}` : ''
   }`;
 
   return (
@@ -85,10 +85,10 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
               e.preventDefault();
 
               const error = new FormData(e.currentTarget).get(
-                "error",
+                'error',
               ) as string;
 
-              router.push("?error=" + compressToEncodedURIComponent(error));
+              router.push('?error=' + compressToEncodedURIComponent(error));
             }}
           >
             <textarea
@@ -133,7 +133,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
                     <>
                       <h2>Translation</h2>
                       <p>
-                        Could not find a translation for error code{" "}
+                        Could not find a translation for error code{' '}
                         <span className="font-semibold">#{error.code}</span>:
                       </p>
                       <code>{error.error}</code>
@@ -174,7 +174,7 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
             return {
               ...error,
               improvedError: getImprovedMessageFromMarkdown(
-                path.resolve(process.cwd(), "../../packages/engine/errors"),
+                path.resolve(process.cwd(), '../../packages/engine/errors'),
                 error.code,
                 error.parseInfo.items,
               ),

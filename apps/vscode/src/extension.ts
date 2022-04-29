@@ -1,15 +1,15 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 import {
   parseErrors,
   fillBodyAndExcerptWithItems,
-} from "@ts-error-messages/engine";
-import * as bundleErrors from "./bundleErrors.json";
-import { compressToEncodedURIComponent } from "lz-string";
+} from '@ts-error-messages/engine';
+import * as bundleErrors from './bundleErrors.json';
+import { compressToEncodedURIComponent } from 'lz-string';
 
 const humaniseDiagnostic = (
   diagnostic: vscode.Diagnostic,
 ): vscode.MarkdownString | undefined => {
-  if (diagnostic.source !== "ts") {
+  if (diagnostic.source !== 'ts') {
     return undefined;
   }
   const errors = parseErrors(diagnostic.message);
@@ -23,7 +23,7 @@ const humaniseDiagnostic = (
 
     errorBodies.push(
       `## TS Error #${index + 1}`,
-      ["```", error.parseInfo.rawError, "```"].join("\n"),
+      ['```', error.parseInfo.rawError, '```'].join('\n'),
     );
 
     if (fullError) {
@@ -50,13 +50,13 @@ const humaniseDiagnostic = (
   });
 
   if (errorBodies.length > 0) {
-    return new vscode.MarkdownString(errorBodies.join("\n\n"));
+    return new vscode.MarkdownString(errorBodies.join('\n\n'));
   }
 };
 
 export function activate(context: vscode.ExtensionContext) {
   const uriStore: Record<
-    vscode.Uri["path"],
+    vscode.Uri['path'],
     {
       range: vscode.Range;
       contents: vscode.MarkdownString[];
@@ -66,8 +66,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.languages.registerHoverProvider(
       {
-        scheme: "file",
-        language: "typescript",
+        scheme: 'file',
+        language: 'typescript',
       },
       {
         provideHover: (document, position) => {
@@ -113,8 +113,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.languages.registerCodeLensProvider(
       {
-        scheme: "file",
-        language: "typescript",
+        scheme: 'file',
+        language: 'typescript',
       },
       {
         provideCodeLenses: (document) => {
@@ -125,8 +125,8 @@ export function activate(context: vscode.ExtensionContext) {
                 new vscode.Position(10, 0),
               ),
               {
-                title: "Hey!",
-                command: "wow",
+                title: 'Hey!',
+                command: 'wow',
               },
             ),
           ];
@@ -136,9 +136,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   let disposable = vscode.commands.registerCommand(
-    "my-extension.helloWorld",
+    'my-extension.helloWorld',
     () => {
-      vscode.window.showInformationMessage("Hello World from my-extension!");
+      vscode.window.showInformationMessage('Hello World from my-extension!');
     },
   );
 

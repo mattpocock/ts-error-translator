@@ -1,9 +1,9 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import fm from "front-matter";
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import fm from 'front-matter';
 
 const bundleErrors = async () => {
-  const dir = path.resolve(__dirname, "../../../packages/engine/errors");
+  const dir = path.resolve(__dirname, '../../../packages/engine/errors');
 
   const allFiles = (await fs.readdir(dir)).map((file) => ({
     fullPath: path.resolve(dir, file),
@@ -13,7 +13,7 @@ const bundleErrors = async () => {
   const json: Record<string, any> = {};
 
   for (const file of allFiles) {
-    const fileResult = await fs.readFile(file.fullPath, "utf8");
+    const fileResult = await fs.readFile(file.fullPath, 'utf8');
     try {
       const parseResult = fm<{ excerpt: string }>(fileResult);
 
@@ -31,7 +31,7 @@ const bundleErrors = async () => {
   }
 
   await fs.writeFile(
-    path.resolve(__dirname, "./bundleErrors.json"),
+    path.resolve(__dirname, './bundleErrors.json'),
     JSON.stringify(json, null, 2),
   );
 };
