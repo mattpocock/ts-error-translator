@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.6
+
+### Patch Changes
+
+- [`1354df5`](https://github.com/mattpocock/ts-error-translator/commit/1354df5ef4b3d0f24e47e85882b426b32e74b82f) Thanks [@mattpocock](https://github.com/mattpocock)! - More error translations
+
 ## 0.1.5
 
 ### Patch Changes
