@@ -1,58 +1,13 @@
 import * as vscode from 'vscode';
-import {
-  parseErrors,
-  fillBodyAndExcerptWithItems,
-} from '@ts-error-messages/engine';
-import * as bundleErrors from './bundleErrors.json';
-import { compressToEncodedURIComponent } from 'lz-string';
+import { humaniseDiagnostic } from './humaniseDiagnostic';
+import { Options } from './types';
 
-const humaniseDiagnostic = (
-  diagnostic: vscode.Diagnostic,
-): vscode.MarkdownString | undefined => {
-  if (diagnostic.source !== 'ts') {
-    return undefined;
-  }
-  const errors = parseErrors(diagnostic.message);
-
-  const errorBodies: string[] = [];
-
-  errors.forEach((error, index) => {
-    const fullError = (
-      bundleErrors as Record<string, { body: string; excerpt: string }>
-    )[error.code];
-
-    errorBodies.push(
-      `## TS Error #${index + 1}`,
-      ['```', error.parseInfo.rawError, '```'].join('\n'),
-    );
-
-    if (fullError) {
-      const { excerpt } = fillBodyAndExcerptWithItems(
-        fullError.body,
-        fullError.excerpt,
-        error.parseInfo.items,
-      );
-      errorBodies.push(
-        `### Translation`,
-        excerpt,
-        `[See full translation](https://ts-error-translator.vercel.app/?error=${compressToEncodedURIComponent(
-          diagnostic.message,
-        )})`,
-      );
-    } else {
-      errorBodies.push(
-        `### Translation`,
-        `Could not find a translation for error code \`#${error.code}\``,
-        `\`${error.error}\``,
-        `[Contribute a translation](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md)`,
-      );
-    }
-  });
-
-  if (errorBodies.length > 0) {
-    return new vscode.MarkdownString(errorBodies.join('\n\n'));
-  }
+const defaultOptions: Options = {
+  showFullTranslation: true,
+  showTLDRTranslation: true,
 };
+
+let options = defaultOptions;
 
 export function activate(context: vscode.ExtensionContext) {
   const uriStore: Record<
@@ -62,6 +17,23 @@ export function activate(context: vscode.ExtensionContext) {
       contents: vscode.MarkdownString[];
     }[]
   > = {};
+
+  const updateOptions = () => {
+    options = {
+      ...defaultOptions,
+      ...vscode.workspace.getConfiguration('tsErrorTranslator'),
+    };
+  };
+
+  updateOptions();
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration((config) => {
+      if (config.affectsConfiguration('tsErrorTranslator')) {
+        updateOptions();
+      }
+    }),
+  );
 
   context.subscriptions.push(
     vscode.languages.registerHoverProvider(
@@ -96,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
           contents: vscode.MarkdownString[];
         }[] = [];
         diagnostics.forEach((diagnostic) => {
-          const humanizedVersion = humaniseDiagnostic(diagnostic);
+          const humanizedVersion = humaniseDiagnostic(diagnostic, options);
 
           if (humanizedVersion) {
             items.push({
@@ -109,40 +81,6 @@ export function activate(context: vscode.ExtensionContext) {
       });
     }),
   );
-
-  context.subscriptions.push(
-    vscode.languages.registerCodeLensProvider(
-      {
-        scheme: 'file',
-        language: 'typescript',
-      },
-      {
-        provideCodeLenses: (document) => {
-          return [
-            new vscode.CodeLens(
-              new vscode.Range(
-                new vscode.Position(0, 0),
-                new vscode.Position(10, 0),
-              ),
-              {
-                title: 'Hey!',
-                command: 'wow',
-              },
-            ),
-          ];
-        },
-      },
-    ),
-  );
-
-  let disposable = vscode.commands.registerCommand(
-    'my-extension.helloWorld',
-    () => {
-      vscode.window.showInformationMessage('Hello World from my-extension!');
-    },
-  );
-
-  context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
