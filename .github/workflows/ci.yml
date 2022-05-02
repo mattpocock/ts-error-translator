@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - "**"
+      - '**'
 
 jobs:
   build:
@@ -12,11 +12,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - run: yarn
+      - run: yarn lint
       - run: (cd apps/vscode && npx vsce package --yarn)
       - uses: actions/upload-artifact@v2
         with:
           name: VSCode Preview VSIX
-          path: "apps/vscode/*.vsix"
+          path: 'apps/vscode/*.vsix'
