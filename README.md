@@ -10,4 +10,6 @@ Want a preview? Check out our [online playground](https://ts-error-translator.ve
 
 ## Contributing
 
+TypeScript has 1000-2000 error messages for us to translate, so we'll need some help tackling them all. Contributions are highly welcome!
+
 Read the [Contributing guide](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md) to get started.
