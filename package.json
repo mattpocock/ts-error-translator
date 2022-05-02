@@ -12,14 +12,15 @@
     "test": "turbo run test",
     "extension:build": "yarn workspace ts-error-translator compile",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "(cd apps/vscode && npx vsce publish) && node ./scripts/tag-extension.js"
   },
   "devDependencies": {
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "ts-node": "^10.7.0",
-    "turbo": "^1.2.6",
-    "husky": ">=6",
-    "lint-staged": ">=10"
+    "turbo": "^1.2.6"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json}": "prettier --write"
@@ -30,5 +31,9 @@
     "singleQuote": true,
     "semi": true,
     "trailingComma": "all"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "^0.4.4",
+    "@changesets/cli": "^2.22.0"
   }
 }

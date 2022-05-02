@@ -1,27 +1,27 @@
-name: Publish VSCode (and patch)
-on: workflow_dispatch
+name: Publish
+on:
+  push:
+    branches:
+      - 'main'
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - run: yarn
-      - run: yarn config set version-git-tag false
-      - run: (cd apps/vscode && npx vsce package --yarn)
-      - name: Setup git user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-      - run: yarn workspace ts-error-translator version --patch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: (cd apps/vscode && npx vsce publish --packagePath $(find . -iname *.vsix))
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - run: git push origin main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
