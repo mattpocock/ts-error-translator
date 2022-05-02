@@ -24,10 +24,7 @@ export const humaniseDiagnostic = (
       bundleErrors as Record<string, { body: string; excerpt: string }>
     )[error.code];
 
-    errorBodies.push(
-      `## Error #${index + 1}`,
-      ['```txt', error.parseInfo.rawError, '```'].join('\n'),
-    );
+    errorBodies.push(['```txt', error.parseInfo.rawError, '```'].join('\n'));
 
     if (fullError) {
       const { excerpt, body } = fillBodyAndExcerptWithItems(
@@ -44,11 +41,8 @@ export const humaniseDiagnostic = (
       );
     } else {
       errorBodies.push(
-        `### Translation`,
+        `### No Translation Found`,
         `Could not find a translation for error code \`#${error.code}\``,
-        '```txt',
-        `${error.error}`,
-        '```',
         `[Contribute a translation](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md)`,
       );
     }
