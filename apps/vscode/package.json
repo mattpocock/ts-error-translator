@@ -7,7 +7,7 @@
   "version": "0.1.2",
   "private": true,
   "engines": {
-    "vscode": "^1.66.0"
+    "vscode": "^1.50.0"
   },
   "icon": "media/icon.png",
   "repository": {
