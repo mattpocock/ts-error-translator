@@ -1,7 +1,13 @@
-# Contributing
+<img src="https://raw.githubusercontent.com/mattpocock/ts-error-translator/main/assets/screenshot.png" alt="An improved error message showing in a VSCode document" />
+
+# TypeScript Error Translator
+
+Confused by TypeScript errors? Translate them into human-readable language right in your IDE.
+
+[Download our VSCode Extension](https://marketplace.visualstudio.com/items?itemName=mattpocock.ts-error-translator)
+
+Want a preview? Check out our [online playground](https://ts-error-translator.vercel.app/).
+
+## Contributing
 
 Read the [Contributing guide](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md) to get started.
-
-## Prepare for bugs!
-
-Prepare for bugs, y'all. This is by no means a finished product - just got back from my holiday and posting early due to interest. Feel free to have a poke about and improve things!
