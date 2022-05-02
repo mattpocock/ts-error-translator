@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.1
+
+### Patch Changes
+
+- [`fd85ee1`](https://github.com/mattpocock/ts-error-translator/commit/fd85ee18d20c302fa828d0b4646abf1b82e18a15) Thanks [@mattpocock](https://github.com/mattpocock)! - Readme tweak
+
 ## 0.1.0
 
 ### Minor Changes
