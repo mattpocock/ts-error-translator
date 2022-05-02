@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.3
+
+### Patch Changes
+
+- [`f3deed5`](https://github.com/mattpocock/ts-error-translator/commit/f3deed5851372a44f38277c3c9d32f2f22d644a3) Thanks [@mattpocock](https://github.com/mattpocock)! - Took down the compatible vscode engine to 1.50.0
+
 ## 0.1.2
 
 ### Patch Changes
