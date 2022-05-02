@@ -10,5 +10,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["config", "tsconfig", "@ts-error-messages/app"]
+  "ignore": ["config", "tsconfig"]
 }
