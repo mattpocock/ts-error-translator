@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.4
+
+### Patch Changes
+
+- [`c8df4ae`](https://github.com/mattpocock/ts-error-translator/commit/c8df4aee5f9ff82eb53d0ed9670de81530f35da4) Thanks [@mattpocock](https://github.com/mattpocock)! - Added an error for 2761
+
 ## 0.1.3
 
 ### Patch Changes
