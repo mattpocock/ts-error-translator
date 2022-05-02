@@ -9,6 +9,5 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": ["config", "tsconfig"]
+  "updateInternalDependencies": "patch"
 }
