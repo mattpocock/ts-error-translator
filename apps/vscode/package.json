@@ -1,6 +1,6 @@
 {
   "name": "ts-error-translator",
-  "displayName": "TS Error Translator",
+  "displayName": "TypeScript Error Translator",
   "description": "TypeScript errors, translated for humans",
   "license": "MIT",
   "author": "Matt Pocock",
@@ -35,7 +35,7 @@
   "publisher": "mattpocock",
   "contributes": {
     "configuration": {
-      "title": "TS Error Translator",
+      "title": "TypeScript Error Translator",
       "properties": {
         "tsErrorTranslator.showFullTranslation": {
           "type": "boolean",
