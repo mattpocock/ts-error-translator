@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.1.0
+
+### Minor Changes
+
+- [`d306d4a`](https://github.com/mattpocock/ts-error-translator/commit/d306d4ab7c79e3667d23113f7d40debd8403f5c0) Thanks [@mattpocock](https://github.com/mattpocock)! - Made showing the TL;DR excerpt and the full body of the translated error configurable by these options:
+
+  `"tsErrorTranslator.showFullTranslation": true`
+  `"tsErrorTranslator.showTLDRTranslation": true`
+
 ## 0.0.4
 
 ### Patch Changes

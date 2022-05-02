@@ -4,7 +4,7 @@
   "description": "TypeScript errors, translated for humans",
   "license": "MIT",
   "author": "Matt Pocock",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "vscode": "^1.66.0"
