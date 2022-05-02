@@ -1,4 +1,5 @@
 import tsErrorMessages from './tsErrorMessages.json';
+import * as Diagnostic from './rfc/Diagnostic';
 
 function escapeRegExp(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
@@ -54,6 +55,23 @@ export interface ParseErrorsOpts {}
 export const parseErrors = (
   message: string,
 ): ErrorInfoWithoutImprovedError[] => {
+  /**
+   * Just a facade to that's compatible with the existing implementation to demonstrate how it works
+   * without breaking current app.
+   */
+  return Diagnostic.ParseMessage(message).map<ErrorInfoWithoutImprovedError>(
+    (diagnostic) => ({
+      code: diagnostic.code,
+      error: diagnostic.message,
+      parseInfo: {
+        startIndex: 0,
+        endIndex: 0,
+        rawError: diagnostic.matched,
+        items: diagnostic.parameters,
+      },
+    }),
+  );
+
   const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
   (Object.keys(tsErrorMessages) as (keyof typeof tsErrorMessages)[]).forEach(
