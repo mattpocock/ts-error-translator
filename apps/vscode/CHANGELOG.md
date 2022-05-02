@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.2
+
+### Patch Changes
+
+- [`594fe08`](https://github.com/mattpocock/ts-error-translator/commit/594fe088353476d24129721a803f9b1f2f4fa6b5) Thanks [@mattpocock](https://github.com/mattpocock)! - Changed name of extension for easier searching
+
 ## 0.1.1
 
 ### Patch Changes
