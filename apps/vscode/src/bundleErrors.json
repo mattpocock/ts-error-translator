@@ -44,6 +44,11 @@
     "excerpt": "Simplified version of the error message (Use 'you' as the pronoun because it feels friendly)",
     "code": "2326"
   },
+  "2339": {
+    "body": "TODO\n",
+    "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
+    "code": "2339"
+  },
   "2345": {
     "body": "I was expecting\n\n```\n{1}\n```\n\nbut instead, I received\n\n```\n{0}\n```\n",
     "excerpt": "I was expecting '{1}', but you passed '{0}'",
@@ -74,6 +79,11 @@
     "excerpt": "You haven't passed all the required parameters to '{2}' -  '{1}' is missing the '{0}' property",
     "code": "2741"
   },
+  "2761": {
+    "body": "TODO\n",
+    "excerpt": "You can't use `new` on '{0}' - it doesn't look like it's possible to me.",
+    "code": "2761"
+  },
   "5075": {
     "body": "TODO\n",
     "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
@@ -81,7 +91,7 @@
   },
   "7006": {
     "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
-    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'.",
+    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
     "code": "7006"
   }
 }
