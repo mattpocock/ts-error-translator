@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.5
+
+### Patch Changes
+
+- [`61aea88`](https://github.com/mattpocock/ts-error-translator/commit/61aea880d0663ccad918982f5f8df5b5cad27ea1) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where the extension wouldn't work in .tsx files
+
 ## 0.1.4
 
 ### Patch Changes
