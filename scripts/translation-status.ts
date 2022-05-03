@@ -9,7 +9,7 @@ const template = (translationStatusLists: TSErrorListByTranslationStatus) =>
   `
 # Translation Statuses
 
-This file was generated with a GitHub Action and lists the translations status of each TypeScript error.
+This file was generated with a GitHub Action and lists the translation status of each TypeScript error.
 
 ## Need Translation
 
