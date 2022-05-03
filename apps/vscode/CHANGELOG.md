@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.2.0
+
+### Minor Changes
+
+- [`6aab9bc`](https://github.com/mattpocock/ts-error-translator/commit/6aab9bc2a05e731e5b13821ab29958e56b94b65c) Thanks [@mattpocock](https://github.com/mattpocock)! - Improved the way that multiple errors display by simplifying the display and adding `<hr />` tags between them.
+
 ## 0.1.8
 
 ### Patch Changes
