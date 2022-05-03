@@ -53,14 +53,12 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.languages.registerHoverProvider(
       {
-        scheme: 'file',
         language: 'typescript',
       },
       hoverProvider,
     ),
     vscode.languages.registerHoverProvider(
       {
-        scheme: 'file',
         language: 'typescriptreact',
       },
       hoverProvider,

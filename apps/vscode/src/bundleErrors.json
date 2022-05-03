@@ -29,6 +29,16 @@
     "excerpt": "I can't find the variable you're trying to access.",
     "code": "2304"
   },
+  "2307": {
+    "body": "TODO\n",
+    "excerpt": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.",
+    "code": "2307"
+  },
+  "2314": {
+    "body": "TODO\n",
+    "excerpt": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.",
+    "code": "2314"
+  },
   "2322": {
     "body": "You can assign variables types to give me hints about what kind of types you want to allow in that variable. For instance:\n\n```ts\nconst num: number = 0;\n```\n\nThis tells me that `num` will always be a `number`.\n\nBut sometimes, you'll break that pact you made with me. For instance:\n\n```ts\nconst num: number = 'some string';\n```\n\nIn your case, you said that this type was the only thing assignable to that variable:\n\n```\n{1}\n```\n\nAnd you passed me this instead:\n\n```\n{0}\n```\n",
     "excerpt": "I was expecting a type matching A, but instead you passed B.",
@@ -49,6 +59,11 @@
     "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
     "code": "2339"
   },
+  "2344": {
+    "body": "TODO\n",
+    "excerpt": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.",
+    "code": "2344"
+  },
   "2345": {
     "body": "I was expecting\n\n```\n{1}\n```\n\nbut instead, I received\n\n```\n{0}\n```\n",
     "excerpt": "I was expecting '{1}', but you passed '{0}'",
@@ -59,9 +74,14 @@
     "excerpt": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
     "code": "2352"
   },
+  "2353": {
+    "body": "This object:\n\n```\n{1}\n```\n\nDoesn't contain this property:\n\n```\n{0}\n```\n\nSo don't pass it!\n",
+    "excerpt": "You can't pass property '{0}' to object '{1}'.",
+    "code": "2353"
+  },
   "2552": {
     "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
-    "excerpt": "You are trying to reference a function or variable which Typescript cannot find within the scope.",
+    "excerpt": "You are trying to reference a function or variable which I can't find in the current scope.",
     "code": "2552"
   },
   "2590": {
