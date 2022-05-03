@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.2.1
+
+### Patch Changes
+
+- [`21a2b5f`](https://github.com/mattpocock/ts-error-translator/commit/21a2b5f7463efb57ca41dc713051c8b6516a82e9) Thanks [@mattpocock](https://github.com/mattpocock)! - Got the extension ready for deploy on open-vsix
+
 ## 0.2.0
 
 ### Minor Changes
