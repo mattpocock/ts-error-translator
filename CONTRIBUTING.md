@@ -27,10 +27,9 @@ yarn dev # This will run the next app
 
 You'll find all of the errors' translations at `packages/engine/errors` and they follow the following conventions:
 
-- Every file must be named with its error code: `<code>.md`
+> 💡 Hint: You can find a list of untranslated errors in [`TRANSLATION_STATUS.md`](https://github.com/mattpocock/ts-error-translator/blob/main/packages/engine/src/TRANSLATION_STATUS.md)
 
-> 💡 Hint: To find the code for the error you're looking for, have a look inside [`tsErrorMessages.json`](https://github.com/mattpocock/ts-error-translator/blob/main/packages/engine/src/tsErrorMessages.json),
-> or check your console, you'll see this formatting `error TS<code>: <msg>`.
+- Every file must be named with its error code: `<code>.md`
 
 - You can follow our template by running the following command. This will write an example file at `packages/engine/errors/<code>.md` with placeholders on how the explanation should be written.
 
