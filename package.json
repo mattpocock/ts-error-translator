@@ -8,6 +8,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "translate": "ts-node -T scripts/translate.ts",
+    "translation-status": "ts-node -T scripts/translation-status.ts",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "extension:build": "yarn workspace ts-error-translator compile",
