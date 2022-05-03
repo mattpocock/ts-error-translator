@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (humanizedVersion) {
             items.push({
               range: diagnostic.range,
-              contents: [humanizedVersion],
+              contents: humanizedVersion,
             });
           }
         });

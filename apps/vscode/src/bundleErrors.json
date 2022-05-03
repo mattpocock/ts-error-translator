@@ -49,11 +49,6 @@
     "excerpt": "You haven't passed all the required parameters to '{1}' - you've missed out '{0}'",
     "code": "2324"
   },
-  "2326": {
-    "body": "More details, reproducible examples for the error and How the error should be fixed.\n",
-    "excerpt": "Simplified version of the error message (Use 'you' as the pronoun because it feels friendly)",
-    "code": "2326"
-  },
   "2339": {
     "body": "TODO\n",
     "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
@@ -69,6 +64,11 @@
     "excerpt": "I was expecting '{1}', but you passed '{0}'",
     "code": "2345"
   },
+  "2349": {
+    "body": "You're trying to call something that doesn't appear to be a function. A version of this error might be:\n\n```ts\nconst a = '';\na();\n```\n",
+    "excerpt": "I can't call this expression because I can't call it like a function.",
+    "code": "2349"
+  },
   "2352": {
     "body": "It looks like you're trying to use `as` to 'cast' one type into another. Your first type:\n\n```\n{0}\n```\n\ndoesn't match up with\n\n```\n{1}\n```\n\nbecause there isn't what I call 'sufficient overlap' between them. I.e. they don't look enough like each other.\n\nIf you really meant to do this, you should cast `{0}` to `unknown` first. For example, if I wanted to cast `string` to `string[]`, I'd need to write this code:\n\n```ts twoslash\nconst a = 'wow' as unknown as string[];\n```\n",
     "excerpt": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
@@ -78,6 +78,11 @@
     "body": "This object:\n\n```\n{1}\n```\n\nDoesn't contain this property:\n\n```\n{0}\n```\n\nSo don't pass it!\n",
     "excerpt": "You can't pass property '{0}' to object '{1}'.",
     "code": "2353"
+  },
+  "2414": {
+    "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).",
+    "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
+    "code": "2414"
   },
   "2552": {
     "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
