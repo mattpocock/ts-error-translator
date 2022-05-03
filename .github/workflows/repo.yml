@@ -1,0 +1,15 @@
+name: Repo
+on: push
+
+jobs:
+  generate-status-md:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: 'yarn'
+      - run: yarn
+      - run: yarn translation-status
+    
