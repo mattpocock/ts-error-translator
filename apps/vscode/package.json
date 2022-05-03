@@ -29,6 +29,7 @@
     "onLanguage:typescriptreact"
   ],
   "main": "./out/extension.js",
+  "browser": "./out/extension.js",
   "keywords": [
     "typescript"
   ],
