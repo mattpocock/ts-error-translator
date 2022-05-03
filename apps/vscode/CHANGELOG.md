@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.8
+
+### Patch Changes
+
+- [`fb85b4f`](https://github.com/mattpocock/ts-error-translator/commit/fb85b4f7f6ce2381a30c49a1fc55718f69b80de2) Thanks [@mattpocock](https://github.com/mattpocock)! - Enabled the extension for web
+
 ## 0.1.7
 
 ### Patch Changes
