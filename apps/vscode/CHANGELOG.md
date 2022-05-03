@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.7
+
+### Patch Changes
+
+- [`211bfd8`](https://github.com/mattpocock/ts-error-translator/commit/211bfd83bc9fecbde5b3aabd9f0dd0153635b06e) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where the extension did not work in untitled files
+
 ## 0.1.6
 
 ### Patch Changes
