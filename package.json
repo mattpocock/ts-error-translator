@@ -13,7 +13,7 @@
     "extension:build": "yarn workspace ts-error-translator compile",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "release": "(cd apps/vscode && npx vsce publish) && node ./scripts/tag-extension.js"
+    "release": "(cd apps/vscode && npx vsce publish) && (cd apps/vscode && npx ovsx publish $(find . -iname *.vsix)) && node ./scripts/tag-extension.js"
   },
   "devDependencies": {
     "husky": ">=6",

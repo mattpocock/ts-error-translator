@@ -24,4 +24,5 @@ jobs:
           publish: yarn release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          OSVX_PAT: ${{ secrets.OSVX_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
