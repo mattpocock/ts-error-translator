@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.0
+
+### Minor Changes
+
+- [`35a91f0`](https://github.com/mattpocock/ts-error-translator/commit/35a91f0d212a7fa7b1d49bc5b2f9eaa5519c01aa) Thanks [@mattpocock](https://github.com/mattpocock)! - Made the extension also work with Vue and Svelte
+
+### Patch Changes
+
+- [`57e588c`](https://github.com/mattpocock/ts-error-translator/commit/57e588c7ebccfc9e81f4c3143f7274d1ade9397b) Thanks [@mattpocock](https://github.com/mattpocock)! - More translations
+
+* [`0eba595`](https://github.com/mattpocock/ts-error-translator/commit/0eba595ead2260de4911933e6cf75f5bae8e76d6) Thanks [@mattpocock](https://github.com/mattpocock)! - Tweak to existing errors
+
 ## 0.2.1
 
 ### Patch Changes
