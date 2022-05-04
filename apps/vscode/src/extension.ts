@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { AddMissingTypeProps, COMMAND as FILLOBJECT_COMMAND } from './codeActions/addMissingTypeProps';
 import { humaniseDiagnostic } from './humaniseDiagnostic';
 import { Options } from './types';
 
@@ -88,6 +89,22 @@ export function activate(context: vscode.ExtensionContext) {
       });
     }),
   );
+
+  context.subscriptions.push(
+		vscode.languages.registerCodeActionsProvider(
+      {
+        language: 'typescript',
+      },
+      new AddMissingTypeProps(),
+      {
+			  providedCodeActionKinds: AddMissingTypeProps.providedCodeActionKinds
+		  }
+    )
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand(FILLOBJECT_COMMAND, AddMissingTypeProps.Run)
+	);
 }
 
 // this method is called when your extension is deactivated
