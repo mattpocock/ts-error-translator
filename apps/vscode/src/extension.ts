@@ -63,6 +63,18 @@ export function activate(context: vscode.ExtensionContext) {
       },
       hoverProvider,
     ),
+    vscode.languages.registerHoverProvider(
+      {
+        language: 'vue',
+      },
+      hoverProvider,
+    ),
+    vscode.languages.registerHoverProvider(
+      {
+        language: 'svelte',
+      },
+      hoverProvider,
+    ),
   );
 
   context.subscriptions.push(

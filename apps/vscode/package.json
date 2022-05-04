@@ -26,7 +26,9 @@
   ],
   "activationEvents": [
     "onLanguage:typescript",
-    "onLanguage:typescriptreact"
+    "onLanguage:typescriptreact",
+    "onLanguage:vue",
+    "onLanguage:svelte"
   ],
   "main": "./out/extension.js",
   "browser": "./out/extension.js",

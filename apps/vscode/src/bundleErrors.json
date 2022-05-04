@@ -5,7 +5,7 @@
     "code": "1002"
   },
   "1003": {
-    "body": "This means that your syntax is wrong and simply the compiler can't tokenize your code properly.\n",
+    "body": "This means that your syntax is wrong and the compiler can't tokenize your code properly.\n",
     "excerpt": "Your code doesn't comply with the syntax rules of the TypeScript language",
     "code": "1003"
   },
@@ -18,6 +18,11 @@
     "body": "You should remove the trailing comma where I'm pointing - otherwise, I won't be able to understand your code.\n",
     "excerpt": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
+  },
+  "1163": {
+    "body": "To use yield you should turn your function into a generator by adding an asterisk (*) next to the function name. For instance:\n\n```ts\nconst squaredNum = function* (num: number) {\n   yield num * num;\n};\n```\n",
+    "excerpt": "The `yield` keyword can only be used inside a generator function",
+    "code": "1163"
   },
   "1208": {
     "body": "- If you only use TypeScript to produce JavaScript code from TypeScript code you can set the compilerOptions.isolatedModules to false in tsconfig.json\n- For more information about 'isolatedModules' you can see [here](https://www.typescriptlang.org/tsconfig#isolatedModules)",
@@ -45,8 +50,8 @@
     "code": "2322"
   },
   "2324": {
-    "body": "Oh dear\n",
-    "excerpt": "You haven't passed all the required parameters to '{1}' - you've missed out '{0}'",
+    "body": "",
+    "excerpt": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
     "code": "2324"
   },
   "2339": {
@@ -84,6 +89,11 @@
     "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
     "code": "2414"
   },
+  "2451": {
+    "body": "",
+    "excerpt": "'{0}' has already been declared - you can't declare it again.",
+    "code": "2451"
+  },
   "2552": {
     "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
     "excerpt": "You are trying to reference a function or variable which I can't find in the current scope.",
@@ -101,7 +111,7 @@
   },
   "2741": {
     "body": "I can help enforce that objects have all the right properties. In this case, I'm looking at this object:\n\n```\n{2}\n```\n",
-    "excerpt": "You haven't passed all the required parameters to '{2}' -  '{1}' is missing the '{0}' property",
+    "excerpt": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
     "code": "2741"
   },
   "2761": {
@@ -118,5 +128,10 @@
     "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
     "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
     "code": "7006"
+  },
+  "18004": {
+    "body": "",
+    "excerpt": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
+    "code": "18004"
   }
 }
