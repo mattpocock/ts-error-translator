@@ -54,6 +54,7 @@
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
+    "compile:debug": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --sourcemap --outfile=out/extension.js --external:vscode --format=cjs",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "tsc",

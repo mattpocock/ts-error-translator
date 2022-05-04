@@ -5,7 +5,7 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "extension:build",
+			"script": "extension:build:debug",
 			"isBackground": true,
 			"presentation": {
 				"reveal": "never"

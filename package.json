@@ -11,6 +11,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "extension:build": "yarn workspace ts-error-translator compile",
+    "extension:build:debug": "yarn workspace ts-error-translator compile:debug",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "release": "(cd apps/vscode && (npx vsce publish || true)) && (cd apps/vscode && npx ovsx publish $(find . -iname *.vsix)) && node ./scripts/tag-extension.js"

@@ -15,7 +15,7 @@
 			"outFiles": [
 				"${workspaceFolder}/apps/vscode/out/**/*.js"
 			],
-			"preLaunchTask": "npm: extension:build"
+			"preLaunchTask": "npm: extension:build:debug"
 		},
 		{
 			"name": "Extension Tests",
