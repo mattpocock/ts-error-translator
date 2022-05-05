@@ -28,7 +28,8 @@
     "onLanguage:typescript",
     "onLanguage:typescriptreact",
     "onLanguage:vue",
-    "onLanguage:svelte"
+    "onLanguage:svelte",
+    "workspaceContains:**/.ts"
   ],
   "main": "./out/extension.js",
   "browser": "./out/extension.js",
