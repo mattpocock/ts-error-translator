@@ -1,138 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { parseErrors } from '../parseErrors';
-
-const opts = {
-  dir: './errors',
-};
+import { parseErrors, parseErrorsWithDb } from '../parseErrors';
 
 describe('parseErrors', () => {
-  it.skip('Should work', () => {
-    expect(
-      parseErrors(
-        `Conversion of type 'string' to type 'string[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.`,
-        opts,
-      ),
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "code": 2352,
-          "error": "Conversion of type '{0}' to type '{1}' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.",
-          "improvedError": {
-            "body": "It looks like you're trying to use \`as\` to 'cast' one type into another. Your first type:
-      
-      \`\`\`
-      string
-      \`\`\`
-      
-      doesn't match up with
-      
-      \`\`\`
-      string[]
-      \`\`\`
-      
-      because there isn't what I call 'sufficient overlap' between them. I.e. they don't look enough like each other.
-      
-      If you really meant to do this, you should cast \`string\` to \`unknown\` first. For example, if I wanted to cast \`string\` to \`string[]\`, I'd need to write this code:
-      
-      \`\`\`ts twoslash
-      const a = \\"wow\\" as unknown as string[];
-      \`\`\`
-      ",
-            "excerpt": "You can't use 'as' to convert 'string' into a 'string[]' - they don't share enough in common.",
-          },
-          "parseInfo": {
-            "endIndex": 190,
-            "firstItem": "string",
-            "secondItem": "string[]",
-            "startIndex": 0,
-          },
-        },
-      ]
-    `);
-
-    expect(
-      parseErrors(`Argument of type '{}' is not assignable to parameter of type '{ wow: { nice: boolean; }; }'.
-    Property 'wow' is missing in type '{}' but required in type '{ wow: { nice: boolean; }; }'.`),
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "code": 2324,
-          "error": "Property '{0}' is missing in type '{1}'.",
-          "improvedError": null,
-          "parseInfo": {
-            "endIndex": 188,
-            "firstItem": "wow",
-            "secondItem": "{}' but required in type '{ wow: { nice: boolean; }; }",
-            "startIndex": 97,
-          },
-        },
-        {
-          "code": 2345,
-          "error": "Argument of type '{0}' is not assignable to parameter of type '{1}'.",
-          "improvedError": null,
-          "parseInfo": {
-            "endIndex": 92,
-            "firstItem": "{}",
-            "secondItem": "{ wow: { nice: boolean; }; }",
-            "startIndex": 0,
-          },
-        },
-      ]
-    `);
-
-    expect(
-      parseErrors(
-        `The expected type comes from property 'nice' which is declared here on type '{ nice: boolean; }'`,
-      ),
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "code": 6500,
-          "error": "The expected type comes from property '{0}' which is declared here on type '{1}'",
-          "improvedError": null,
-          "parseInfo": {
-            "endIndex": 96,
-            "firstItem": "nice",
-            "secondItem": "{ nice: boolean; }",
-            "startIndex": 0,
-          },
-        },
-      ]
-    `);
-  });
-
-  it.skip('REPL 2', () => {
-    expect(
-      parseErrors(
-        `Property 'wow' is missing in type '{}' but required in type '{ wow: { nice: boolean; }; }'.`,
-      ),
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "code": 2741,
-          "error": "Property '{0}' is missing in type '{1}' but required in type '{2}'.",
-          "improvedError": null,
-          "parseInfo": {
-            "endIndex": 91,
-            "items": [
-              "wow",
-              "{}",
-              "{ wow: { nice: boolean; }; }",
-            ],
-            "startIndex": 0,
-          },
-        },
-      ]
-    `);
-  });
-
   it('Should catch multiple of the same error', () => {
     const errors = parseErrors(
       `Types of property 'URL_NAVIGATION' are incompatible.
     Types of property 'actions' are incompatible.`,
-      {
-        dir: './errors',
-      },
     );
 
     expect(errors).toHaveLength(2);
@@ -191,5 +64,89 @@ describe('parseErrors', () => {
         },
       ]
     `);
+  });
+
+  it('Should handle multiple params of ALL the same value', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`'{0}', '{1}', '{2}'`]: {
+          code: 1,
+        },
+      },
+      `'A', 'A', 'A'`,
+    );
+    expect(result[0].parseInfo.items).toEqual(['A', 'A', 'A']);
+  });
+
+  it('Should handle multiple params of SOME the same value', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`'{0}', '{1}', '{2}'`]: {
+          code: 1,
+        },
+      },
+      `'A', 'A', 'B'`,
+    );
+    expect(result[0].parseInfo.items).toEqual(['A', 'A', 'B']);
+  });
+
+  it('Should handle non-quoted params', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`Imported via {0} from file '{1}'`]: {
+          code: 1,
+        },
+      },
+      `Imported via A from file 'B'`,
+    );
+
+    expect(result[0].parseInfo.items).toEqual(['A', 'B']);
+  });
+
+  it.skip('Should handle params in the incorrect order', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`{2}, {0}, {1}`]: {
+          code: 1,
+        },
+      },
+      `C, A, B`,
+    );
+
+    expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C']);
+  });
+
+  it('Should handle params specified multiple times', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`{0}, {1}, {1}, {2}`]: {
+          code: 1,
+        },
+      },
+      `A, B, B, C`,
+    );
+
+    expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C']);
+  });
+
+  it('If two sections match, it should choose the longer one', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`{0}, {1}, {2}`]: {
+          code: 1,
+        },
+        [`{0}, {1}, {2}, {3}`]: {
+          code: 1,
+        },
+      },
+      `A, B, C, D`,
+    );
+
+    /**
+     * It should not have matched {0}, {1}, {2}, because
+     * {0}, {1}, {2}, {3} was a better match
+     */
+    expect(result).toHaveLength(1);
+    expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C', 'D']);
   });
 });

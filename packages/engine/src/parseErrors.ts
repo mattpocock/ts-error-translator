@@ -1,29 +1,33 @@
 import tsErrorMessages from './tsErrorMessages.json';
 
-type TsDiagnosticMessage = keyof typeof tsErrorMessages;
-type TsDiagnosticParameters = string;
+type TsErrorMessageDb = Record<string, { code: number }>;
 
 interface TSDiagnosticMatcher {
   regexGlobal: RegExp;
   regexLocal: RegExp;
-  parameters: TsDiagnosticParameters[];
+  parameters: string[];
 }
 
-const DiagnosticHashMap = new Map<TsDiagnosticMessage, TSDiagnosticMatcher>();
+const DiagnosticHashMap = new Map<string, TSDiagnosticMatcher>();
+
+const escapeRegex = /[.*+?^${}()|[\]\\]/g;
 
 function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  return str.replace(escapeRegex, '\\$&'); // $& means the whole matched string
 }
 
-function getDiagnosticMatcher(text: TsDiagnosticMessage): TSDiagnosticMatcher {
+const parameterRegex = /{(\d)}/g;
+const escapedParameterRegex = /\\\{(\d)\\\}/g;
+
+function getDiagnosticMatcher(text: string): TSDiagnosticMatcher {
   const existing = DiagnosticHashMap.get(text);
 
   if (existing) return existing;
 
-  const regexSource = escapeRegExp(text).replace(/\\\{(\d)\\\}/g, '(.+)');
+  const regexSource = escapeRegExp(text).replace(escapedParameterRegex, '(.+)');
   const regexLocal = new RegExp(regexSource);
   const regexGlobal = new RegExp(regexSource, 'g');
-  const parameters = text.match(/{(\d)}/g) ?? [];
+  const parameters = text.match(parameterRegex) ?? [];
 
   const diagnosticMatcher = {
     regexLocal,
@@ -37,14 +41,16 @@ function getDiagnosticMatcher(text: TsDiagnosticMessage): TSDiagnosticMatcher {
 }
 
 function associateMatchedParameters(
-  parameters: TsDiagnosticParameters[],
+  parameters: string[],
   matchedParams: string[],
 ): (string | number)[] {
   const params: Record<string, string | number> = Object.create(null);
 
   for (let i = 0; i < matchedParams.length; i++) {
     const parameter = parameters[i];
-    params[parameter] ??= matchedParams[i] ?? '';
+    if (!params.parameter) {
+      params[parameter] = matchedParams[i] ?? '';
+    }
   }
 
   return Object.values(params);
@@ -72,14 +78,12 @@ export interface ErrorInfo extends ErrorInfoWithoutImprovedError {
 
 export interface ParseErrorsOpts {}
 
-const tsMessages = Object.keys(tsErrorMessages) as TsDiagnosticMessage[];
-
-export const parseErrors = (
-  message: string,
-): ErrorInfoWithoutImprovedError[] => {
+export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
   const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
-  tsMessages.forEach((newError) => {
+  const keys = Object.keys(db);
+
+  keys.forEach((newError) => {
     const { regexLocal, regexGlobal, parameters } =
       getDiagnosticMatcher(newError);
 
@@ -97,7 +101,7 @@ export const parseErrors = (
         );
 
         const errorObj: ErrorInfoWithoutImprovedError = {
-          code: tsErrorMessages[newError].code,
+          code: db[newError].code,
           error: newError,
           parseInfo: {
             rawError: matchElem,
@@ -128,4 +132,10 @@ export const parseErrors = (
   return Object.values(errorMessageByKey).sort(
     (a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex,
   );
+};
+
+export const parseErrors = (
+  message: string,
+): ErrorInfoWithoutImprovedError[] => {
+  return parseErrorsWithDb(tsErrorMessages, message);
 };
