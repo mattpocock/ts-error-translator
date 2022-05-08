@@ -8,18 +8,44 @@ import * as bundleErrors from './bundleErrors.json';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { Options } from './types';
 
+const getMessageTemplate = (options: Options) => {
+  let messageTemplate:
+    | 'body-and-tldr'
+    | 'tldr-only'
+    | 'body-only'
+    | 'link-only';
+
+  if (options.showFullTranslation) {
+    if (options.showTLDRTranslation) {
+      messageTemplate = 'body-and-tldr';
+    } else {
+      messageTemplate = 'body-only';
+    }
+  } else {
+    if (options.showTLDRTranslation) {
+      messageTemplate = 'tldr-only';
+    } else {
+      messageTemplate = 'link-only';
+    }
+  }
+
+  return messageTemplate;
+};
+
 export const humaniseDiagnostic = (
   diagnostic: vscode.Diagnostic,
   options: Options,
-): vscode.MarkdownString | undefined => {
+): vscode.MarkdownString[] => {
   if (diagnostic.source !== 'ts') {
-    return undefined;
+    return [];
   }
   const errors = parseErrors(diagnostic.message);
 
-  const errorBodies: string[] = [];
+  const markdownStrings: vscode.MarkdownString[] = [];
 
-  errors.forEach((error, index) => {
+  errors.forEach((error, index, array) => {
+    const errorBodies: string[] = [];
+
     const fullError = (
       bundleErrors as Record<string, { body: string; excerpt: string }>
     )[error.code];
@@ -32,23 +58,43 @@ export const humaniseDiagnostic = (
         fullError.excerpt,
         error.parseInfo.items,
       );
-      errorBodies.push(
-        `[See full translation](https://ts-error-translator.vercel.app/?error=${compressToEncodedURIComponent(
-          diagnostic.message,
-        )})`,
-        ...(options.showTLDRTranslation ? [`### TL;DR`, excerpt] : []),
-        ...(options.showFullTranslation ? [`### Full Translation`, body] : []),
-      );
+
+      const messageTemplate = getMessageTemplate(options);
+
+      const linkToTranslation = `[See full translation](https://ts-error-translator.vercel.app/?error=${compressToEncodedURIComponent(
+        diagnostic.message,
+      )})`;
+
+      switch (messageTemplate) {
+        case 'body-and-tldr':
+          {
+            errorBodies.push(
+              linkToTranslation,
+              `### TL;DR`,
+              excerpt,
+              `### Full Translation`,
+              body,
+            );
+          }
+          break;
+        case 'body-only':
+          errorBodies.push(linkToTranslation, body);
+          break;
+        case 'link-only':
+          errorBodies.push(linkToTranslation);
+          break;
+        case 'tldr-only':
+          errorBodies.push(`**Translation**: ${excerpt}`, linkToTranslation);
+          break;
+      }
     } else {
       errorBodies.push(
-        `### No Translation Found`,
-        `Could not find a translation for error code \`#${error.code}\``,
-        `[Contribute a translation](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md)`,
+        `[Contribute a translation for \`#${error.code}\`](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md)`,
       );
     }
+
+    markdownStrings.push(new vscode.MarkdownString(errorBodies.join('\n\n')));
   });
 
-  if (errorBodies.length > 0) {
-    return new vscode.MarkdownString(errorBodies.join('\n\n'));
-  }
+  return markdownStrings;
 };

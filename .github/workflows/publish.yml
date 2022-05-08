@@ -24,4 +24,6 @@ jobs:
           publish: yarn release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          # Yes, I did a silly thing by saving the secret as O(SV)X_PAT instead of O(VS)X_PAT
+          OVSX_PAT: ${{ secrets.OSVX_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

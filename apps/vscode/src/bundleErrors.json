@@ -5,7 +5,7 @@
     "code": "1002"
   },
   "1003": {
-    "body": "This means that your syntax is wrong and simply the compiler can't tokenize your code properly.\n",
+    "body": "This means that your syntax is wrong and the compiler can't tokenize your code properly.\n",
     "excerpt": "Your code doesn't comply with the syntax rules of the TypeScript language",
     "code": "1003"
   },
@@ -19,6 +19,11 @@
     "excerpt": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
   },
+  "1163": {
+    "body": "To use yield you should turn your function into a generator by adding an asterisk (*) next to the function name. For instance:\n\n```ts\nconst squaredNum = function* (num: number) {\n   yield num * num;\n};\n```\n",
+    "excerpt": "The `yield` keyword can only be used inside a generator function",
+    "code": "1163"
+  },
   "1208": {
     "body": "- If you only use TypeScript to produce JavaScript code from TypeScript code you can set the compilerOptions.isolatedModules to false in tsconfig.json\n- For more information about 'isolatedModules' you can see [here](https://www.typescriptlang.org/tsconfig#isolatedModules)",
     "excerpt": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.",
@@ -29,34 +34,69 @@
     "excerpt": "I can't find the variable you're trying to access.",
     "code": "2304"
   },
+  "2307": {
+    "body": "TODO\n",
+    "excerpt": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.",
+    "code": "2307"
+  },
+  "2314": {
+    "body": "TODO\n",
+    "excerpt": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.",
+    "code": "2314"
+  },
   "2322": {
     "body": "You can assign variables types to give me hints about what kind of types you want to allow in that variable. For instance:\n\n```ts\nconst num: number = 0;\n```\n\nThis tells me that `num` will always be a `number`.\n\nBut sometimes, you'll break that pact you made with me. For instance:\n\n```ts\nconst num: number = 'some string';\n```\n\nIn your case, you said that this type was the only thing assignable to that variable:\n\n```\n{1}\n```\n\nAnd you passed me this instead:\n\n```\n{0}\n```\n",
     "excerpt": "I was expecting a type matching A, but instead you passed B.",
     "code": "2322"
   },
   "2324": {
-    "body": "Oh dear\n",
-    "excerpt": "You haven't passed all the required parameters to '{1}' - you've missed out '{0}'",
+    "body": "",
+    "excerpt": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
     "code": "2324"
   },
-  "2326": {
-    "body": "More details, reproducible examples for the error and How the error should be fixed.\n",
-    "excerpt": "Simplified version of the error message (Use 'you' as the pronoun because it feels friendly)",
-    "code": "2326"
+  "2339": {
+    "body": "TODO\n",
+    "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
+    "code": "2339"
+  },
+  "2344": {
+    "body": "TODO\n",
+    "excerpt": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.",
+    "code": "2344"
   },
   "2345": {
     "body": "I was expecting\n\n```\n{1}\n```\n\nbut instead, I received\n\n```\n{0}\n```\n",
     "excerpt": "I was expecting '{1}', but you passed '{0}'",
     "code": "2345"
   },
+  "2349": {
+    "body": "You're trying to call something that doesn't appear to be a function. A version of this error might be:\n\n```ts\nconst a = '';\na();\n```\n",
+    "excerpt": "I can't call this expression because I can't call it like a function.",
+    "code": "2349"
+  },
   "2352": {
     "body": "It looks like you're trying to use `as` to 'cast' one type into another. Your first type:\n\n```\n{0}\n```\n\ndoesn't match up with\n\n```\n{1}\n```\n\nbecause there isn't what I call 'sufficient overlap' between them. I.e. they don't look enough like each other.\n\nIf you really meant to do this, you should cast `{0}` to `unknown` first. For example, if I wanted to cast `string` to `string[]`, I'd need to write this code:\n\n```ts twoslash\nconst a = 'wow' as unknown as string[];\n```\n",
     "excerpt": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
     "code": "2352"
   },
+  "2353": {
+    "body": "This object:\n\n```\n{1}\n```\n\nDoesn't contain this property:\n\n```\n{0}\n```\n\nSo don't pass it!\n",
+    "excerpt": "You can't pass property '{0}' to object '{1}'.",
+    "code": "2353"
+  },
+  "2414": {
+    "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).",
+    "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
+    "code": "2414"
+  },
+  "2451": {
+    "body": "",
+    "excerpt": "'{0}' has already been declared - you can't declare it again.",
+    "code": "2451"
+  },
   "2552": {
     "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
-    "excerpt": "You are trying to reference a function or variable which Typescript cannot find within the scope.",
+    "excerpt": "You are trying to reference a function or variable which I can't find in the current scope.",
     "code": "2552"
   },
   "2590": {
@@ -71,8 +111,13 @@
   },
   "2741": {
     "body": "I can help enforce that objects have all the right properties. In this case, I'm looking at this object:\n\n```\n{2}\n```\n",
-    "excerpt": "You haven't passed all the required parameters to '{2}' -  '{1}' is missing the '{0}' property",
+    "excerpt": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
     "code": "2741"
+  },
+  "2761": {
+    "body": "TODO\n",
+    "excerpt": "You can't use `new` on '{0}' - it doesn't look like it's possible to me.",
+    "code": "2761"
   },
   "5075": {
     "body": "TODO\n",
@@ -81,7 +126,12 @@
   },
   "7006": {
     "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
-    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'.",
+    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
     "code": "7006"
+  },
+  "18004": {
+    "body": "",
+    "excerpt": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
+    "code": "18004"
   }
 }

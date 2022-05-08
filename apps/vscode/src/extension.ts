@@ -35,26 +35,45 @@ export function activate(context: vscode.ExtensionContext) {
     }),
   );
 
+  const hoverProvider: vscode.HoverProvider = {
+    provideHover: (document, position) => {
+      const itemsInUriStore = uriStore[document.uri.path];
+
+      if (!itemsInUriStore) {
+        return null;
+      }
+
+      const itemsInRange = itemsInUriStore.filter((item) => {
+        return item.range.contains(position);
+      });
+      return itemsInRange[0];
+    },
+  };
+
   context.subscriptions.push(
     vscode.languages.registerHoverProvider(
       {
-        scheme: 'file',
         language: 'typescript',
       },
+      hoverProvider,
+    ),
+    vscode.languages.registerHoverProvider(
       {
-        provideHover: (document, position) => {
-          const itemsInUriStore = uriStore[document.uri.path];
-
-          if (!itemsInUriStore) {
-            return null;
-          }
-
-          const itemsInRange = itemsInUriStore.filter((item) => {
-            return item.range.contains(position);
-          });
-          return itemsInRange[0];
-        },
+        language: 'typescriptreact',
       },
+      hoverProvider,
+    ),
+    vscode.languages.registerHoverProvider(
+      {
+        language: 'vue',
+      },
+      hoverProvider,
+    ),
+    vscode.languages.registerHoverProvider(
+      {
+        language: 'svelte',
+      },
+      hoverProvider,
     ),
   );
 
@@ -73,7 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (humanizedVersion) {
             items.push({
               range: diagnostic.range,
-              contents: [humanizedVersion],
+              contents: humanizedVersion,
             });
           }
         });
