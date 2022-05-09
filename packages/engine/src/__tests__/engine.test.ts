@@ -129,25 +129,27 @@ describe('parseErrors', () => {
     expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C']);
   });
 
-  it('If two sections match, it should choose the longer one', () => {
-    const result = parseErrorsWithDb(
-      {
-        [`{0}, {1}, {2}`]: {
-          code: 1,
+  describe('When two sections match, but one is longer', () => {
+    it('Should choose the longer one', () => {
+      const result = parseErrorsWithDb(
+        {
+          [`{0}, {1}, {2}`]: {
+            code: 1,
+          },
+          [`{0}, {1}, {2}, {3}`]: {
+            code: 1,
+          },
         },
-        [`{0}, {1}, {2}, {3}`]: {
-          code: 1,
-        },
-      },
-      `A, B, C, D`,
-    );
+        `A, B, C, D`,
+      );
 
-    /**
-     * It should not have matched {0}, {1}, {2}, because
-     * {0}, {1}, {2}, {3} was a better match
-     */
-    expect(result).toHaveLength(1);
-    expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C', 'D']);
+      /**
+       * It should not have matched {0}, {1}, {2}, because
+       * {0}, {1}, {2}, {3} was a better match
+       */
+      expect(result).toHaveLength(1);
+      expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C', 'D']);
+    });
   });
 
   it('Should handle cases where there are no params', () => {
