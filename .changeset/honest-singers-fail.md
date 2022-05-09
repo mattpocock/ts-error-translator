@@ -1,5 +1,5 @@
 ---
-'@ts-error-messages/engine': minor
+'@ts-error-messages/engine': patch
 ---
 
 Correctly match duplicated matched parameters
