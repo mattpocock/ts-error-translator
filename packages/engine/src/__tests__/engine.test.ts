@@ -149,4 +149,17 @@ describe('parseErrors', () => {
     expect(result).toHaveLength(1);
     expect(result[0].parseInfo.items).toEqual(['A', 'B', 'C', 'D']);
   });
+
+  it('Should handle cases where there are no params', () => {
+    const result = parseErrorsWithDb(
+      {
+        [`Hello!`]: {
+          code: 1,
+        },
+      },
+      `Hello!`,
+    );
+
+    expect(result[0].parseInfo.items).toEqual([]);
+  });
 });
