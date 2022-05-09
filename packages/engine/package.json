@@ -9,9 +9,11 @@
     "test": "vitest"
   },
   "dependencies": {
-    "front-matter": "^4.0.2"
+    "front-matter": "^4.0.2",
+    "prettier": "^2.5.1"
   },
   "devDependencies": {
+    "@types/prettier": "^2.6.0",
     "typescript": "^4.5.3",
     "vitest": "^0.10.0",
     "esbuild": "^0.14.38"

@@ -1,4 +1,5 @@
 import tsErrorMessages from './tsErrorMessages.json';
+import prettier from 'prettier';
 
 type TsErrorMessageDb = Record<string, { code: number }>;
 
@@ -56,11 +57,16 @@ function associateMatchedParameters(
   return Object.values(params);
 }
 
+const myTypeStarting = /^type MyType =/;
+const newlineEnding = /\n$/g;
+const semicolonEnding = /;$/g;
+
 interface ParseInfo {
   rawError: string;
   startIndex: number;
   endIndex: number;
   items: (string | number)[];
+  prettyItems: string[];
 }
 
 export interface ErrorInfoWithoutImprovedError {
@@ -78,19 +84,22 @@ export interface ErrorInfo extends ErrorInfoWithoutImprovedError {
 
 export interface ParseErrorsOpts {}
 
-export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
+export const parseErrorsWithDb = async (
+  db: TsErrorMessageDb,
+  message: string,
+) => {
   const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
   const keys = Object.keys(db);
 
-  keys.forEach((newError) => {
+  for (const newError of keys) {
     const { regexLocal, regexGlobal, parameters } =
       getDiagnosticMatcher(newError);
 
     const match = message.match(regexGlobal);
 
     if (match) {
-      match.forEach((matchElem) => {
+      for (const matchElem of match) {
         const startIndex = message.indexOf(matchElem);
         const endIndex = startIndex ?? 0 + matchElem.length;
         const key = `${startIndex}_${endIndex}`;
@@ -100,6 +109,28 @@ export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
           matchElem.match(regexLocal)?.slice(1) ?? [],
         );
 
+        const prettyItems: string[] = [];
+
+        for (const item of items) {
+          try {
+            const prettyItem = await prettier.format(`type MyType = ${item}`, {
+              plugins: ['typescript'],
+              parser: 'babel',
+              singleQuote: true,
+              printWidth: 60,
+            });
+            prettyItems.push(
+              prettyItem
+                .replace(myTypeStarting, '')
+                .replace(newlineEnding, '')
+                .replace(semicolonEnding, '')
+                .trim(),
+            );
+          } catch (e) {
+            prettyItems.push(`${item}`);
+          }
+        }
+
         const errorObj: ErrorInfoWithoutImprovedError = {
           code: db[newError].code,
           error: newError,
@@ -108,6 +139,7 @@ export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
             startIndex,
             endIndex,
             items,
+            prettyItems,
           },
         };
 
@@ -125,17 +157,17 @@ export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
         } else {
           errorMessageByKey[key] = errorObj;
         }
-      });
+      }
     }
-  });
+  }
 
   return Object.values(errorMessageByKey).sort(
     (a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex,
   );
 };
 
-export const parseErrors = (
+export const parseErrors = async (
   message: string,
-): ErrorInfoWithoutImprovedError[] => {
+): Promise<ErrorInfoWithoutImprovedError[]> => {
   return parseErrorsWithDb(tsErrorMessages, message);
 };

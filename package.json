@@ -10,6 +10,7 @@
     "translate": "ts-node -T scripts/translate.ts",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "engine": "yarn workspace @ts-error-messages/engine",
     "extension:build": "yarn workspace ts-error-translator compile",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
