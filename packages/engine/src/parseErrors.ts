@@ -1,39 +1,66 @@
 import tsErrorMessages from './tsErrorMessages.json';
 
-function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+type TsErrorMessageDb = Record<string, { code: number }>;
+
+interface TSDiagnosticMatcher {
+  regexGlobal: RegExp;
+  regexLocal: RegExp;
+  parameters: string[];
 }
 
-let regexCache: Record<string, RegExp> = {};
+const DiagnosticHashMap = new Map<string, TSDiagnosticMatcher>();
 
-const toRegex = (key: string): RegExp => {
-  if (regexCache[key]) {
-    return regexCache[key];
+const escapeRegex = /[.*+?^${}()|[\]\\]/g;
+
+function escapeRegExp(str: string) {
+  return str.replace(escapeRegex, '\\$&'); // $& means the whole matched string
+}
+
+const parameterRegex = /{(\d)}/g;
+const escapedParameterRegex = /\\\{(\d)\\\}/g;
+
+function getDiagnosticMatcher(text: string): TSDiagnosticMatcher {
+  const existing = DiagnosticHashMap.get(text);
+
+  if (existing) return existing;
+
+  const regexSource = escapeRegExp(text).replace(escapedParameterRegex, '(.+)');
+  const regexLocal = new RegExp(regexSource);
+  const regexGlobal = new RegExp(regexSource, 'g');
+  const parameters = text.match(parameterRegex) ?? [];
+
+  const diagnosticMatcher = {
+    regexLocal,
+    regexGlobal,
+    parameters,
+  };
+
+  DiagnosticHashMap.set(text, diagnosticMatcher);
+
+  return diagnosticMatcher;
+}
+
+function associateMatchedParameters(
+  parameters: string[],
+  matchedParams: string[],
+): (string | number)[] {
+  const params: Record<string, string | number> = Object.create(null);
+
+  for (let i = 0; i < matchedParams.length; i++) {
+    const parameter = parameters[i];
+    if (!params.parameter) {
+      params[parameter] = matchedParams[i] ?? '';
+    }
   }
-  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, '(.{1,})');
 
-  regexCache[key] = new RegExp(regex, 'g');
-
-  return regexCache[key];
-};
-
-const toNonGlobalRegex = (key: string): RegExp => {
-  const adjustedKey = key + '_non_global';
-  if (regexCache[adjustedKey]) {
-    return regexCache[adjustedKey];
-  }
-  const regex = escapeRegExp(key).replace(/\\\{(\d)\\\}/g, '(.{1,})');
-
-  regexCache[adjustedKey] = new RegExp(regex);
-
-  return regexCache[adjustedKey];
-};
+  return Object.values(params);
+}
 
 interface ParseInfo {
   rawError: string;
   startIndex: number;
   endIndex: number;
-  items: string[];
+  items: (string | number)[];
 }
 
 export interface ErrorInfoWithoutImprovedError {
@@ -51,60 +78,64 @@ export interface ErrorInfo extends ErrorInfoWithoutImprovedError {
 
 export interface ParseErrorsOpts {}
 
-export const parseErrors = (
-  message: string,
-): ErrorInfoWithoutImprovedError[] => {
+export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
   const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
-  (Object.keys(tsErrorMessages) as (keyof typeof tsErrorMessages)[]).forEach(
-    (newError) => {
-      const regex = toRegex(newError);
+  const keys = Object.keys(db);
 
-      const match = message.match(regex);
+  keys.forEach((newError) => {
+    const { regexLocal, regexGlobal, parameters } =
+      getDiagnosticMatcher(newError);
 
-      if (match) {
-        match.forEach((matchElem) => {
-          const startIndex = message.indexOf(matchElem);
-          const endIndex = startIndex ?? 0 + matchElem.length;
-          const key = `${startIndex}_${endIndex}`;
+    const match = message.match(regexGlobal);
 
-          const nonGlobalRegex = toNonGlobalRegex(newError);
+    if (match) {
+      match.forEach((matchElem) => {
+        const startIndex = message.indexOf(matchElem);
+        const endIndex = startIndex ?? 0 + matchElem.length;
+        const key = `${startIndex}_${endIndex}`;
 
-          let [, ...items] = matchElem.match(nonGlobalRegex)!;
+        const items = associateMatchedParameters(
+          parameters,
+          matchElem.match(regexLocal)?.slice(1) ?? [],
+        );
 
-          items = Array.from(new Set(items));
+        const errorObj: ErrorInfoWithoutImprovedError = {
+          code: db[newError].code,
+          error: newError,
+          parseInfo: {
+            rawError: matchElem,
+            startIndex,
+            endIndex,
+            items,
+          },
+        };
 
-          const errorObj: ErrorInfoWithoutImprovedError = {
-            code: tsErrorMessages[newError].code,
-            error: newError,
-            parseInfo: {
-              rawError: matchElem,
-              startIndex,
-              endIndex,
-              items,
-            },
-          };
+        if (errorMessageByKey[key]) {
+          const existingRule = errorMessageByKey[key];
 
-          if (errorMessageByKey[key]) {
-            const existingRule = errorMessageByKey[key];
-
-            /**
-             * If the new rule is longer than the existing rule,
-             * replace the existing rule with the new rule.
-             */
-            errorMessageByKey[key] =
-              newError.length > existingRule.error.length
-                ? errorObj
-                : existingRule;
-          } else {
-            errorMessageByKey[key] = errorObj;
-          }
-        });
-      }
-    },
-  );
+          /**
+           * If the new rule is longer than the existing rule,
+           * replace the existing rule with the new rule.
+           */
+          errorMessageByKey[key] =
+            newError.length > existingRule.error.length
+              ? errorObj
+              : existingRule;
+        } else {
+          errorMessageByKey[key] = errorObj;
+        }
+      });
+    }
+  });
 
   return Object.values(errorMessageByKey).sort(
     (a, b) => a.parseInfo.startIndex - b.parseInfo.startIndex,
   );
+};
+
+export const parseErrors = (
+  message: string,
+): ErrorInfoWithoutImprovedError[] => {
+  return parseErrorsWithDb(tsErrorMessages, message);
 };
