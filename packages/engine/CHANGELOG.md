@@ -1,5 +1,11 @@
 # @ts-error-messages/engine
 
+## 1.0.3
+
+### Patch Changes
+
+- [#83](https://github.com/mattpocock/ts-error-translator/pull/83) [`6c29b64`](https://github.com/mattpocock/ts-error-translator/commit/6c29b640de019b59fe8c780a8cf139724a6c3efc) Thanks [@eddyw](https://github.com/eddyw)! - Correctly match duplicated matched parameters
+
 ## 1.0.2
 
 ### Patch Changes
