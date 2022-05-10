@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.0
+
+### Minor Changes
+
+- [#86](https://github.com/mattpocock/ts-error-translator/pull/86) [`5749899`](https://github.com/mattpocock/ts-error-translator/commit/5749899febea95d7388029f217412ba26dad9207) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed whitespace from body-and-tldr display mode, making things more compact and easier to scan.
+
 ## 0.3.2
 
 ### Patch Changes
