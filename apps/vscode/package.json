@@ -43,7 +43,7 @@
       "properties": {
         "tsErrorTranslator.showFullTranslation": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Show the full translation of the error"
         },
         "tsErrorTranslator.showTLDRTranslation": {
