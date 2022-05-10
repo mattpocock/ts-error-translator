@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.1
+
+### Patch Changes
+
+- [`89e37ba`](https://github.com/mattpocock/ts-error-translator/commit/89e37ba4591fae85219311efe55db5f146af627e) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where the full translation showed by default
+
 ## 0.5.0
 
 ### Minor Changes
