@@ -5,7 +5,7 @@ import fm from 'front-matter';
 export const getImprovedMessageFromMarkdown = (
   dir: string,
   code: number,
-  items: string[],
+  items: (string | number)[],
 ) => {
   const file = path.join(dir, `${code}.md`);
 
@@ -27,11 +27,11 @@ export const getImprovedMessageFromMarkdown = (
 export const fillBodyAndExcerptWithItems = (
   body: string,
   excerpt: string,
-  items: string[],
+  items: (string | number)[],
 ) => {
   items.forEach((item, index) => {
     const bodyRegex = new RegExp(`\\\{${index}\\\}`, 'g');
-    body = body.replace(bodyRegex, item);
+    body = body.replace(bodyRegex, item.toString());
     const excerptRegex = new RegExp(`'\\\{${index}\\\}'`, 'g');
     excerpt = excerpt.replace(excerptRegex, '`' + item + '`');
   });
