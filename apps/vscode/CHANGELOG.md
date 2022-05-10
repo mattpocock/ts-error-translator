@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- [#89](https://github.com/mattpocock/ts-error-translator/pull/89) [`e14f25e`](https://github.com/mattpocock/ts-error-translator/commit/e14f25e44ee94216d5ff09a490f623c4dcfefb45) Thanks [@Princesseuh](https://github.com/Princesseuh)! - Add support for Astro files
+
 ## 0.4.0
 
 ### Minor Changes
