@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.2
+
+### Patch Changes
+
+- [`a274a70`](https://github.com/mattpocock/ts-error-translator/commit/a274a706dbe59c6e0a016c6b36d290f498c16525) Thanks [@mattpocock](https://github.com/mattpocock)! - More errors added
+
 ## 0.3.1
 
 ### Patch Changes
