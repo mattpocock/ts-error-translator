@@ -5,8 +5,8 @@
     "code": "1002"
   },
   "1003": {
-    "body": "This means that your syntax is wrong and the compiler can't tokenize your code properly.\n",
-    "excerpt": "Your code doesn't comply with the syntax rules of the TypeScript language",
+    "body": "You are using a keyword that expects to be followed by a **variable, type, interface, class, function,** or **property** name but none was provided in the location were I'm pointing at.\n\nThe following examples are invalid:\n\n```ts\nfunction () {}\ntype Foo = (typeof);\nNumber.;\n```\n\nProviding a valid name (identifier) in the location where I'm pointing at fixes the issue:\n\n```ts\nfunction bar() {}        // function name added after 'function'\ntype Foo = (typeof bar); // variable name added after 'typeof'\nNumber.MAX_SAFE_INTEGER; // property name added after '.'\n```\n",
+    "excerpt": "I was expecting a name but none was provided.",
     "code": "1003"
   },
   "1006": {
@@ -19,6 +19,16 @@
     "excerpt": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
   },
+  "1091": {
+    "body": "I don't know what to do with multiple variables:\n\n```ts\nfor (let var1, var2 in list){\n  // do stuff\n}\n```\n\nBut I'll be happy if you just use one:\n\n```ts\nfor (let property in list){\n  // do stuff\n}\n```\n",
+    "excerpt": "You can only create a single variable in a 'for...in' statement",
+    "code": "1091"
+  },
+  "1155": {
+    "body": "I don't expect `const` variables to ever change after they're created. \nTherefore, I don't think it makes sense to create one without an initial value.\n\nThis confuses me:\n\n```ts\nconst name: string;\n```\n\nBut this is cool:\n\n```ts\nconst name: string = \"Jared\";\n```\n\n",
+    "excerpt": "A `const` must be given a value when it's declared.",
+    "code": "1155"
+  },
   "1163": {
     "body": "To use yield you should turn your function into a generator by adding an asterisk (*) next to the function name. For instance:\n\n```ts\nconst squaredNum = function* (num: number) {\n   yield num * num;\n};\n```\n",
     "excerpt": "The `yield` keyword can only be used inside a generator function",
@@ -28,6 +38,11 @@
     "body": "- If you only use TypeScript to produce JavaScript code from TypeScript code you can set the compilerOptions.isolatedModules to false in tsconfig.json\n- For more information about 'isolatedModules' you can see [here](https://www.typescriptlang.org/tsconfig#isolatedModules)",
     "excerpt": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.",
     "code": "1208"
+  },
+  "1313": {
+    "body": "I don't know what to do with something like this:\n\n```ts\nif (;){\n  // do stuff\n}\n```\n\nBut it would make much more sense if you added a condition inside the parentheses:\n\n```ts\nif (name===\"Georgia\"){\n // do stuff\n}\n```\n",
+    "excerpt": "An if statement shouldn't be empty",
+    "code": "1313"
   },
   "2304": {
     "body": "I tried to find\n\n```\n{0}\n```\n\nin the document, but I couldn't see it anywhere. Are you sure you imported/declared it?\n",
@@ -84,6 +99,16 @@
     "excerpt": "You can't pass property '{0}' to object '{1}'.",
     "code": "2353"
   },
+  "2355": {
+    "body": "```ts\n// 👎\nconst fun = (): string => {\n  doSomething();\n  // We aren't returning a string! So this will result in an error.\n};\n```\n\n```js\n// ✅\nconst fun = (): string => {\n  doSomething();\n  return 'done';\n};\n```\n",
+    "excerpt": "You set the function return type but it is not returning anything.",
+    "code": "2355"
+  },
+  "2393": {
+    "body": "You should try renaming your function or if you want to implement different function signatures you can explore [Function Overloads](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads).\n",
+    "excerpt": "You've already declared a function with the same name.",
+    "code": "2393"
+  },
   "2414": {
     "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).",
     "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
@@ -94,10 +119,25 @@
     "excerpt": "'{0}' has already been declared - you can't declare it again.",
     "code": "2451"
   },
+  "2551": {
+    "body": "TODO\n",
+    "excerpt": "You're trying to access '{0}' on an object that doesn't contain it. Did you mean '{2}'?",
+    "code": "2551"
+  },
   "2552": {
     "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
     "excerpt": "You are trying to reference a function or variable which I can't find in the current scope.",
     "code": "2552"
+  },
+  "2554": {
+    "body": "TODO\n",
+    "excerpt": "The function you're trying to call needs {0} arguments, but you're passing {1}.",
+    "code": "2554"
+  },
+  "2571": {
+    "body": "You need to narrow down the type of the variable before accessing its properties or assigning it to a different typed variable. For example:\n\n```ts\nconst foo: unknown = \"bar\";\n\nif (typeof foo === \"string\") { // Now I know 'foo' is of type 'string',\n  const baz: string = foo;     // I can assign it to a typed variable\n  foo.toUpperCase();           // and access its properties\n}\n",
+    "excerpt": "I don't know what type this object is.",
+    "code": "2571"
   },
   "2590": {
     "body": "",
@@ -114,9 +154,14 @@
     "excerpt": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
     "code": "2741"
   },
+  "2749": {
+    "body": "You've passed in...\n\n```\n{0}\n```\n\n...into a slot where I'm expecting to see a type.\n",
+    "excerpt": "You're trying to use a JavaScript variable where you should be passing a type.",
+    "code": "2749"
+  },
   "2761": {
-    "body": "TODO\n",
-    "excerpt": "You can't use `new` on '{0}' - it doesn't look like it's possible to me.",
+    "body": "You cannot use the `new` keyword because type `{0}` is neither a class nor a function constructor. For example:\n\n```ts\ninterface Foo {\n  bar: string;\n}\nfunction test(MyFoo: Foo) {\n  const instance = new MyFoo(\"\");\n}\n```\n\nHere using the `new` keyword is a mistake because the type of `myFoo` parameter is `Foo` which describes an object type. The following examples are valid cases I'd accept:\n\n```ts\nclass Foo { }\ninterface Bar {\n  new(): Record<string, any>\n}\n\nfunction test(MyFoo: typeof Foo, MyBar: Bar) {\n  const instanceOfFoo = new MyFoo()\n  const instanceOfBar = new MyBar()\n}\n```\n",
+    "excerpt": "Type '{0}' is not a class.",
     "code": "2761"
   },
   "5075": {
@@ -124,14 +169,39 @@
     "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
     "code": "5075"
   },
+  "6142": {
+    "body": "TODO\n",
+    "excerpt": "You can't import `.jsx` or `.tsx` files until you set `jsx` in your `tsconfig.json`.",
+    "code": "6142"
+  },
   "7006": {
     "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
     "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
     "code": "7006"
   },
+  "7057": {
+    "body": "You can do one of two following options:\n\n1. (_Recommended_) Either cast the `yield` value using `as`, or strictly declare the type of the variable\n\n```ts\nfunction* watchTasks() {\n  const taskChannel: ActionChannelEffect = yield actionChannel([\n    //no longer has to infer\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n\n2. Specify the return type of your generator function for **all** contained `yield` steps\n\n```ts\nfunction* watchTasks(): Generator<ActionChannelEffect, void> {\n  const taskChannel = yield actionChannel([\n    //can now infer here safely\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n",
+    "excerpt": "I don't know enough about your generator function's return type to safely infer here.",
+    "code": "7057"
+  },
+  "8016": {
+    "body": "Type assertions such as `myVar as string` are a TypeScript-only language feature.\n\nIn order to use type assertions, you should convert your JavaScript file to TypeScript.\n",
+    "excerpt": "You can't use type assertions because this isn't a TypeScript file",
+    "code": "8016"
+  },
+  "17004": {
+    "body": "TODO\n",
+    "excerpt": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.",
+    "code": "17004"
+  },
   "18004": {
     "body": "",
     "excerpt": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
     "code": "18004"
+  },
+  "95050": {
+    "body": "Some of your code is stranded with no way of being executed.\n\nFor example:\n\n```ts\nfunction printAndReturn(text: string){\n  return; \n  console.log(text);\n}\n```\n\nThis function will stop when it returns on the first line, so text will never be printed.\n\n\n",
+    "excerpt": "I've spotted a bit of code that will never be run.",
+    "code": "95050"
   }
 }

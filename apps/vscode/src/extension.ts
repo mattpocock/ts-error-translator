@@ -75,6 +75,12 @@ export function activate(context: vscode.ExtensionContext) {
       },
       hoverProvider,
     ),
+    vscode.languages.registerHoverProvider(
+      {
+        language: 'astro',
+      },
+      hoverProvider,
+    ),
   );
 
   context.subscriptions.push(

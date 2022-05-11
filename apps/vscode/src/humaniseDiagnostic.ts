@@ -69,11 +69,9 @@ export const humaniseDiagnostic = (
         case 'body-and-tldr':
           {
             errorBodies.push(
-              linkToTranslation,
-              `### TL;DR`,
-              excerpt,
-              `### Full Translation`,
+              `**Translation**: ${excerpt}`,
               body,
+              linkToTranslation,
             );
           }
           break;

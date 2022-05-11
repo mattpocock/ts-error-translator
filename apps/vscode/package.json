@@ -4,7 +4,7 @@
   "description": "TypeScript errors, translated for humans",
   "license": "MIT",
   "author": "Matt Pocock",
-  "version": "0.3.1",
+  "version": "0.5.1",
   "private": true,
   "engines": {
     "vscode": "^1.50.0"
@@ -28,7 +28,8 @@
     "onLanguage:typescript",
     "onLanguage:typescriptreact",
     "onLanguage:vue",
-    "onLanguage:svelte"
+    "onLanguage:svelte",
+    "onLanguage:astro"
   ],
   "main": "./out/extension.js",
   "browser": "./out/extension.js",
@@ -42,7 +43,7 @@
       "properties": {
         "tsErrorTranslator.showFullTranslation": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Show the full translation of the error"
         },
         "tsErrorTranslator.showTLDRTranslation": {
