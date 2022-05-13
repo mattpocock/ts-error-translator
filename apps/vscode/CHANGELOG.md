@@ -1,5 +1,35 @@
 # Change Log
 
+## 0.5.1
+
+### Patch Changes
+
+- [`89e37ba`](https://github.com/mattpocock/ts-error-translator/commit/89e37ba4591fae85219311efe55db5f146af627e) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where the full translation showed by default
+
+## 0.5.0
+
+### Minor Changes
+
+- [#89](https://github.com/mattpocock/ts-error-translator/pull/89) [`e14f25e`](https://github.com/mattpocock/ts-error-translator/commit/e14f25e44ee94216d5ff09a490f623c4dcfefb45) Thanks [@Princesseuh](https://github.com/Princesseuh)! - Add support for Astro files
+
+## 0.4.0
+
+### Minor Changes
+
+- [#86](https://github.com/mattpocock/ts-error-translator/pull/86) [`5749899`](https://github.com/mattpocock/ts-error-translator/commit/5749899febea95d7388029f217412ba26dad9207) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed whitespace from body-and-tldr display mode, making things more compact and easier to scan.
+
+## 0.3.2
+
+### Patch Changes
+
+- [`a274a70`](https://github.com/mattpocock/ts-error-translator/commit/a274a706dbe59c6e0a016c6b36d290f498c16525) Thanks [@mattpocock](https://github.com/mattpocock)! - More errors added
+
+## 0.3.1
+
+### Patch Changes
+
+- [#83](https://github.com/mattpocock/ts-error-translator/pull/83) [`6c29b64`](https://github.com/mattpocock/ts-error-translator/commit/6c29b640de019b59fe8c780a8cf139724a6c3efc) Thanks [@eddyw](https://github.com/eddyw)! - Correctly match duplicated matched parameters
+
 ## 0.3.0
 
 ### Minor Changes
