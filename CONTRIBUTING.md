@@ -75,3 +75,27 @@ Bad:
 Good:
 
 `'A' can't be passed to a slot expecting 'B'.`
+
+## Contributing to a new language support
+
+In order to add a new language you’ll have to Identify the language information such as:
+
+- Flag
+- Language name
+- [Language ID ([UTS #35: Unicode Locale Data Markup Language](https://www.unicode.org/reports/tr35/tr35-59/tr35.html#Identifiers))
+
+Add the ID for the new language you’re going to add at the config `apps/web/next.config.js`
+
+And place the information needed at `apps/web/src/constants/languages.ts` as well.
+
+### UI Translations
+
+Once you added the language then you can add the UI translations at `apps/web/src/locales` following the same structure as the existing ones, also be sure to call the translations file with the ID you used for the language object.
+
+For the translations to be applied you’ll have to import the file at `apps/web/src/utils/translations.ts` and make the function handle the new language.
+
+### Typescript error translations
+
+Now that you translated the UI, you can also add a couple of translations to the Typescript error translated errors.
+
+First step is create a new folder under the errors folder at `packages/engine/errors` and add a file with the error code as name, you can also follow the [Translation style guide](#translation-style-guide) to do this.

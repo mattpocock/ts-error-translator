@@ -1,4 +1,6 @@
-const locale = {
+import { Translations } from './types';
+
+const locale: Translations = {
   subtitle: 'Errores de TypeScript en Español',
   title: 'Traductor de errores de TypeScript',
   submitButton: 'Consulta tu error',
