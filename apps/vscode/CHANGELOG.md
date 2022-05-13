@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.2
+
+### Patch Changes
+
+- [`bd4b32b`](https://github.com/mattpocock/ts-error-translator/commit/bd4b32b15796a453d4e75912678b7892b74585f9) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where {0} (without quotes) in excerpt was not translated
+
 ## 0.5.1
 
 ### Patch Changes
