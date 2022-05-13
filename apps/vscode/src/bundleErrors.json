@@ -19,10 +19,20 @@
     "excerpt": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
   },
+  "1014": {
+    "body": "Rest parameters tell me to group all remaining variables together, like this:\n\n```ts\nfunction doStuff(fruit: string, ...numbers: number[]){\n\t// stuff\n}\n\ndoStuff('banana', 1, 2, 3)\n```\n\nI get confused if they're not at the very end of the list, because I won't know how many to group together. I'll find this confusing:\n\n```ts\nfunction doStuff(...numbers: number[], fruit: string){\n  // stuff\n}\n\ndoStuff(1, 2, 3, 'banana')\n```\n",
+    "excerpt": "A parameter in a function that starts with `...` must be the last one in the list.",
+    "code": "1014"
+  },
   "1091": {
     "body": "I don't know what to do with multiple variables:\n\n```ts\nfor (let var1, var2 in list){\n  // do stuff\n}\n```\n\nBut I'll be happy if you just use one:\n\n```ts\nfor (let property in list){\n  // do stuff\n}\n```\n",
     "excerpt": "You can only create a single variable in a 'for...in' statement",
     "code": "1091"
+  },
+  "1117": {
+    "body": "I expect objects to have unique property names.\n\nBecause this object has a duplicate property, I don't know how to deal with it:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: false,\n  delicious: true,\n};\n```\n\nI'll be happy again if you remove the duplicate like so:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: true,\n};\n```\n",
+    "excerpt": "You can't add the same property multiple times to an object.",
+    "code": "1117"
   },
   "1155": {
     "body": "I don't expect `const` variables to ever change after they're created. \nTherefore, I don't think it makes sense to create one without an initial value.\n\nThis confuses me:\n\n```ts\nconst name: string;\n```\n\nBut this is cool:\n\n```ts\nconst name: string = \"Jared\";\n```\n\n",
@@ -69,6 +79,11 @@
     "excerpt": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
     "code": "2324"
   },
+  "2326": {
+    "body": "You are assigning to a variable whose type `Foo` matches type `Bar` but they both have a property `{0}` whose type is incompatible with each other. For example:\n\n```ts\ninterface Foo {\n  {0}: string\n}\ninterface Bar {\n  {0}: number\n}\nconst foo: Foo = { {0}: \"\" }\nconst bar: Bar = foo\n```\n\nTypes `Foo` and `Bar` are structurally equal because they have the same properties. However, they are incompatible because the type of property `{0}` is `string` in `Foo` and `number` in `Bar`.\n",
+    "excerpt": "Two similar types have a property '{0}' which is different, making them incompatible.",
+    "code": "2326"
+  },
   "2339": {
     "body": "TODO\n",
     "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
@@ -110,7 +125,7 @@
     "code": "2393"
   },
   "2414": {
-    "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).",
+    "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n```\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).\n",
     "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
     "code": "2414"
   },
@@ -168,6 +183,11 @@
     "body": "TODO\n",
     "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
     "code": "5075"
+  },
+  "6133": {
+    "body": "",
+    "excerpt": "I noticed that '{0}' has been declared, but it's never used in the code.",
+    "code": "6133"
   },
   "6142": {
     "body": "TODO\n",

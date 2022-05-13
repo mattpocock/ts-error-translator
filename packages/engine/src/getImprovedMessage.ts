@@ -32,7 +32,7 @@ export const fillBodyAndExcerptWithItems = (
   items.forEach((item, index) => {
     const bodyRegex = new RegExp(`\\\{${index}\\\}`, 'g');
     body = body.replace(bodyRegex, item.toString());
-    const excerptRegex = new RegExp(`'\\\{${index}\\\}'`, 'g');
+    const excerptRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
     excerpt = excerpt.replace(excerptRegex, '`' + item + '`');
   });
 

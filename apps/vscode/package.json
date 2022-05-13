@@ -55,13 +55,14 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
-    "compile": "yarn bundle-errors && esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
+    "vscode:build": "esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
+    "vscode:package": "vsce package --yarn",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "tsc",
     "test:e2e": "node ./out/test/runTest.js",
-    "publish": "npx vsce publish --yarn"
+    "publish:vsce": "(vsce publish $(find . -iname *.vsix) || true)",
+    "publish:ovsx": "(ovsx publish $(find . -iname *.vsix) || true)"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
