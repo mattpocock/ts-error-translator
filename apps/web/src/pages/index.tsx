@@ -29,20 +29,15 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const firstExcerpt = props.errors?.[0]?.improvedError?.excerpt;
   const firstErrorCode = props.errors?.[0]?.code;
 
-  const title = `TypeScript Error Translator${
-    firstErrorCode ? ` | Code #${firstErrorCode}` : ''
+  const title = `${t.pageTitle}${
+    firstErrorCode ? ` | ${t.code} #${firstErrorCode}` : ''
   }`;
 
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta
-          name="description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
-        />
+        <meta name="description" content={firstExcerpt || t.metaDescription} />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -51,9 +46,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <meta property="og:title" content={title} />
         <meta
           property="og:description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
+          content={firstExcerpt || t.metaDescription}
         />
         <meta
           property="og:image"
@@ -68,9 +61,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <meta name="twitter:title" content={title} />
         <meta
           name="twitter:description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
+          content={firstExcerpt || t.metaDescription}
         />
         <meta property="twitter:domain" content="vercel.app" />
         <meta
@@ -118,7 +109,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <div className="max-w-2xl mx-auto space-y-16 text-xl leading-relaxed text-gray-800">
           {props.errors?.map((error, index, array) => {
             return (
-              <div>
+              <div key={error.code}>
                 <div className="prose prose-code:before:hidden prose-code:after:hidden">
                   <span className="inline-block px-2 py-1 mb-2 text-xs text-indigo-900 bg-indigo-100 rounded">
                     #{error.code}
@@ -179,11 +170,6 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
   const t = getTranslations(locale);
   const isEnglish = locale === 'en' || locale === 'en-US';
 
-  console.log(
-    locale,
-    `../../packages/engine/errors/${isEnglish ? '' : locale}`,
-  );
-
   if (query.error) {
     const decodedError = decompressFromEncodedURIComponent(query.error)!;
     return {
@@ -191,21 +177,17 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
         errors: parseErrors(decodedError)
           .reverse()
           .map(
-            (error: any): ErrorInfo => {
-              console.log(error);
-
-              return {
-                ...error,
-                improvedError: getImprovedMessageFromMarkdown(
-                  path.resolve(
-                    process.cwd(),
-                    `../../packages/engine/errors/${isEnglish ? '' : locale}`,
-                  ),
-                  error.code,
-                  error.parseInfo.items,
+            (error: any): ErrorInfo => ({
+              ...error,
+              improvedError: getImprovedMessageFromMarkdown(
+                path.resolve(
+                  process.cwd(),
+                  `../../packages/engine/errors/${locale}`,
                 ),
-              };
-            },
+                error.code,
+                error.parseInfo.items,
+              ),
+            }),
           ),
         error: decodedError,
       },

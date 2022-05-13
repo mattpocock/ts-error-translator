@@ -3,7 +3,7 @@ import * as path from 'path';
 import fm from 'front-matter';
 
 const bundleErrors = async () => {
-  const dir = path.resolve(__dirname, '../../../packages/engine/errors');
+  const dir = path.resolve(__dirname, '../../../packages/engine/errors/en');
 
   const allFiles = (await fs.readdir(dir)).map((file) => ({
     fullPath: path.resolve(dir, file),
@@ -25,7 +25,7 @@ const bundleErrors = async () => {
         excerpt,
         code: file.code,
       };
-    } catch (e: any) {
+    } catch (e) {
       throw new Error(`Error at ${file.code}.md: ${e.message}`);
     }
   }
