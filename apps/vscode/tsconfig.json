@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "ES2020",
-		"outDir": "out",
+		"outDir": "src/out",
 		"lib": [
 			"ES2020"
 		],
@@ -12,7 +12,8 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"useUnknownInCatchVariables": false,
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
 		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
