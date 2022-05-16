@@ -9,6 +9,7 @@ import {
 } from 'lz-string';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as path from 'path';
 import React from 'react';
@@ -67,6 +68,17 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         />
       </Head>
       <div className="px-6 py-6 pt-0 pb-20">
+        <div className="fixed w-24 overflow-hidden inline-block right-0 top-0">
+          <div className=" h-36 from-purple-500 to-indigo-600 bg-gradient-to-r -rotate-45 transform origin-top-left" />
+          <a
+            href="https://github.com/mattpocock/ts-error-translator"
+            target="_blank"
+            rel="noreferrer"
+            className="block absolute w-10 h-10 top-2 right-2"
+          >
+            <Image src="/github-icon.svg" alt="GitHub" layout="fill" />
+          </a>
+        </div>
         <div className="py-20">
           <h2 className="mb-8 text-xl font-medium tracking-tight text-center text-indigo-600">
             TypeScript errors in Plain English
