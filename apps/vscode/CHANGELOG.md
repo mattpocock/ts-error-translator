@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- [#97](https://github.com/mattpocock/ts-error-translator/pull/97) [`5381d03`](https://github.com/mattpocock/ts-error-translator/commit/5381d0340b35d0fb43b21dc992cca98bffa9e4fb) Thanks [@mattpocock](https://github.com/mattpocock)! - Allowed the ts extension to also run in js and jsx files
+
 ## 0.5.2
 
 ### Patch Changes
