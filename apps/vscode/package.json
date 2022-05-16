@@ -27,6 +27,8 @@
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
     "onLanguage:vue",
     "onLanguage:svelte",
     "onLanguage:astro"

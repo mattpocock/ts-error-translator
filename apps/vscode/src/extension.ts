@@ -9,6 +9,16 @@ const defaultOptions: Options = {
 
 let options = defaultOptions;
 
+const languages = [
+  'typescript',
+  'typescriptreact',
+  'javascript',
+  'javascriptreact',
+  'vue',
+  'svelte',
+  'astro',
+];
+
 export function activate(context: vscode.ExtensionContext) {
   const uriStore: Record<
     vscode.Uri['path'],
@@ -51,36 +61,14 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   context.subscriptions.push(
-    vscode.languages.registerHoverProvider(
-      {
-        language: 'typescript',
-      },
-      hoverProvider,
-    ),
-    vscode.languages.registerHoverProvider(
-      {
-        language: 'typescriptreact',
-      },
-      hoverProvider,
-    ),
-    vscode.languages.registerHoverProvider(
-      {
-        language: 'vue',
-      },
-      hoverProvider,
-    ),
-    vscode.languages.registerHoverProvider(
-      {
-        language: 'svelte',
-      },
-      hoverProvider,
-    ),
-    vscode.languages.registerHoverProvider(
-      {
-        language: 'astro',
-      },
-      hoverProvider,
-    ),
+    ...languages.map((language) => {
+      return vscode.languages.registerHoverProvider(
+        {
+          language,
+        },
+        hoverProvider,
+      );
+    }),
   );
 
   context.subscriptions.push(
