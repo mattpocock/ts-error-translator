@@ -9,6 +9,7 @@ import {
 } from 'lz-string';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as path from 'path';
 import React from 'react';
@@ -24,6 +25,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const title = `TypeScript Error Translator${
     firstErrorCode ? ` | Code #${firstErrorCode}` : ''
   }`;
+  const description = firstExcerpt || 'Translate TypeScript Errors to plain English.';
 
   return (
     <>
@@ -31,9 +33,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <title>{title}</title>
         <meta
           name="description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
+          content={description}
         />
 
         <meta property="og:type" content="website" />
@@ -44,9 +44,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <meta property="og:title" content={title} />
         <meta
           property="og:description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
+          content={description}
         />
         <meta
           property="og:image"
@@ -61,9 +59,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <meta name="twitter:title" content={title} />
         <meta
           name="twitter:description"
-          content={
-            firstExcerpt || `Translate TypeScript Errors to plain English`
-          }
+          content={description}
         />
         <meta property="twitter:domain" content="vercel.app" />
         <meta
@@ -72,6 +68,17 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         />
       </Head>
       <div className="px-6 py-6 pt-0 pb-20">
+        <div className="fixed w-24 overflow-hidden inline-block right-0 top-0">
+          <div className=" h-36 from-purple-500 to-indigo-600 bg-gradient-to-r -rotate-45 transform origin-top-left" />
+          <a
+            href="https://github.com/mattpocock/ts-error-translator"
+            target="_blank"
+            rel="noreferrer"
+            className="block absolute w-10 h-10 top-2 right-2"
+          >
+            <Image src="/github-icon.svg" alt="GitHub" layout="fill" />
+          </a>
+        </div>
         <div className="py-20">
           <h2 className="mb-8 text-xl font-medium tracking-tight text-center text-indigo-600">
             TypeScript errors in Plain English
@@ -92,11 +99,11 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
             }}
           >
             <textarea
-              className="block w-full h-32 max-w-lg px-4 py-3 mb-6 font-mono rounded resize-y bg-indigo-50 focus:outline-none focus:ring-4 ring-yellow-400"
+              className="block w-full h-36 max-w-lg px-4 py-3 mb-6 font-mono rounded resize-y bg-indigo-50 focus:outline-none focus:ring-4 ring-yellow-400"
               name="error"
               autoFocus
               defaultValue={props.error}
-            ></textarea>
+            />
             <div>
               <button className="px-6 py-2 font-semibold tracking-tight text-white rounded from-purple-500 to-indigo-600 bg-gradient-to-r focus:outline-none focus:ring-4 ring-yellow-400">
                 Submit your Error
