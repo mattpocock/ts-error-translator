@@ -3,32 +3,26 @@
 // Hover to view descriptions of existing attributes.
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "Run Extension",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/apps/vscode"
-			],
-			"outFiles": [
-				"${workspaceFolder}/apps/vscode/out/**/*.js"
-			],
-			"preLaunchTask": "npm: extension:build"
-		},
-		{
-			"name": "Extension Tests",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/apps/vscode",
-				"--extensionTestsPath=${workspaceFolder}/apps/vscode/out/test/suite/index"
-			],
-			"outFiles": [
-				"${workspaceFolder}/apps/vscode/out/test/**/*.js"
-			],
-			"preLaunchTask": "npm: extension:build"
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/apps/vscode"],
+      "outFiles": ["${workspaceFolder}/apps/vscode/out/**/*.js"],
+      "preLaunchTask": "npm: extension:build"
+    },
+    {
+      "name": "Extension Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/apps/vscode",
+        "--extensionTestsPath=${workspaceFolder}/apps/vscode/out/test/suite/index"
+      ],
+      "outFiles": ["${workspaceFolder}/apps/vscode/out/test/**/*.js"],
+      "preLaunchTask": "npm: extension:build"
+    }
+  ]
 }
