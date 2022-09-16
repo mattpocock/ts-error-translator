@@ -108,7 +108,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         <div className="max-w-2xl mx-auto space-y-16 text-xl leading-relaxed text-gray-800">
           {props.errors?.map((error, index, array) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="prose prose-code:before:hidden prose-code:after:hidden">
                   {/* <span className="inline-block px-2 py-1 mb-2 text-xs text-indigo-900 bg-indigo-100 rounded">
                   #{error.code}
