@@ -13,6 +13,7 @@
     "extension:build": "yarn workspace ts-error-translator compile",
     "format": "prettier --write .",
     "prepare": "husky install",
+    "lint-staged": "lint-staged",
     "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js"
   },
   "devDependencies": {
