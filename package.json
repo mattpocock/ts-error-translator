@@ -8,16 +8,17 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "translate": "ts-node -T scripts/translate.ts",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint && prettier --check .",
     "test": "turbo run test",
     "extension:build": "yarn workspace ts-error-translator compile",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write .",
     "prepare": "husky install",
     "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js"
   },
   "devDependencies": {
-    "husky": ">=6",
-    "lint-staged": ">=10",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "micromatch": "^4.0.5",
     "prettier": "^2.5.1",
     "ts-node": "^10.7.0",
     "turbo": "^1.2.6"
