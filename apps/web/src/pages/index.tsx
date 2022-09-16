@@ -18,8 +18,8 @@ import { z } from 'zod';
 export default function Web(props: { error: string; errors: ErrorInfo[] }) {
   const router = useRouter();
 
-  const firstExcerpt = props.errors?.[0]?.improvedError?.excerpt;
-  const firstErrorCode = props.errors?.[0]?.code;
+  const firstExcerpt = props.errors[0]?.improvedError?.excerpt;
+  const firstErrorCode = props.errors[0]?.code;
 
   const title = `TypeScript Error Translator${
     firstErrorCode ? ` | Code #${firstErrorCode}` : ''
@@ -106,7 +106,7 @@ export default function Web(props: { error: string; errors: ErrorInfo[] }) {
         </div>
 
         <div className="max-w-2xl mx-auto space-y-16 text-xl leading-relaxed text-gray-800">
-          {props.errors?.map((error, index, array) => {
+          {props.errors.map((error, index, array) => {
             return (
               <div key={index}>
                 <div className="prose prose-code:before:hidden prose-code:after:hidden">
