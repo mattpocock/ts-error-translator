@@ -1,0 +1,23 @@
+name: New TypeScript Error
+description: Report a TypeScript error message that we don't currently understand
+labels: [Unknown Error]
+body:
+  - type: textarea
+    id: typescript_error
+    attributes:
+      label: Error message
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: typescript_version
+    attributes:
+      label: TypeScript version
+    validations:
+      required: true
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional info
+    validations:
+      required: false
