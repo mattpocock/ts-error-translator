@@ -15,26 +15,30 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { z } from 'zod';
 
-type Result = { type: 'none' } | {
-  type: 'errors',
-  errors: ErrorInfo[]
-}
+type Result =
+  | { type: 'none' }
+  | {
+      type: 'errors';
+      errors: ErrorInfo[];
+    };
 
 type Props = {
-  result: Result,
-  error: string,
-}
+  result: Result;
+  error: string;
+};
 
 export default function Web(props: Props) {
   const router = useRouter();
   const [inputContainsText, setInputContainsText] = useState(!!props.error);
 
-  const firstError = props.result.type === 'errors' ? props.result.errors[0] ?? null : null;
+  const firstError =
+    props.result.type === 'errors' ? props.result.errors[0] ?? null : null;
   const firstExcerpt = firstError?.improvedError?.excerpt ?? null;
   const firstErrorCode = firstError?.code ?? null;
 
-  const title = `TypeScript Error Translator${firstErrorCode ? ` | Code #${firstErrorCode}` : ''
-    }`;
+  const title = `TypeScript Error Translator${
+    firstErrorCode ? ` | Code #${firstErrorCode}` : ''
+  }`;
 
   return (
     <>
@@ -107,11 +111,13 @@ export default function Web(props: Props) {
               name="error"
               autoFocus
               defaultValue={props.error}
-              onChange={(e) => setInputContainsText(!!e.target.value)
-              }
+              onChange={(e) => setInputContainsText(!!e.target.value)}
             ></textarea>
             <div>
-              <button disabled={!inputContainsText} className="px-6 py-2 font-semibold tracking-tight text-white rounded from-purple-500 to-indigo-600 bg-gradient-to-r focus:outline-none focus:ring-4 ring-yellow-400 disabled:bg-slate-300 disabled:bg-none disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none">
+              <button
+                disabled={!inputContainsText}
+                className="px-6 py-2 font-semibold tracking-tight text-white rounded from-purple-500 to-indigo-600 bg-gradient-to-r focus:outline-none focus:ring-4 ring-yellow-400 disabled:bg-slate-300 disabled:bg-none disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+              >
                 Submit your Error
               </button>
             </div>
@@ -140,7 +146,9 @@ export default function Web(props: Props) {
                           </ReactMarkdown>
                         </div>
                         <h2>Explanation</h2>
-                        <ReactMarkdown>{error.improvedError?.body}</ReactMarkdown>
+                        <ReactMarkdown>
+                          {error.improvedError?.body}
+                        </ReactMarkdown>
                       </>
                     )}
                     {!error.improvedError && (
@@ -166,6 +174,19 @@ export default function Web(props: Props) {
                 </div>
               );
             })}
+            {props.result.errors.length === 0 && (
+              <>
+                <div className="prose prose-code:before:hidden prose-code:after:hidden">
+                  <h1>Unknown Error</h1>
+                  <p>We don&apos;t understand that error yet.</p>
+                  <p>
+                    <a href={`https://github.com/mattpocock/ts-error-translator/issues/new?template=new_typescript_error.md&typescript_error=${encodeURIComponent(props.error)}`} target="_blank" rel="noreferrer noopener">
+                      Please let us know by opening an issue.
+                    </a>
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -177,14 +198,17 @@ const Query = z.object({
   error: z.string().optional(),
 });
 
-export const getServerSideProps: GetServerSideProps<Props> = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext,
+) => {
   const query = Query.parse(ctx.query);
   if (query.error) {
     const decodedError = decompressFromEncodedURIComponent(query.error)!;
     return {
       props: {
         result: {
-          type: 'errors', errors: parseErrors(decodedError)
+          type: 'errors',
+          errors: parseErrors(decodedError)
             .reverse()
             .map((error): ErrorInfo => {
               return {
@@ -195,7 +219,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx: GetServ
                   error.parseInfo.items,
                 ),
               };
-            })
+            }),
         },
         error: decodedError,
       },
