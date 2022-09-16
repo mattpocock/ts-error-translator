@@ -165,6 +165,12 @@ describe('parseErrors', () => {
 
     expect(result[0].parseInfo.items).toEqual([]);
   });
+
+  it('Should return an empty array when there are no known errors', () => {
+    const errors = parseErrors('');
+
+    expect(errors).toHaveLength(0);
+  });
 });
 
 describe('fillBodyAndExcerptWithItems', () => {
