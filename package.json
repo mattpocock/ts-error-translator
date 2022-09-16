@@ -23,9 +23,6 @@
     "ts-node": "^10.7.0",
     "turbo": "^1.2.6"
   },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,json}": "prettier --write"
-  },
   "prettier": {
     "arrowParens": "always",
     "printWidth": 80,
