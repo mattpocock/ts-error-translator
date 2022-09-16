@@ -180,8 +180,8 @@ export default function Web(props: Props) {
                   <h1>Unknown Error</h1>
                   <p>We don&apos;t understand that error yet.</p>
                   <p>
-                    <a href={`https://github.com/mattpocock/ts-error-translator/issues/new?template=new_typescript_error.md&typescript_error=${encodeURIComponent(props.error)}`} target="_blank" rel="noreferrer noopener">
-                      Please let us know by opening an issue.
+                    <a href={`https://github.com/mattpocock/ts-error-translator/issues/new?template=new_typescript_error.yml&typescript_error=${encodeURIComponent(props.error)}`} target="_blank" rel="noreferrer noopener">
+                      Please let us know by opening an issue
                     </a>
                   </p>
                 </div>
