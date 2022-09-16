@@ -155,7 +155,7 @@ export default function Web(props: Props) {
                           <a
                             href="https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md"
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noreferrer noopener"
                           >
                             Add a translation
                           </a>
