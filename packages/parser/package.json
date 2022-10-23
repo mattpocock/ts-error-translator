@@ -1,0 +1,25 @@
+{
+  "name": "@ts-error-messages/parser",
+  "version": "1.0.3",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "dev": "vitest -u"
+  },
+  "dependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/parser": "^7.19.1",
+    "@babel/traverse": "^7.19.1",
+    "@babel/types": "^7.19.0",
+    "@types/babel__traverse": "^7.18.1",
+    "zod": "^3.19.1"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.3",
+    "vitest": "^0.10.0"
+  }
+}

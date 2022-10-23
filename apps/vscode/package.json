@@ -60,13 +60,19 @@
     "vscode:build": "esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
     "vscode:package": "npx vsce package --yarn",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "pnpm run compile && pnpm run lint",
     "lint": "tsc",
     "test:e2e": "node ./out/test/runTest.js",
     "publish:vsce": "(npx vsce publish $(find . -iname *.vsix) || true)",
     "publish:ovsx": "(npx ovsx publish $(find . -iname *.vsix) || true)"
   },
+  "dependencies": {
+    "@types/lz-string": "^1.3.34",
+    "front-matter": "^4.0.2",
+    "lz-string": "^1.4.4"
+  },
   "devDependencies": {
+    "@ts-error-messages/engine": "workspace:*",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "14.x",
@@ -74,12 +80,12 @@
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "@vscode/test-electron": "^2.1.3",
-    "@ts-error-messages/engine": "1.0.3",
     "esbuild": "^0.14.38",
     "esbuild-register": "^3.3.2",
     "eslint": "^8.11.0",
     "glob": "^7.2.0",
     "mocha": "^9.2.2",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "@ts-error-messages/parser": "workspace:*"
   }
 }
