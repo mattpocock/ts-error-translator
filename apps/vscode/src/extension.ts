@@ -1,4 +1,9 @@
-import { getTipsFromFile, Tip } from '@ts-error-messages/parser';
+import {
+  getTipsFromFile,
+  Tip,
+  TipInfo,
+  tipInfo,
+} from '@ts-error-messages/parser';
 import * as vscode from 'vscode';
 import { initDiagnostics } from './initDiagnostics';
 
@@ -8,47 +13,6 @@ const languages = [
   'javascript',
   'javascriptreact',
 ];
-
-const tipInfo: Record<
-  Tip['type'],
-  {
-    message: string;
-    name: string;
-  }
-> = {
-  'function-return-type': {
-    name: 'Function return type',
-    message: `This is a function return type. It tells the function what type it should return.`,
-  },
-  'interface-declaration': {
-    name: 'Interface declaration',
-    message: `This is an interface declaration. It's like a type alias, but it can be extended.`,
-  },
-  'optional-object-property': {
-    name: 'Optional Object Property',
-    message: `The question mark next to this object property means that it's optional - it doesn't need to be specified on this object.`,
-  },
-  'readonly-object-property': {
-    name: 'Readonly Object Property',
-    message: `The readonly keyword means that this property can't be changed after it's been set.`,
-  },
-  'type-alias-declaration': {
-    name: 'Type Keyword',
-    message: `This is a type alias. It's like an interface, but it can't be extended - and it can represent things that interfaces can't.`,
-  },
-  'variable-type-annotation': {
-    name: 'Variable type annotation',
-    message: `This annotation tells the variable what type it should be.`,
-  },
-  'conditional-type': {
-    name: 'Conditional type',
-    message: `This is a conditional type. It's a kind of if-else logic in TypeScript, but at the type level.`,
-  },
-  'nested-conditional-type': {
-    name: 'Nested conditional type',
-    message: `Conditional types can be nested in TypeScript!`,
-  },
-};
 
 const tips = Object.keys(tipInfo);
 
@@ -68,8 +32,21 @@ export const getRangeFromSourceLocation = (location: {
   );
 };
 
-export function activate(context: vscode.ExtensionContext) {
+const getHiddenTips = (): string[] => {
+  const config = vscode.workspace.getConfiguration('tsErrorTranslator');
+  return config.get('hiddenTips') || [];
+};
+
+let webview: vscode.WebviewPanel | undefined = undefined;
+
+export async function activate(context: vscode.ExtensionContext) {
   initDiagnostics(context);
+
+  let ignoredTips = new Set<string>(getHiddenTips());
+
+  const updateHiddenTips = () => {
+    ignoredTips = new Set(getHiddenTips());
+  };
 
   const helperDiagnostics =
     vscode.languages.createDiagnosticCollection('helpers');
@@ -80,15 +57,59 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.commands.registerCommand(
         `ts-error-translator.dont-show-again.${tip}`,
         async () => {
-          const config = vscode.workspace.getConfiguration(
-            `tsErrorTranslator.dontShowAgain`,
-          );
-          vscode.window.showInformationMessage(`${tip} won't be shown again!`);
+          const humanReadableTip: string | undefined =
+            tipInfo[tip as keyof typeof tipInfo]?.name;
+
+          if (!humanReadableTip) {
+            return;
+          }
+
+          const config = vscode.workspace.getConfiguration('tsErrorTranslator');
+
+          ignoredTips.add(tip);
+
           await config.update(
-            tip.replace(new RegExp('-', 'g'), ''),
-            true,
+            'hiddenTips',
+            Array.from(ignoredTips),
             vscode.ConfigurationTarget.Global,
           );
+        },
+      ),
+    );
+
+    context.subscriptions.push(
+      vscode.commands.registerCommand(
+        `ts-error-translator.show.${tip}`,
+        async () => {
+          const humanReadableTip:
+            | { name: string; message?: string }
+            | undefined = tipInfo[tip as keyof typeof tipInfo];
+
+          if (!humanReadableTip) {
+            return;
+          }
+
+          if (!webview) {
+            webview = vscode.window.createWebviewPanel(
+              'ts-error-translator',
+              'TS Error Translator',
+              vscode.ViewColumn.Beside,
+            );
+
+            context.subscriptions.push(
+              webview.onDidDispose(() => {
+                webview = undefined;
+              }),
+            );
+          }
+
+          webview.reveal();
+
+          webview.title = humanReadableTip.name;
+
+          webview.webview.html = `
+            <video src="https://file-examples.com/storage/fe8c7eef0c6364f6c9504cc/2017/04/file_example_MP4_480_1_5MG.mp4" autoplay></video>
+          `;
         },
       ),
     );
@@ -98,10 +119,34 @@ export function activate(context: vscode.ExtensionContext) {
     try {
       const tips = getTipsFromFile(document.getText());
 
-      uriStore[document.uri.path] = tips.map((tip) => ({
-        ...tip,
-        range: getRangeFromSourceLocation(tip.loc),
-      }));
+      const tipHasNoDepsOrAllDepsCompleted = (tip: Tip) => {
+        const tipInfoItem = tipInfo[tip.type];
+
+        // Tip has no deps
+        if (!tipInfoItem.deps) {
+          return true;
+        }
+
+        const deps = Array.isArray(tipInfoItem.deps)
+          ? tipInfoItem.deps
+          : [tipInfoItem.deps];
+
+        return deps.every((dep) => {
+          return ignoredTips.has(dep);
+        });
+      };
+
+      /**
+       * Tips where the deps have been fulfilled
+       */
+      const tipsWithoutDeps = tips.filter(tipHasNoDepsOrAllDepsCompleted);
+
+      uriStore[document.uri.path] = tipsWithoutDeps
+        .filter((tip) => !ignoredTips.has(tip.type))
+        .map((tip) => ({
+          ...tip,
+          range: getRangeFromSourceLocation(tip.loc),
+        }));
     } catch (e) {}
 
     helperDiagnostics.set(
@@ -109,13 +154,9 @@ export function activate(context: vscode.ExtensionContext) {
       uriStore[document.uri.path].map((tip) => {
         const diagnostic = new vscode.Diagnostic(
           tip.range,
-          tipInfo[tip.type].message,
+          tip.type,
           vscode.DiagnosticSeverity.Information,
         );
-        diagnostic.code = {
-          value: tip.type,
-          target: vscode.Uri.parse(`https://ts-error-messages.com/${tip.type}`),
-        };
         diagnostic.source = 'total-typescript';
         return diagnostic;
       }),
@@ -123,12 +164,17 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   if (vscode.window.activeTextEditor) {
-    updateDiagnostics(vscode.window.activeTextEditor.document);
+    await updateDiagnostics(vscode.window.activeTextEditor.document);
   }
 
   context.subscriptions.push(
-    vscode.workspace.onDidChangeTextDocument((e) => {
-      updateDiagnostics(e.document);
+    vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+      if (editor) {
+        await updateDiagnostics(editor.document);
+      }
+    }),
+    vscode.workspace.onDidChangeTextDocument(async (e) => {
+      await updateDiagnostics(e.document);
     }),
   );
 
@@ -147,18 +193,38 @@ export function activate(context: vscode.ExtensionContext) {
       const contents = items.map((itemInRange) => {
         const thisTip = tipInfo[itemInRange.type];
         const mdString = new vscode.MarkdownString(
-          `**${thisTip.name}**\n\n${thisTip.message}\n\n[Learn More](TODO) | [Don't Show Again](command:ts-error-translator.dont-show-again.${itemInRange.type})`,
+          `**${thisTip.name}**\n\n${
+            thisTip.message ? `${thisTip.message}\n\n` : ''
+          }[Learn More](command:ts-error-translator.show.${
+            itemInRange.type
+          }) | [Mark as Learned](command:ts-error-translator.dont-show-again.${
+            itemInRange.type
+          })`,
         );
+
         mdString.isTrusted = true;
         mdString.supportHtml = true;
 
         return mdString;
       });
+
       return {
         contents,
       };
     },
   };
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(async (e) => {
+      if (e.affectsConfiguration('tsErrorTranslator.hiddenTips')) {
+        updateHiddenTips();
+      }
+
+      if (vscode.window.activeTextEditor) {
+        await updateDiagnostics(vscode.window.activeTextEditor.document);
+      }
+    }),
+  );
 
   context.subscriptions.push(
     ...languages.map((language) => {

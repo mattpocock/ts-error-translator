@@ -5,23 +5,19 @@ import { IdentifierSchema, safeParse, SourceLocationSchema } from '../utils';
 
 const Schema = z.object({
   loc: SourceLocationSchema,
-  key: IdentifierSchema,
-  optional: z.literal(true),
 });
 
-export const optionalObjectProperty = createTip<{
-  type: 'optional-object-property';
-  propertyName: string;
+export const tupleType = createTip<{
+  type: 'tuple-type';
   loc: t.SourceLocation;
 }>((push) => {
   return {
-    TSPropertySignature(path) {
+    TSTupleType(path) {
       safeParse(() => {
         const node = Schema.parse(path.node);
         push({
-          type: 'optional-object-property',
-          propertyName: node.key.name,
-          loc: node.key.loc,
+          type: 'tuple-type',
+          loc: node.loc,
         });
       });
     },

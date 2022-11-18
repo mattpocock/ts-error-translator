@@ -4,13 +4,13 @@ import { safeParse, SourceLocationSchema } from '../utils';
 import { z } from 'zod';
 
 const schema = z.object({
-  loc: SourceLocationSchema,
   typeParameters: z.object({
     type: z.literal('TSTypeParameterDeclaration'),
     params: z
       .array(
         z.object({
           type: z.literal('TSTypeParameter'),
+          loc: SourceLocationSchema,
         }),
       )
       .min(1),
@@ -24,19 +24,21 @@ export const genericSlotsInFunctions = createTip<{
   return {
     ArrowFunctionExpression: (path) => {
       safeParse(() => {
-        const { loc } = schema.parse(path.node);
+        const result = schema.parse(path.node);
+
         push({
           type: 'generic-slots-in-functions',
-          loc,
+          loc: result.typeParameters.params[0].loc,
         });
       });
     },
     FunctionDeclaration: (path) => {
       safeParse(() => {
-        const { loc } = schema.parse(path.node);
+        const result = schema.parse(path.node);
+
         push({
           type: 'generic-slots-in-functions',
-          loc,
+          loc: result.typeParameters.params[0].loc,
         });
       });
     },

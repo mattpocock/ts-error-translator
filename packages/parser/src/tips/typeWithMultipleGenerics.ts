@@ -6,7 +6,7 @@ import { safeParse, SourceLocationSchema } from '../utils';
 const Schema = z.object({
   loc: SourceLocationSchema,
   typeParameters: z.object({
-    type: z.literal('TSTypeParameterDeclaration'),
+    loc: SourceLocationSchema,
     params: z
       .array(
         z.object({
@@ -17,26 +17,17 @@ const Schema = z.object({
   }),
 });
 
-export const interfaceOrTypeWithMultipleGenerics = createTip<{
-  type: 'interface-or-type-with-multiple-generics';
+export const typeAliasWithMultipleGenerics = createTip<{
+  type: 'type-alias-with-multiple-generics';
   loc: t.SourceLocation;
 }>((push) => {
   return {
-    TSInterfaceDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'interface-or-type-with-multiple-generics',
-          loc: node.loc,
-        });
-      });
-    },
     TSTypeAliasDeclaration(path) {
       safeParse(() => {
         const node = Schema.parse(path.node);
         push({
-          type: 'interface-or-type-with-multiple-generics',
-          loc: node.loc,
+          type: 'type-alias-with-multiple-generics',
+          loc: node.typeParameters.loc,
         });
       });
     },

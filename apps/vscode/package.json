@@ -52,6 +52,10 @@
           "type": "boolean",
           "default": true,
           "description": "Show the TL;DR translation of the error"
+        },
+        "tsErrorTranslator.hiddenTips": {
+          "type": "array",
+          "default": []
         }
       }
     }

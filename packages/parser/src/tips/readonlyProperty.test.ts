@@ -4,11 +4,11 @@ import { getTipsFromFile } from '../getTipsFromFile';
 it('Should work', () => {
   const fileContents = `
   interface Wow {
-    optional?: boolean;
+    readonly optional: boolean;
   }
 
   type Wow2 = {
-    optional?: boolean;
+    readonly optional: boolean;
   }
   `;
 
@@ -16,8 +16,8 @@ it('Should work', () => {
 
   expect(tips).toEqual([
     'interface-declaration',
-    'optional-object-property',
+    'readonly-object-property',
     'type-alias-declaration',
-    'optional-object-property',
+    'readonly-object-property',
   ]);
 });

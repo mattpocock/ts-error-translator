@@ -4,24 +4,23 @@ import { createTip } from '../createTip';
 import { IdentifierSchema, safeParse, SourceLocationSchema } from '../utils';
 
 const Schema = z.object({
-  loc: SourceLocationSchema,
-  key: IdentifierSchema,
-  optional: z.literal(true),
+  indexType: z.object({
+    type: z.literal('TSNumberKeyword'),
+    loc: SourceLocationSchema,
+  }),
 });
 
-export const optionalObjectProperty = createTip<{
-  type: 'optional-object-property';
-  propertyName: string;
+export const numberIndexedAccess = createTip<{
+  type: 'number-indexed-access';
   loc: t.SourceLocation;
 }>((push) => {
   return {
-    TSPropertySignature(path) {
+    TSIndexedAccessType(path) {
       safeParse(() => {
         const node = Schema.parse(path.node);
         push({
-          type: 'optional-object-property',
-          propertyName: node.key.name,
-          loc: node.key.loc,
+          type: 'number-indexed-access',
+          loc: node.indexType.loc,
         });
       });
     },

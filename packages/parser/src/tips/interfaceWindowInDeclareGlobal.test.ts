@@ -3,21 +3,20 @@ import { getTipsFromFile } from '../getTipsFromFile';
 
 it('Should work', () => {
   const fileContents = `
-  interface Wow {
-    optional?: boolean;
-  }
+  declare global {
+    interface Another {}
+    interface Window {
 
-  type Wow2 = {
-    optional?: boolean;
+    }
   }
   `;
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
   expect(tips).toEqual([
+    'declare-global',
+    'interface-window-in-declare-global',
     'interface-declaration',
-    'optional-object-property',
-    'type-alias-declaration',
-    'optional-object-property',
+    'interface-declaration',
   ]);
 });

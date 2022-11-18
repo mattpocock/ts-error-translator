@@ -1,25 +1,25 @@
-import * as t from '@babel/types';
+import { SourceLocation } from '@babel/types';
 import { z } from 'zod';
 import { createTip } from '../createTip';
 import { IdentifierSchema, safeParse, SourceLocationSchema } from '../utils';
 
-const Schema = z.object({
+const ReadonlyObjectProperty = z.object({
   loc: SourceLocationSchema,
   key: IdentifierSchema,
-  optional: z.literal(true),
+  readonly: z.literal(true),
 });
 
-export const optionalObjectProperty = createTip<{
-  type: 'optional-object-property';
+export const readonlyProperty = createTip<{
+  type: 'readonly-object-property';
   propertyName: string;
-  loc: t.SourceLocation;
+  loc: SourceLocation;
 }>((push) => {
   return {
     TSPropertySignature(path) {
       safeParse(() => {
-        const node = Schema.parse(path.node);
+        const node = ReadonlyObjectProperty.parse(path.node);
         push({
-          type: 'optional-object-property',
+          type: 'readonly-object-property',
           propertyName: node.key.name,
           loc: node.key.loc,
         });

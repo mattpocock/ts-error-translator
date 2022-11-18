@@ -3,21 +3,17 @@ import { getTipsFromFile } from '../getTipsFromFile';
 
 it('Should work', () => {
   const fileContents = `
-  interface Wow {
-    optional?: boolean;
-  }
-
-  type Wow2 = {
-    optional?: boolean;
-  }
+    type Wow2<T> = {
+      [K in keyof T]: T[K];
+    }
   `;
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
   expect(tips).toEqual([
-    'interface-declaration',
-    'optional-object-property',
     'type-alias-declaration',
-    'optional-object-property',
+    'type-alias-with-generics',
+    'mapped-type',
+    'k-in-keyof',
   ]);
 });

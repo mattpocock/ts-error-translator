@@ -26,11 +26,6 @@ const NestedConditionalType = z
     ]),
   );
 
-const TypeSchema = z.object({
-  loc: SourceLocationSchema,
-  id: IdentifierSchema,
-});
-
 const IdentifierWithTypeAnnotationSchema = IdentifierSchema.extend({
   typeAnnotation: z.object({
     loc: SourceLocationSchema,
@@ -39,12 +34,6 @@ const IdentifierWithTypeAnnotationSchema = IdentifierSchema.extend({
 
 const VariableDeclaratorSchema = z.object({
   id: IdentifierWithTypeAnnotationSchema,
-});
-
-const ReadonlyObjectProperty = z.object({
-  loc: SourceLocationSchema,
-  key: IdentifierSchema,
-  readonly: z.literal(true),
 });
 
 type TipFunctions = Partial<
@@ -73,27 +62,6 @@ export const getTipsFromFile = (fileContents: string) => {
   const push = (tip: Tip) => tips.push(tip);
 
   const opts: TraverseOptions = {
-    TSTypeAliasDeclaration(path) {
-      safeParse(() => {
-        const node = TypeSchema.parse(path.node);
-        tips.push({
-          type: 'type-alias-declaration',
-          name: node.id.name,
-          loc: node.id.loc,
-        });
-      });
-    },
-    TSPropertySignature(path) {
-      safeParse(() => {
-        const node = ReadonlyObjectProperty.parse(path.node);
-        tips.push({
-          type: 'readonly-object-property',
-          propertyName: node.key.name,
-          loc: node.loc,
-        });
-      });
-    },
-
     VariableDeclarator(path) {
       safeParse(() => {
         const node = VariableDeclaratorSchema.parse(path.node);
@@ -116,9 +84,12 @@ export const getTipsFromFile = (fileContents: string) => {
       safeParse(() => {
         const node = NestedConditionalType.parse(path.node);
 
+        const baseNodeLoc =
+          'trueType' in node ? node.trueType.loc : node.falseType.loc;
+
         tips.push({
           type: 'nested-conditional-type',
-          loc: node.loc,
+          loc: baseNodeLoc,
         });
       });
     },
