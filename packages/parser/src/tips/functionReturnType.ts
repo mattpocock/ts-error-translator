@@ -12,10 +12,7 @@ const ReturnTypeAnnotationSchema = z.object({
   }),
 });
 
-export const functionReturnType = createTip<{
-  type: 'function-return-type';
-  loc: t.SourceLocation;
-}>((push) => {
+export const functionReturnType = createTip('function-return-type', (push) => {
   return {
     ArrowFunctionExpression(path) {
       safeParse(() => {

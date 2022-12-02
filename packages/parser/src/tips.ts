@@ -17,11 +17,13 @@ import { typeAliasWithMultipleGenerics } from './tips/typeWithMultipleGenerics';
 import { passingGenericsToTypes } from './tips/passingGenericsToTypes';
 import { promiseType } from './tips/promiseType';
 import { interfaceWindowInDeclareGlobal } from './tips/interfaceWindowInDeclareGlobal';
-import { declareGlobal } from './tips/declareGLobal';
+import { declareGlobal } from './tips/declareGlobal';
 import { spreadIntoTupleType } from './tips/spreadIntoTupleType';
+import { keyofIndexedAccess } from './tips/keyofIndexedAccess';
+import { templateLiteral } from './tips/templateLiteral';
 
 /**
- * As you add tips, add them here!
+ * As you add tips, add them here!G
  */
 export const allTips = [
   declareGlobal,
@@ -44,20 +46,20 @@ export const allTips = [
   promiseType,
   interfaceWindowInDeclareGlobal,
   spreadIntoTupleType,
+  keyofIndexedAccess,
+  templateLiteral,
 ];
 
-export type Tip = ReturnType<typeof allTips[number]>['_tip'] | _Tip;
+export type Tip = ReturnType<typeof allTips[number]>['type'] | _Tip;
 
 type _Tip =
   | {
       type: 'readonly-object-property';
-      propertyName: string;
       loc: t.SourceLocation;
     }
   | {
       type: 'variable-type-annotation';
       loc: t.SourceLocation;
-      variableName: string;
     }
   | {
       type: 'conditional-type';

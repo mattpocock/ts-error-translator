@@ -1,0 +1,22 @@
+{
+  "name": "@ts-error-messages/searcher",
+  "version": "1.0.3",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "private": true,
+  "scripts": {
+    "go": "node -r esbuild-register src/bin.ts"
+  },
+  "dependencies": {
+    "@ts-error-messages/parser": "workspace:*",
+    "fast-glob": "^3.2.12",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.3",
+    "esbuild": "^0.15.16",
+    "esbuild-register": "^3.4.1"
+  }
+}

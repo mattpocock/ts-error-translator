@@ -1,14 +1,21 @@
 import { TraverseOptions } from '@babel/traverse';
+import { SourceLocation } from '@babel/types';
 
-export interface TipResult<TTip extends { type: string }> {
-  _tip: TTip;
+export interface TipResult<TTipType extends string> {
+  type: TTipType;
   opts: TraverseOptions;
 }
 
+type TipFromType<TTipType extends string> = {
+  type: TTipType;
+  loc: SourceLocation;
+};
+
 export const createTip =
-  <TTip extends { type: string }>(
-    createOpts: (push: (tip: TTip) => void) => TraverseOptions,
+  <TTipType extends string>(
+    type: TTipType,
+    createOpts: (push: (tip: TipFromType<TTipType>) => void) => TraverseOptions,
   ) =>
-  (push: (tip: TTip) => void) => {
-    return { opts: createOpts(push) } as TipResult<TTip>;
+  (push: (tip: TipFromType<TTipType>) => void): TipResult<TTipType> => {
+    return { opts: createOpts(push), type };
   };

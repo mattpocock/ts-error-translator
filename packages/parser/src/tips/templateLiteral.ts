@@ -1,25 +1,27 @@
-import { SourceLocation } from '@babel/types';
+import * as t from '@babel/types';
 import { z } from 'zod';
 import { createTip } from '../createTip';
 import { safeParse, SourceLocationSchema } from '../utils';
 
 const Schema = z.object({
-  id: z.object({
-    name: z.literal('global'),
+  literal: z.object({
+    type: z.literal('TemplateLiteral'),
     loc: SourceLocationSchema,
   }),
-  declare: z.literal(true),
-  global: z.literal(true),
 });
 
-export const declareGlobal = createTip('declare-global', (push) => {
+export const templateLiteral = createTip<{
+  type: 'template-literal';
+  loc: t.SourceLocation;
+}>((push) => {
   return {
-    TSModuleDeclaration(path) {
+    TSLiteralType(path) {
       safeParse(() => {
         const node = Schema.parse(path.node);
+
         push({
-          type: 'declare-global',
-          loc: node.id.loc,
+          type: 'template-literal',
+          loc: node.literal.loc,
         });
       });
     },
