@@ -10,3 +10,13 @@ it('Should figure out as const', () => {
 
   expect(tips).toEqual(['as-const']);
 });
+
+it('Templates with as const', () => {
+  const fileContents = `
+  const yeah = \`\` as const;
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toEqual(['as-const', 'template-as-const']);
+});

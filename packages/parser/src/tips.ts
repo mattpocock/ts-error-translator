@@ -74,6 +74,32 @@ export const allTips = [
     },
   ),
   createInlineTip(
+    'template-as-const',
+    z.object({
+      loc: SourceLocationSchema,
+      expression: z.object({
+        type: z.literal('TemplateLiteral'),
+      }),
+      typeAnnotation: z.object({
+        type: z.literal('TSTypeReference'),
+        typeName: z.object({
+          loc: SourceLocationSchema,
+          name: z.literal('const'),
+        }),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAsExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
     'variable-type-annotation',
     z.object({
       id: IdentifierSchema.extend({
