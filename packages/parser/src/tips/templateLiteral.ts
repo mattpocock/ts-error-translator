@@ -10,10 +10,7 @@ const Schema = z.object({
   }),
 });
 
-export const templateLiteral = createTip<{
-  type: 'template-literal';
-  loc: t.SourceLocation;
-}>((push) => {
+export const templateLiteral = createTip('template-literal', (push) => {
   return {
     TSLiteralType(path) {
       safeParse(() => {

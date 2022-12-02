@@ -19,20 +19,20 @@ const Schema = z.object({
   //   ),
 });
 
-export const spreadIntoTupleType = createTip<{
-  type: 'spread-into-tuple-type';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSTupleType(path) {
-      safeParse(() => {
-        // TODO
-        // const node = Schema.parse(path.node);
-        // push({
-        //   type: 'spread-into-tuple-type',
-        //   loc: node.elementTypes[0].loc,
-        // });
-      });
-    },
-  };
-});
+export const spreadIntoTupleType = createTip(
+  'spread-into-tuple-type',
+  (push) => {
+    return {
+      TSTupleType(path) {
+        safeParse(() => {
+          // TODO
+          // const node = Schema.parse(path.node);
+          // push({
+          //   type: 'spread-into-tuple-type',
+          //   loc: node.elementTypes[0].loc,
+          // });
+        });
+      },
+    };
+  },
+);

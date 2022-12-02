@@ -13,10 +13,7 @@ const Schema = z.object({
   }),
 });
 
-export const kInKeyof = createTip<{
-  type: 'k-in-keyof';
-  loc: t.SourceLocation;
-}>((push) => {
+export const kInKeyof = createTip('k-in-keyof', (push) => {
   return {
     TSMappedType(path) {
       safeParse(() => {

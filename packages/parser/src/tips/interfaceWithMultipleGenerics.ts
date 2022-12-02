@@ -17,19 +17,19 @@ const Schema = z.object({
   }),
 });
 
-export const interfaceWithMultipleGenerics = createTip<{
-  type: 'interface-with-multiple-generics';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSInterfaceDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'interface-with-multiple-generics',
-          loc: node.typeParameters.loc,
+export const interfaceWithMultipleGenerics = createTip(
+  'interface-with-multiple-generics',
+  (push) => {
+    return {
+      TSInterfaceDeclaration(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'interface-with-multiple-generics',
+            loc: node.typeParameters.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

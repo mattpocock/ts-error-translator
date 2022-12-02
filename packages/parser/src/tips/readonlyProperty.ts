@@ -9,21 +9,19 @@ const ReadonlyObjectProperty = z.object({
   readonly: z.literal(true),
 });
 
-export const readonlyProperty = createTip<{
-  type: 'readonly-object-property';
-  propertyName: string;
-  loc: SourceLocation;
-}>((push) => {
-  return {
-    TSPropertySignature(path) {
-      safeParse(() => {
-        const node = ReadonlyObjectProperty.parse(path.node);
-        push({
-          type: 'readonly-object-property',
-          propertyName: node.key.name,
-          loc: node.key.loc,
+export const readonlyProperty = createTip(
+  'readonly-object-property',
+  (push) => {
+    return {
+      TSPropertySignature(path) {
+        safeParse(() => {
+          const node = ReadonlyObjectProperty.parse(path.node);
+          push({
+            type: 'readonly-object-property',
+            loc: node.key.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

@@ -8,19 +8,19 @@ const Schema = z.object({
   id: IdentifierSchema,
 });
 
-export const typeAliasDeclaration = createTip<{
-  type: 'type-alias-declaration';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSTypeAliasDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'type-alias-declaration',
-          loc: node.id.loc,
+export const typeAliasDeclaration = createTip(
+  'type-alias-declaration',
+  (push) => {
+    return {
+      TSTypeAliasDeclaration(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'type-alias-declaration',
+            loc: node.id.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

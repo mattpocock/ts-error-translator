@@ -17,28 +17,28 @@ const schema = z.object({
   }),
 });
 
-export const multipleGenericSlotsInFunctions = createTip<{
-  type: 'multiple-generic-slots-in-functions';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    ArrowFunctionExpression: (path) => {
-      safeParse(() => {
-        const { loc } = schema.parse(path.node);
-        push({
-          type: 'multiple-generic-slots-in-functions',
-          loc,
+export const multipleGenericSlotsInFunctions = createTip(
+  'multiple-generic-slots-in-functions',
+  (push) => {
+    return {
+      ArrowFunctionExpression: (path) => {
+        safeParse(() => {
+          const { loc } = schema.parse(path.node);
+          push({
+            type: 'multiple-generic-slots-in-functions',
+            loc,
+          });
         });
-      });
-    },
-    FunctionDeclaration: (path) => {
-      safeParse(() => {
-        const { loc } = schema.parse(path.node);
-        push({
-          type: 'multiple-generic-slots-in-functions',
-          loc,
+      },
+      FunctionDeclaration: (path) => {
+        safeParse(() => {
+          const { loc } = schema.parse(path.node);
+          push({
+            type: 'multiple-generic-slots-in-functions',
+            loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

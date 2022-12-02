@@ -10,19 +10,19 @@ const Schema = z.object({
   }),
 });
 
-export const numberIndexedAccess = createTip<{
-  type: 'number-indexed-access';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSIndexedAccessType(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'number-indexed-access',
-          loc: node.indexType.loc,
+export const numberIndexedAccess = createTip(
+  'number-indexed-access',
+  (push) => {
+    return {
+      TSIndexedAccessType(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'number-indexed-access',
+            loc: node.indexType.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

@@ -11,10 +11,7 @@ const Schema = z.object({
   }),
 });
 
-export const keyofIndexedAccess = createTip<{
-  type: 'keyof-indexed-access';
-  loc: t.SourceLocation;
-}>((push) => {
+export const keyofIndexedAccess = createTip('keyof-indexed-access', (push) => {
   return {
     TSIndexedAccessType(path) {
       safeParse(() => {

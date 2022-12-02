@@ -17,19 +17,19 @@ const Schema = z.object({
   }),
 });
 
-export const typeAliasWithMultipleGenerics = createTip<{
-  type: 'type-alias-with-multiple-generics';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSTypeAliasDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'type-alias-with-multiple-generics',
-          loc: node.typeParameters.loc,
+export const typeAliasWithMultipleGenerics = createTip(
+  'type-alias-with-multiple-generics',
+  (push) => {
+    return {
+      TSTypeAliasDeclaration(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'type-alias-with-multiple-generics',
+            loc: node.typeParameters.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

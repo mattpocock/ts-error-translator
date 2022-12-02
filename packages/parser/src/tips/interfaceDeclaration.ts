@@ -8,24 +8,19 @@ const InterfaceSchema = z.object({
   id: IdentifierSchema,
 });
 
-export const interfaceDeclaration = createTip<{
-  /**
-   * Learning what an interface Whatever {} is
-   */
-  type: 'interface-declaration';
-  name: string;
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSInterfaceDeclaration(path) {
-      safeParse(() => {
-        const node = InterfaceSchema.parse(path.node);
-        push({
-          type: 'interface-declaration',
-          name: node.id.name,
-          loc: node.id.loc,
+export const interfaceDeclaration = createTip(
+  'interface-declaration',
+  (push) => {
+    return {
+      TSInterfaceDeclaration(path) {
+        safeParse(() => {
+          const node = InterfaceSchema.parse(path.node);
+          push({
+            type: 'interface-declaration',
+            loc: node.id.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

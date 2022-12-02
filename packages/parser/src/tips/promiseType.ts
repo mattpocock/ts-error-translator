@@ -13,10 +13,7 @@ const Schema = z.object({
   }),
 });
 
-export const promiseType = createTip<{
-  type: 'promise-type';
-  loc: SourceLocation;
-}>((push) => {
+export const promiseType = createTip('promise-type', (push) => {
   return {
     TSTypeReference(path) {
       safeParse(() => {

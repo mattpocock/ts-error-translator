@@ -21,6 +21,9 @@ import { declareGlobal } from './tips/declareGlobal';
 import { spreadIntoTupleType } from './tips/spreadIntoTupleType';
 import { keyofIndexedAccess } from './tips/keyofIndexedAccess';
 import { templateLiteral } from './tips/templateLiteral';
+import { createInlineTip } from './createTip';
+import { IdentifierSchema, safeParse, SourceLocationSchema } from './utils';
+import { z } from 'zod';
 
 /**
  * As you add tips, add them here!G
@@ -48,24 +51,100 @@ export const allTips = [
   spreadIntoTupleType,
   keyofIndexedAccess,
   templateLiteral,
+  createInlineTip(
+    'as-const',
+    z.object({
+      typeAnnotation: z.object({
+        type: z.literal('TSTypeReference'),
+        typeName: z.object({
+          loc: SourceLocationSchema,
+          name: z.literal('const'),
+        }),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAsExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeAnnotation.typeName.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'variable-type-annotation',
+    z.object({
+      id: IdentifierSchema.extend({
+        typeAnnotation: z.object({
+          loc: SourceLocationSchema,
+        }),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        VariableDeclarator(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.id.typeAnnotation.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'conditional-type',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSConditionalType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'nested-conditional-type',
+    z
+      .object({
+        loc: SourceLocationSchema,
+      })
+      .and(
+        z.union([
+          z.object({
+            trueType: z.object({
+              type: z.literal('TSConditionalType'),
+              loc: SourceLocationSchema,
+            }),
+          }),
+          z.object({
+            falseType: z.object({
+              loc: SourceLocationSchema,
+              type: z.literal('TSConditionalType'),
+            }),
+          }),
+        ]),
+      ),
+    ({ parse, push }) => {
+      return {
+        TSConditionalType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
 ];
 
-export type Tip = ReturnType<typeof allTips[number]>['type'] | _Tip;
+export const tipsAsStrings = allTips.map((tip) => tip.type);
 
-type _Tip =
-  | {
-      type: 'readonly-object-property';
-      loc: t.SourceLocation;
-    }
-  | {
-      type: 'variable-type-annotation';
-      loc: t.SourceLocation;
-    }
-  | {
-      type: 'conditional-type';
-      loc: t.SourceLocation;
-    }
-  | {
-      type: 'nested-conditional-type';
-      loc: t.SourceLocation;
-    };
+export type TipType = typeof allTips[number]['type'];
+export type Tip = { type: TipType; loc: t.SourceLocation };

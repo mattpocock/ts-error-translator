@@ -7,10 +7,7 @@ const Schema = z.object({
   loc: SourceLocationSchema,
 });
 
-export const mappedType = createTip<{
-  type: 'mapped-type';
-  loc: t.SourceLocation;
-}>((push) => {
+export const mappedType = createTip('mapped-type', (push) => {
   return {
     TSMappedType(path) {
       safeParse(() => {

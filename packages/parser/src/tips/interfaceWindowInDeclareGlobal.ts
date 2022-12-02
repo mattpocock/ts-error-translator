@@ -32,19 +32,19 @@ const Schema = z.object({
   }),
 });
 
-export const interfaceWindowInDeclareGlobal = createTip<{
-  type: 'interface-window-in-declare-global';
-  loc: SourceLocation;
-}>((push) => {
-  return {
-    TSModuleDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'interface-window-in-declare-global',
-          loc: node.body.body.id.loc,
+export const interfaceWindowInDeclareGlobal = createTip(
+  'interface-window-in-declare-global',
+  (push) => {
+    return {
+      TSModuleDeclaration(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'interface-window-in-declare-global',
+            loc: node.body.body.id.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

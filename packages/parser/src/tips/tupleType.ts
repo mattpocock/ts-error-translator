@@ -7,10 +7,7 @@ const Schema = z.object({
   loc: SourceLocationSchema,
 });
 
-export const tupleType = createTip<{
-  type: 'tuple-type';
-  loc: t.SourceLocation;
-}>((push) => {
+export const tupleType = createTip('tuple-type', (push) => {
   return {
     TSTupleType(path) {
       safeParse(() => {

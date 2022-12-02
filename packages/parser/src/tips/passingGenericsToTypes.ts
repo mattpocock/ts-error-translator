@@ -11,19 +11,19 @@ const Schema = z.object({
   }),
 });
 
-export const passingGenericsToTypes = createTip<{
-  type: 'passing-generics-to-types';
-  loc: SourceLocation;
-}>((push) => {
-  return {
-    TSTypeReference(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'passing-generics-to-types',
-          loc: node.typeParameters.loc,
+export const passingGenericsToTypes = createTip(
+  'passing-generics-to-types',
+  (push) => {
+    return {
+      TSTypeReference(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'passing-generics-to-types',
+            loc: node.typeParameters.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

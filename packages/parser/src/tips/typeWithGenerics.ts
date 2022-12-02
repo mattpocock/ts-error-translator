@@ -17,19 +17,19 @@ const Schema = z.object({
   }),
 });
 
-export const typeAliasWithGenerics = createTip<{
-  type: 'type-alias-with-generics';
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSTypeAliasDeclaration(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'type-alias-with-generics',
-          loc: node.typeParameters.loc,
+export const typeAliasWithGenerics = createTip(
+  'type-alias-with-generics',
+  (push) => {
+    return {
+      TSTypeAliasDeclaration(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'type-alias-with-generics',
+            loc: node.typeParameters.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);

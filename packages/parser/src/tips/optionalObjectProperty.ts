@@ -9,21 +9,19 @@ const Schema = z.object({
   optional: z.literal(true),
 });
 
-export const optionalObjectProperty = createTip<{
-  type: 'optional-object-property';
-  propertyName: string;
-  loc: t.SourceLocation;
-}>((push) => {
-  return {
-    TSPropertySignature(path) {
-      safeParse(() => {
-        const node = Schema.parse(path.node);
-        push({
-          type: 'optional-object-property',
-          propertyName: node.key.name,
-          loc: node.key.loc,
+export const optionalObjectProperty = createTip(
+  'optional-object-property',
+  (push) => {
+    return {
+      TSPropertySignature(path) {
+        safeParse(() => {
+          const node = Schema.parse(path.node);
+          push({
+            type: 'optional-object-property',
+            loc: node.key.loc,
+          });
         });
-      });
-    },
-  };
-});
+      },
+    };
+  },
+);
