@@ -1,7 +1,7 @@
 import { parse } from '@babel/parser';
 import traverse, { TraverseOptions } from '@babel/traverse';
 import * as t from '@babel/types';
-import { allTips, Tip } from './tips';
+import { allTips, Tip, TipType } from './tips';
 
 type TipFunctions = Partial<
   Record<t.Node['type'], Array<(opts: any[]) => void>>
@@ -20,7 +20,10 @@ export const parseFileContents = (fileContents: string) => {
   return parseResult;
 };
 
-export const getTipsFromFile = (fileContents: string) => {
+export const getTipsFromFile = (
+  fileContents: string,
+  tipToFilter?: TipType,
+) => {
   const parseResult = parseFileContents(fileContents);
   const tips: Tip[] = [];
 
@@ -29,6 +32,10 @@ export const getTipsFromFile = (fileContents: string) => {
   const push = (tip: Tip) => tips.push(tip);
 
   allTips.forEach((tipFunction) => {
+    if (tipToFilter && tipToFilter !== tipFunction.type) {
+      return;
+    }
+
     const opts = tipFunction.createOpts(push);
 
     Object.entries(opts).forEach(([_key, func]) => {

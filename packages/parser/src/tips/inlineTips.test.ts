@@ -20,3 +20,33 @@ it('Templates with as const', () => {
 
   expect(tips).toEqual(['as-const', 'template-as-const']);
 });
+
+it('Extract', () => {
+  const fileContents = `
+  type Yeah = Extract<{}, {}>
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('extract-utility-type');
+});
+
+it('Typeof Import', () => {
+  const fileContents = `
+  type Yeah = typeof import('react-redux')
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('typeof-import');
+});
+
+it('passing-types-to-call-expressions', () => {
+  const fileContents = `
+  func<{}>();
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('passing-types-to-call-expressions');
+});

@@ -11,6 +11,17 @@ export const SourceLocationSchema = z.object({
   }),
 });
 
+export const TypeReferenceWithName = z.object({
+  start: z.object({
+    line: z.number(),
+    column: z.number(),
+  }),
+  end: z.object({
+    line: z.number(),
+    column: z.number(),
+  }),
+});
+
 export const safeParse = (fn: () => void) => {
   try {
     fn();

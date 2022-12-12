@@ -8,5 +8,9 @@ it('Should work', () => {
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
-  expect(tips).toEqual(['type-alias-declaration', 'keyof-indexed-access']);
+  expect(tips).toEqual([
+    'type-alias-declaration',
+    'keyof-indexed-access',
+    'keyof',
+  ]);
 });

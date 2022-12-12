@@ -15,7 +15,6 @@ import { interfaceWithMultipleGenerics } from './tips/interfaceWithMultipleGener
 import { typeAliasWithGenerics } from './tips/typeWithGenerics';
 import { typeAliasWithMultipleGenerics } from './tips/typeWithMultipleGenerics';
 import { passingGenericsToTypes } from './tips/passingGenericsToTypes';
-import { promiseType } from './tips/promiseType';
 import { interfaceWindowInDeclareGlobal } from './tips/interfaceWindowInDeclareGlobal';
 import { declareGlobal } from './tips/declareGlobal';
 import { spreadIntoTupleType } from './tips/spreadIntoTupleType';
@@ -24,6 +23,51 @@ import { templateLiteral } from './tips/templateLiteral';
 import { createInlineTip } from './createTip';
 import { IdentifierSchema, safeParse, SourceLocationSchema } from './utils';
 import { z } from 'zod';
+
+const UTILITY_TYPES = [
+  'Promise',
+  'Extract',
+  'Exclude',
+  'Omit',
+  'Pick',
+  'NonNullable',
+  'ReturnType',
+  'InstanceType',
+  'Required',
+  'Readonly',
+  'Partial',
+  'Record',
+  'Parameters',
+  'Awaited',
+  'Uppercase',
+  'Lowercase',
+  'Capitalize',
+] as const;
+
+const utilityTypeTips = UTILITY_TYPES.map((utilityType) => {
+  return createInlineTip(
+    `${
+      utilityType.toLowerCase() as Lowercase<typeof utilityType>
+    }-utility-type`,
+    z.object({
+      typeName: z.object({
+        name: z.literal(utilityType),
+        type: z.literal('Identifier'),
+        loc: SourceLocationSchema,
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeReference(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeName.loc);
+          });
+        },
+      };
+    },
+  );
+});
 
 /**
  * As you add tips, add them here!G
@@ -46,11 +90,434 @@ export const allTips = [
   typeAliasWithGenerics,
   typeAliasWithMultipleGenerics,
   passingGenericsToTypes,
-  promiseType,
   interfaceWindowInDeclareGlobal,
   spreadIntoTupleType,
   keyofIndexedAccess,
   templateLiteral,
+  createInlineTip(
+    'union-type',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSUnionType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'as-assertion',
+    z.object({
+      typeAnnotation: z.object({
+        loc: SourceLocationSchema,
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAsExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeAnnotation.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'null-keyword',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSNullKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'in-operator-narrowing',
+    z.object({
+      left: z.object({
+        type: z.literal('StringLiteral'),
+      }),
+      operator: z.literal('in'),
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        BinaryExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'type-predicate',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSTypePredicate(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'never-keyword',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSNeverKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'non-null-expression',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSNonNullExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'undefined-keyword',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSUndefinedKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'literal-type',
+    z.object({ loc: SourceLocationSchema }),
+    ({ parse, push }) => {
+      return {
+        TSLiteralType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'array-type',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSArrayType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'basic-types',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSStringKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+        TSNumberKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+        TSBooleanKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'any-type',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAnyKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'as-const-on-object',
+    z.object({
+      expression: z.object({
+        type: z.literal('ObjectExpression'),
+      }),
+      typeAnnotation: z.object({
+        loc: SourceLocationSchema,
+        typeName: z.object({
+          name: z.literal('const'),
+        }),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAsExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeAnnotation.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'remapping-in-mapped-type',
+    z.object({
+      nameType: z.object({
+        loc: SourceLocationSchema,
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSMappedType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.nameType.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'union-type',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSUnionType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'infer',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSInferType(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'ts-object-type',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeLiteral(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'typing-function-parameters',
+    z.object({
+      params: z
+        .array(
+          z
+            .object({
+              typeAnnotation: z.object({
+                loc: SourceLocationSchema,
+              }),
+            })
+            .or(z.any().transform(() => undefined)),
+        )
+        .min(1)
+        .transform((arr) => arr.filter(Boolean)),
+    }),
+    ({ parse, push }) => {
+      return {
+        FunctionDeclaration(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            for (const param of node.params) {
+              push(param!.typeAnnotation.loc);
+            }
+          });
+        },
+        ArrowFunctionExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            for (const param of node.params) {
+              push(param!.typeAnnotation.loc);
+            }
+          });
+        },
+        FunctionExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            for (const param of node.params) {
+              push(param!.typeAnnotation.loc);
+            }
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'infer-used-in-type-parameters',
+    z.object({
+      params: z
+        .array(
+          z.union([
+            z.object({
+              type: z.literal('TSInferType'),
+              loc: SourceLocationSchema,
+            }),
+            z.any().transform(() => undefined),
+          ]),
+        )
+        .refine((arr) => {
+          return arr.every((item) => item !== undefined);
+        })
+        .transform((arr) => {
+          for (const item of arr) {
+            if (item !== undefined) {
+              return item;
+            }
+          }
+        }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeParameterInstantiation(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.params!.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'passing-types-to-call-expressions',
+    z.object({
+      typeParameters: z.object({
+        loc: SourceLocationSchema,
+        params: z
+          .array(
+            z.object({
+              loc: SourceLocationSchema,
+            }),
+          )
+          .min(1),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        CallExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeParameters.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'keyof',
+    z.object({
+      operator: z.literal('keyof'),
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeOperator(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'typeof',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeQuery(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
   createInlineTip(
     'as-const',
     z.object({
@@ -68,6 +535,26 @@ export const allTips = [
           safeParse(() => {
             const node = parse(path.node);
             push(node.typeAnnotation.typeName.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'typeof-import',
+    z.object({
+      exprName: z.object({
+        type: z.literal('TSImportType'),
+        // isTypeOf: z.literal(true),
+        loc: SourceLocationSchema,
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSTypeQuery(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.exprName.loc);
           });
         },
       };
@@ -168,6 +655,7 @@ export const allTips = [
       };
     },
   ),
+  ...utilityTypeTips,
 ];
 
 export const tipsAsStrings = allTips.map((tip) => tip.type);

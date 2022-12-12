@@ -15,5 +15,6 @@ it('Should work', () => {
     'type-alias-with-generics',
     'mapped-type',
     'k-in-keyof',
+    'keyof',
   ]);
 });

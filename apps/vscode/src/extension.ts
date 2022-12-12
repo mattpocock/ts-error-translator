@@ -122,6 +122,10 @@ export async function activate(context: vscode.ExtensionContext) {
       const tipHasNoDepsOrAllDepsCompleted = (tip: Tip) => {
         const tipInfoItem = tipInfo[tip.type];
 
+        if (!tipInfoItem) {
+          return false;
+        }
+
         // Tip has no deps
         if (!tipInfoItem.deps) {
           return true;
@@ -190,23 +194,29 @@ export async function activate(context: vscode.ExtensionContext) {
         return item.range.contains(position);
       });
 
-      const contents = items.map((itemInRange) => {
-        const thisTip = tipInfo[itemInRange.type];
-        const mdString = new vscode.MarkdownString(
-          `**${thisTip.name}**\n\n${
-            thisTip.message ? `${thisTip.message}\n\n` : ''
-          }[Learn More](command:ts-error-translator.show.${
-            itemInRange.type
-          }) | [Mark as Learned](command:ts-error-translator.dont-show-again.${
-            itemInRange.type
-          })`,
-        );
+      const contents = items
+        .map((itemInRange) => {
+          const thisTip = tipInfo[itemInRange.type];
 
-        mdString.isTrusted = true;
-        mdString.supportHtml = true;
+          if (!thisTip) {
+            return '';
+          }
+          const mdString = new vscode.MarkdownString(
+            `**${thisTip.name}**\n\n${
+              thisTip.message ? `${thisTip.message}\n\n` : ''
+            }${
+              thisTip.link ? `[Learn More](${thisTip.link}) |` : ''
+            } [Mark as Learned](command:ts-error-translator.dont-show-again.${
+              itemInRange.type
+            })`,
+          );
 
-        return mdString;
-      });
+          mdString.isTrusted = true;
+          mdString.supportHtml = true;
+
+          return mdString;
+        })
+        .filter(Boolean);
 
       return {
         contents,

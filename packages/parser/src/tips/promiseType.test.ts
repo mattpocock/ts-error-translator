@@ -13,6 +13,6 @@ it.only('Should work', () => {
   expect(tips).toEqual([
     'type-alias-declaration',
     'passing-generics-to-types',
-    'promise-type',
+    'promise-utility-type',
   ]);
 });
