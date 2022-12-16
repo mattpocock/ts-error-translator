@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
 import { getTipsFromFile } from '../getTipsFromFile';
 
-it.only('Should work', () => {
+it('Should work', () => {
   const fileContents = `
   
 
