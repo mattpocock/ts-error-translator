@@ -66,7 +66,7 @@
   },
   "scripts": {
     "vscode:build": "esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
-    "vscode:package": "npx vsce package --yarn",
+    "vscode:package": "npx vsce package",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "tsc",
