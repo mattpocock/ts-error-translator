@@ -4,7 +4,7 @@
   "description": "Learn TypeScript in VSCode with a TypeScript error translator and syntax guide.",
   "license": "MIT",
   "author": "Matt Pocock",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "private": true,
   "engines": {
     "vscode": "^1.50.0"
@@ -68,7 +68,6 @@
     "vscode:build": "esbuild --bundle --platform=\"node\" src/extension.ts --outfile=out/extension.js --external:vscode --format=cjs",
     "vscode:package": "npx vsce package --no-dependencies",
     "bundle-errors": "node -r esbuild-register src/bundleErrors.ts",
-    "pretest": "pnpm run compile && pnpm run lint",
     "lint": "tsc",
     "test:e2e": "node ./out/test/runTest.js",
     "publish:vsce": "(npx vsce publish --no-dependencies $(find . -iname *.vsix) || true)",
