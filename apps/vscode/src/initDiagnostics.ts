@@ -1,11 +1,6 @@
 import * as vscode from 'vscode';
+import { defaultOptions } from './defaultOptions';
 import { humaniseDiagnostic } from './humaniseDiagnostic';
-import { Options } from './types';
-
-const defaultOptions: Options = {
-  showFullTranslation: true,
-  showTLDRTranslation: true,
-};
 
 let options = defaultOptions;
 
@@ -31,7 +26,7 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
   const updateOptions = () => {
     options = {
       ...defaultOptions,
-      ...vscode.workspace.getConfiguration('tsErrorTranslator'),
+      ...vscode.workspace.getConfiguration('totalTypeScript'),
     };
   };
 
@@ -39,7 +34,7 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((config) => {
-      if (config.affectsConfiguration('tsErrorTranslator')) {
+      if (config.affectsConfiguration('totalTypeScript')) {
         updateOptions();
       }
     }),

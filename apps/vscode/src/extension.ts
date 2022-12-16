@@ -1,10 +1,6 @@
-import {
-  getTipsFromFile,
-  Tip,
-  TipInfo,
-  tipInfo,
-} from '@ts-error-messages/parser';
+import { getTipsFromFile, Tip, tipInfo } from '@ts-error-messages/parser';
 import * as vscode from 'vscode';
+import { defaultOptions } from './defaultOptions';
 import { initDiagnostics } from './initDiagnostics';
 
 const languages = [
@@ -13,6 +9,15 @@ const languages = [
   'javascript',
   'javascriptreact',
 ];
+
+let options = defaultOptions;
+
+const updateOptions = () => {
+  options = {
+    ...defaultOptions,
+    ...vscode.workspace.getConfiguration('totalTypeScript'),
+  };
+};
 
 const tips = Object.keys(tipInfo);
 
@@ -32,21 +37,51 @@ export const getRangeFromSourceLocation = (location: {
   );
 };
 
-const getHiddenTips = (): string[] => {
-  const config = vscode.workspace.getConfiguration('tsErrorTranslator');
-  return config.get('hiddenTips') || [];
-};
-
-let webview: vscode.WebviewPanel | undefined = undefined;
-
 export async function activate(context: vscode.ExtensionContext) {
+  updateOptions();
   initDiagnostics(context);
 
-  let ignoredTips = new Set<string>(getHiddenTips());
+  let ignoredTips = new Set<string>(options.hiddenTips);
+
+  const isTipComplete = (tipType: Tip['type']) => {
+    const tipInfoItem = tipInfo[tipType as keyof typeof tipInfo];
+
+    if (!tipInfoItem) {
+      return true;
+    }
+
+    if (tipInfoItem.difficulty === 'easy' && options.hideBasicTips) {
+      return true;
+    }
+
+    return ignoredTips.has(tipType);
+  };
 
   const updateHiddenTips = () => {
-    ignoredTips = new Set(getHiddenTips());
+    updateOptions();
+    ignoredTips = new Set(options.hiddenTips);
   };
+
+  if (options.hideBasicTips === null) {
+    vscode.window
+      .showInformationMessage(
+        `Would you call yourself a TypeScript beginner? If you are, we'll show you tips that are helpful when you're first learning TypeScript.`,
+        'Yes',
+        'No',
+      )
+      .then((res) => {
+        if (!res) {
+          return;
+        }
+        vscode.workspace
+          .getConfiguration('totalTypeScript')
+          .update(
+            'hideBasicTips',
+            res === 'No',
+            vscode.ConfigurationTarget.Global,
+          );
+      });
+  }
 
   const helperDiagnostics =
     vscode.languages.createDiagnosticCollection('helpers');
@@ -64,7 +99,7 @@ export async function activate(context: vscode.ExtensionContext) {
             return;
           }
 
-          const config = vscode.workspace.getConfiguration('tsErrorTranslator');
+          const config = vscode.workspace.getConfiguration('totalTypeScript');
 
           ignoredTips.add(tip);
 
@@ -73,43 +108,10 @@ export async function activate(context: vscode.ExtensionContext) {
             Array.from(ignoredTips),
             vscode.ConfigurationTarget.Global,
           );
-        },
-      ),
-    );
 
-    context.subscriptions.push(
-      vscode.commands.registerCommand(
-        `ts-error-translator.show.${tip}`,
-        async () => {
-          const humanReadableTip:
-            | { name: string; message?: string }
-            | undefined = tipInfo[tip as keyof typeof tipInfo];
-
-          if (!humanReadableTip) {
-            return;
+          if (vscode.window.activeTextEditor?.document) {
+            updateDiagnostics(vscode.window.activeTextEditor.document);
           }
-
-          if (!webview) {
-            webview = vscode.window.createWebviewPanel(
-              'ts-error-translator',
-              'TS Error Translator',
-              vscode.ViewColumn.Beside,
-            );
-
-            context.subscriptions.push(
-              webview.onDidDispose(() => {
-                webview = undefined;
-              }),
-            );
-          }
-
-          webview.reveal();
-
-          webview.title = humanReadableTip.name;
-
-          webview.webview.html = `
-            <video src="https://file-examples.com/storage/fe8c7eef0c6364f6c9504cc/2017/04/file_example_MP4_480_1_5MG.mp4" autoplay></video>
-          `;
         },
       ),
     );
@@ -117,7 +119,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const updateDiagnostics = async (document: vscode.TextDocument) => {
     try {
-      const tips = getTipsFromFile(document.getText());
+      const tipsFromFile = getTipsFromFile(document.getText());
 
       const tipHasNoDepsOrAllDepsCompleted = (tip: Tip) => {
         const tipInfoItem = tipInfo[tip.type];
@@ -136,17 +138,19 @@ export async function activate(context: vscode.ExtensionContext) {
           : [tipInfoItem.deps];
 
         return deps.every((dep) => {
-          return ignoredTips.has(dep);
+          return isTipComplete(dep);
         });
       };
 
       /**
        * Tips where the deps have been fulfilled
        */
-      const tipsWithoutDeps = tips.filter(tipHasNoDepsOrAllDepsCompleted);
+      const tipsWithoutDeps = tipsFromFile.filter(
+        tipHasNoDepsOrAllDepsCompleted,
+      );
 
       uriStore[document.uri.path] = tipsWithoutDeps
-        .filter((tip) => !ignoredTips.has(tip.type))
+        .filter((tip) => !isTipComplete(tip.type))
         .map((tip) => ({
           ...tip,
           range: getRangeFromSourceLocation(tip.loc),
@@ -226,7 +230,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration(async (e) => {
-      if (e.affectsConfiguration('tsErrorTranslator.hiddenTips')) {
+      if (e.affectsConfiguration('totalTypeScript')) {
         updateHiddenTips();
       }
 
