@@ -1,5 +1,5 @@
 {
-  "name": "@ts-error-messages/searcher",
+  "name": "@total-typescript/searcher",
   "version": "1.0.3",
   "license": "MIT",
   "main": "./src/index.ts",
@@ -9,7 +9,7 @@
     "go": "node -r esbuild-register src/bin.ts"
   },
   "dependencies": {
-    "@ts-error-messages/parser": "workspace:*",
+    "@total-typescript/tips-parser": "workspace:*",
     "fast-glob": "^3.2.12",
     "prompts": "^2.4.2"
   },

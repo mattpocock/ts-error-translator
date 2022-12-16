@@ -1,4 +1,4 @@
-import { TipType } from '@ts-error-messages/parser';
+import { TipType } from '@total-typescript/tips-parser';
 import { run } from '.';
 
 run().catch((e) => {

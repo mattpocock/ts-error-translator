@@ -1,5 +1,5 @@
 {
-  "name": "@ts-error-messages/engine",
+  "name": "@total-typescript/error-translation-engine",
   "version": "1.0.3",
   "license": "MIT",
   "main": "./src/index.ts",

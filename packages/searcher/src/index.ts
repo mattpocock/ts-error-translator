@@ -3,7 +3,7 @@ import {
   Tip,
   tipsAsStrings,
   TipType,
-} from '@ts-error-messages/parser';
+} from '@total-typescript/tips-parser';
 import * as fg from 'fast-glob';
 import { readFile } from 'fs/promises';
 import path from 'path';

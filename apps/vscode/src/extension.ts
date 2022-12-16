@@ -1,4 +1,4 @@
-import { getTipsFromFile, Tip, tipInfo } from '@ts-error-messages/parser';
+import { getTipsFromFile, Tip, tipInfo } from '@total-typescript/tips-parser';
 import * as vscode from 'vscode';
 import { defaultOptions } from './defaultOptions';
 import { initDiagnostics } from './initDiagnostics';

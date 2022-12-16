@@ -1,5 +1,5 @@
 {
-  "name": "@ts-error-messages/parser",
+  "name": "@total-typescript/tips-parser",
   "version": "1.0.3",
   "license": "MIT",
   "main": "./src/index.ts",
