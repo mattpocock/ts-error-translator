@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -19,7 +19,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm turbo run lint test vscode:package
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: VSCode Preview VSIX
           path: 'apps/vscode/*.vsix'
