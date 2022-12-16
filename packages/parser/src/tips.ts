@@ -113,6 +113,16 @@ export const allTips = [
     z.object({
       typeAnnotation: z.object({
         loc: SourceLocationSchema,
+        typeName: z
+          .object({
+            name: z
+              .any()
+              .optional()
+              .refine((name) => {
+                if (name === 'const') return false;
+              }),
+          })
+          .optional(),
       }),
     }),
     ({ parse, push }) => {

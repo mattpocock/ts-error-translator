@@ -14,5 +14,6 @@ it.only('Should work', () => {
     'type-alias-declaration',
     'passing-generics-to-types',
     'promise-utility-type',
+    'literal-type',
   ]);
 });

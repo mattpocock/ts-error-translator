@@ -8,5 +8,5 @@ it('Should work', () => {
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
-  expect(tips).toEqual(['type-alias-declaration']);
+  expect(tips).toEqual(['type-alias-declaration', 'ts-object-type']);
 });

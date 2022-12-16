@@ -21,6 +21,16 @@ it('Templates with as const', () => {
   expect(tips).toEqual(['as-const', 'template-as-const']);
 });
 
+it('as assertions', () => {
+  const fileContents = `
+  const yeah = \`\` as string;
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toEqual(['as-assertion', 'basic-types']);
+});
+
 it('Extract', () => {
   const fileContents = `
   type Yeah = Extract<{}, {}>

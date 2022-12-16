@@ -30,6 +30,7 @@
     "autoprefixer": "^10.4.5",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.24",
-    "@tailwindcss/typography": "^0.5.2"
+    "@tailwindcss/typography": "^0.5.2",
+    "@total-typescript/error-translation-engine": "workspace:*"
   }
 }

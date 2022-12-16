@@ -17,7 +17,10 @@ it('Should work', () => {
   expect(tips).toEqual([
     'interface-declaration',
     'readonly-object-property',
+    'basic-types',
     'type-alias-declaration',
+    'ts-object-type',
     'readonly-object-property',
+    'basic-types',
   ]);
 });

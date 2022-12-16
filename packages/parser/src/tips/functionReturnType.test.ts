@@ -10,5 +10,10 @@ function yeah(): boolean {};
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
-  expect(tips).toEqual(['function-return-type', 'function-return-type']);
+  expect(tips).toEqual([
+    'function-return-type',
+    'basic-types',
+    'function-return-type',
+    'basic-types',
+  ]);
 });

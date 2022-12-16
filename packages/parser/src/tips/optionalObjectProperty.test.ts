@@ -14,10 +14,7 @@ it('Should work', () => {
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
-  expect(tips).toEqual([
-    'interface-declaration',
-    'optional-object-property',
-    'type-alias-declaration',
-    'optional-object-property',
-  ]);
+  expect(tips).toContain('interface-declaration');
+  expect(tips).toContain('optional-object-property');
+  expect(tips).toContain('type-alias-declaration');
 });

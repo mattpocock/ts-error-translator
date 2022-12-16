@@ -11,6 +11,8 @@ it('Should work', () => {
   expect(tips).toEqual([
     'type-alias-declaration',
     'keyof-indexed-access',
+    'ts-object-type',
     'keyof',
+    'ts-object-type',
   ]);
 });
