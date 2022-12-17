@@ -1,8 +1,8 @@
-# Total TypeScript
+# Total TypeScript VSCode Extension
 
 Learn TypeScript from within your IDE. Get helpful hints on syntax, and get translations of TypeScript's most cryptic errors.
 
-[Download the VSCode Extension](https://marketplace.visualstudio.com/items?itemName=mattpocock.ts-error-translator)
+- [Download the VSCode Extension](https://marketplace.visualstudio.com/items?itemName=mattpocock.ts-error-translator)
 
 ## Syntax Guide
 
