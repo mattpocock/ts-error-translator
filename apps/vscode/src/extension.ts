@@ -7,6 +7,8 @@ import {
 import * as vscode from 'vscode';
 import { defaultOptions } from './defaultOptions';
 import { initDiagnostics } from './initDiagnostics';
+import { showBeginnerQuestion } from './showBeginnerQuestion';
+import { showTipsQuestion } from './showTipsQuestion';
 
 const languages = [
   'typescript',
@@ -86,25 +88,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   updateHiddenTips();
 
-  if (options.hideBasicTips === null) {
-    vscode.window
-      .showInformationMessage(
-        `Would you call yourself a TypeScript beginner? If you are, we'll show you tips that are helpful when you're first learning TypeScript.`,
-        'Yes',
-        'No',
-      )
-      .then((res) => {
-        if (!res) {
-          return;
-        }
-        vscode.workspace
-          .getConfiguration('totalTypeScript')
-          .update(
-            'hideBasicTips',
-            res === 'No',
-            vscode.ConfigurationTarget.Global,
-          );
-      });
+  if (options.hideAllTips === null) {
+    showTipsQuestion();
+  } else if (!options.hideAllTips && options.hideBasicTips === null) {
+    showBeginnerQuestion();
   }
 
   const helperDiagnostics =
@@ -163,6 +150,10 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const updateDiagnostics = async (document: vscode.TextDocument) => {
+    if (options.hideAllTips) {
+      helperDiagnostics.set(document.uri, []);
+      return;
+    }
     try {
       const tipsFromFile = getTipsFromFile(document.getText());
 
@@ -206,6 +197,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const hoverProvider: vscode.HoverProvider = {
     provideHover: (document, position) => {
+      if (options.hideAllTips) {
+        return null;
+      }
+
       const itemsInUriStore = uriStore[document.uri.path];
 
       if (!itemsInUriStore) {

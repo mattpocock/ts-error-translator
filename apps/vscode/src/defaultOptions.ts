@@ -5,4 +5,5 @@ export const defaultOptions: Options = {
   showTLDRTranslation: true,
   hideBasicTips: null,
   hiddenTips: [],
+  hideAllTips: null,
 };

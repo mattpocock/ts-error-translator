@@ -53,6 +53,10 @@
           "default": true,
           "description": "Show the TL;DR translation of the error"
         },
+        "totalTypeScript.hideAllTips": {
+          "type": "boolean",
+          "default": null
+        },
         "totalTypeScript.hiddenTips": {
           "type": "array",
           "default": []
