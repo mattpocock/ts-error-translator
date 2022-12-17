@@ -21,7 +21,8 @@
       "cache": false
     },
     "vscode:package": {
-      "dependsOn": ["lint", "vscode:build", "test"]
+      "dependsOn": ["lint", "vscode:build", "test"],
+      "cache": false
     },
     "publish:vsce": {
       "dependsOn": ["vscode:package"],

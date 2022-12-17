@@ -17,18 +17,5 @@
 			],
 			"preLaunchTask": "npm: extension:build"
 		},
-		{
-			"name": "Extension Tests",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/apps/vscode",
-				"--extensionTestsPath=${workspaceFolder}/apps/vscode/out/test/suite/index"
-			],
-			"outFiles": [
-				"${workspaceFolder}/apps/vscode/out/test/**/*.js"
-			],
-			"preLaunchTask": "npm: extension:build"
-		}
 	]
 }

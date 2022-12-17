@@ -10,7 +10,7 @@ Your contributions will eventually help save countless hours for people struggli
 ## Prerequisites
 
 1. Node.js version installed, [latest LTS is recommended](https://nodejs.org/en/about/releases/)
-2. Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) (for installing npm dependencies, using yarn workspaces)
+2. Install pnpm
 
 ## How to start developing?
 
@@ -19,8 +19,8 @@ Clone the repo and install the needed dependencies for all the packages by follo
 ```sh
 git clone https://github.com/mattpocock/ts-error-translator.git
 cd ts-error-translator
-yarn
-yarn dev # This will run the next app
+pnpm
+pnpm dev # This will run the next app
 ```
 
 ## Adding/editing error translations
@@ -35,7 +35,7 @@ You'll find all of the errors' translations at `packages/engine/errors` and they
 - You can follow our template by running the following command. This will write an example file at `packages/engine/errors/<code>.md` with placeholders on how the explanation should be written.
 
 ```sh
-yarn translate <code>
+pnpm run translate <code>
 ```
 
 ## Translation style guide

@@ -1,4 +1,4 @@
-# @ts-error-messages/app
+# @total-typescript/app
 
 ## 1.0.1
 
