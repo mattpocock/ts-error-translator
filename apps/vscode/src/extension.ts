@@ -1,4 +1,9 @@
-import { getTipsFromFile, Tip, tipInfo } from '@total-typescript/tips-parser';
+import {
+  getTipsFromFile,
+  Tip,
+  tipInfo,
+  TipType,
+} from '@total-typescript/tips-parser';
 import * as vscode from 'vscode';
 import { defaultOptions } from './defaultOptions';
 import { initDiagnostics } from './initDiagnostics';
@@ -19,7 +24,26 @@ const updateOptions = () => {
   };
 };
 
-const tips = Object.keys(tipInfo);
+const tipHasNoDepsOrAllDepsCompleted = (tip: Tip) => {
+  const tipInfoItem = tipInfo[tip.type];
+
+  if (!tipInfoItem) {
+    return false;
+  }
+
+  // Tip has no deps
+  if (!tipInfoItem.deps) {
+    return true;
+  }
+
+  const deps = Array.isArray(tipInfoItem.deps)
+    ? tipInfoItem.deps
+    : [tipInfoItem.deps];
+
+  return deps.every((dep) => {
+    return isTipComplete(dep);
+  });
+};
 
 export const getRangeFromSourceLocation = (location: {
   start: {
@@ -36,31 +60,31 @@ export const getRangeFromSourceLocation = (location: {
     new vscode.Position(location.end.line - 1, location.end.column),
   );
 };
+let ignoredTips = new Set<string>(options.hiddenTips);
+
+const isTipComplete = (tipType: Tip['type']) => {
+  const tipInfoItem = tipInfo[tipType as keyof typeof tipInfo];
+
+  if (!tipInfoItem) {
+    return true;
+  }
+
+  if (tipInfoItem.difficulty === 'easy' && options.hideBasicTips) {
+    return true;
+  }
+
+  return ignoredTips.has(tipType);
+};
 
 export async function activate(context: vscode.ExtensionContext) {
-  updateOptions();
   initDiagnostics(context);
-
-  let ignoredTips = new Set<string>(options.hiddenTips);
-
-  const isTipComplete = (tipType: Tip['type']) => {
-    const tipInfoItem = tipInfo[tipType as keyof typeof tipInfo];
-
-    if (!tipInfoItem) {
-      return true;
-    }
-
-    if (tipInfoItem.difficulty === 'easy' && options.hideBasicTips) {
-      return true;
-    }
-
-    return ignoredTips.has(tipType);
-  };
 
   const updateHiddenTips = () => {
     updateOptions();
     ignoredTips = new Set(options.hiddenTips);
   };
+
+  updateHiddenTips();
 
   if (options.hideBasicTips === null) {
     vscode.window
@@ -87,87 +111,81 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.languages.createDiagnosticCollection('helpers');
   const uriStore: Record<string, Array<Tip & { range: vscode.Range }>> = {};
 
-  tips.forEach((tip) => {
-    context.subscriptions.push(
-      vscode.commands.registerCommand(
-        `ts-error-translator.dont-show-again.${tip}`,
-        async () => {
-          const humanReadableTip: string | undefined =
-            tipInfo[tip as keyof typeof tipInfo]?.name;
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      `ts-error-translator.dont-show-again`,
+      async ({ tip }: { tip: TipType }) => {
+        const humanReadableTip: string | undefined = tipInfo[tip]?.name;
 
-          if (!humanReadableTip) {
-            return;
-          }
+        if (!humanReadableTip) {
+          return;
+        }
 
-          const config = vscode.workspace.getConfiguration('totalTypeScript');
+        const config = vscode.workspace.getConfiguration('totalTypeScript');
 
-          ignoredTips.add(tip);
+        ignoredTips.add(tip);
 
-          await config.update(
-            'hiddenTips',
-            Array.from(ignoredTips),
-            vscode.ConfigurationTarget.Global,
-          );
+        await config.update(
+          'hiddenTips',
+          Array.from(ignoredTips),
+          vscode.ConfigurationTarget.Global,
+        );
 
-          if (vscode.window.activeTextEditor?.document) {
-            updateDiagnostics(vscode.window.activeTextEditor.document);
-          }
-        },
-      ),
-    );
-  });
+        if (vscode.window.activeTextEditor?.document) {
+          updateDiagnostics(vscode.window.activeTextEditor.document);
+        }
+      },
+    ),
+    vscode.commands.registerCommand(
+      `ts-error-translator.show-tip`,
+      async ({ tip }: { tip: TipType }) => {
+        const humanReadableTip: string | undefined = tipInfo[tip]?.name;
+
+        if (!humanReadableTip) {
+          return;
+        }
+
+        const config = vscode.workspace.getConfiguration('totalTypeScript');
+
+        ignoredTips.delete(tip);
+
+        await config.update(
+          'hiddenTips',
+          Array.from(ignoredTips),
+          vscode.ConfigurationTarget.Global,
+        );
+
+        if (vscode.window.activeTextEditor?.document) {
+          updateDiagnostics(vscode.window.activeTextEditor.document);
+        }
+      },
+    ),
+  );
 
   const updateDiagnostics = async (document: vscode.TextDocument) => {
     try {
       const tipsFromFile = getTipsFromFile(document.getText());
 
-      const tipHasNoDepsOrAllDepsCompleted = (tip: Tip) => {
-        const tipInfoItem = tipInfo[tip.type];
-
-        if (!tipInfoItem) {
-          return false;
-        }
-
-        // Tip has no deps
-        if (!tipInfoItem.deps) {
-          return true;
-        }
-
-        const deps = Array.isArray(tipInfoItem.deps)
-          ? tipInfoItem.deps
-          : [tipInfoItem.deps];
-
-        return deps.every((dep) => {
-          return isTipComplete(dep);
-        });
-      };
-
-      /**
-       * Tips where the deps have been fulfilled
-       */
-      const tipsWithoutDeps = tipsFromFile.filter(
-        tipHasNoDepsOrAllDepsCompleted,
-      );
-
-      uriStore[document.uri.path] = tipsWithoutDeps
-        .filter((tip) => !isTipComplete(tip.type))
-        .map((tip) => ({
-          ...tip,
-          range: getRangeFromSourceLocation(tip.loc),
-        }));
+      uriStore[document.uri.path] = tipsFromFile.map((tip) => ({
+        ...tip,
+        range: getRangeFromSourceLocation(tip.loc),
+      }));
     } catch (e) {}
 
     helperDiagnostics.set(
       document.uri,
-      uriStore[document.uri.path].map((tip) => {
-        const diagnostic = new vscode.Diagnostic(
-          tip.range,
-          tip.type,
-          vscode.DiagnosticSeverity.Information,
-        );
-        diagnostic.source = 'total-typescript';
-        return diagnostic;
-      }),
+      uriStore[document.uri.path]
+        .filter(tipHasNoDepsOrAllDepsCompleted)
+        .filter((tip) => !isTipComplete(tip.type))
+        .map((tip) => {
+          const diagnostic = new vscode.Diagnostic(
+            tip.range,
+            tip.type,
+            vscode.DiagnosticSeverity.Information,
+          );
+          diagnostic.source = 'total-typescript';
+          return diagnostic;
+        }),
     );
   };
 
@@ -198,7 +216,18 @@ export async function activate(context: vscode.ExtensionContext) {
         return item.range.contains(position);
       });
 
-      const contents = items
+      const tipsToShowFullHoverFor: Tip[] = [];
+      const tipsToShowSummaryFor: Tip[] = [];
+
+      items.forEach((tip) => {
+        if (tipHasNoDepsOrAllDepsCompleted(tip) && !isTipComplete(tip.type)) {
+          tipsToShowFullHoverFor.push(tip);
+        } else {
+          tipsToShowSummaryFor.push(tip);
+        }
+      });
+
+      const contents = tipsToShowFullHoverFor
         .map((itemInRange) => {
           const thisTip = tipInfo[itemInRange.type];
 
@@ -210,9 +239,9 @@ export async function activate(context: vscode.ExtensionContext) {
               thisTip.message ? `${thisTip.message}\n\n` : ''
             }${
               thisTip.link ? `[Learn More](${thisTip.link}) |` : ''
-            } [Mark as Learned](command:ts-error-translator.dont-show-again.${
-              itemInRange.type
-            })`,
+            } [Mark as Learned](command:ts-error-translator.dont-show-again?${encodeURIComponent(
+              JSON.stringify({ tip: itemInRange.type }),
+            )})`,
           );
 
           mdString.isTrusted = true;
@@ -221,6 +250,32 @@ export async function activate(context: vscode.ExtensionContext) {
           return mdString;
         })
         .filter(Boolean);
+
+      // const tipSummaryElements = tipsToShowSummaryFor
+      //   .map((tip) => {
+      //     const thisTip = tipInfo[tip.type];
+
+      //     if (!thisTip) {
+      //       return '';
+      //     }
+      //     return ` - ${
+      //       thisTip.name
+      //     } | [Show Hints](command:ts-error-translator.show-tip?${encodeURIComponent(
+      //       JSON.stringify({ tip: tip.type }),
+      //     )})`;
+      //   })
+      //   .filter(Boolean);
+
+      // if (tipSummaryElements.length > 0) {
+      //   const tipSummmary = new vscode.MarkdownString(
+      //     [`**Learned Tips**`, '', ...tipSummaryElements].join('\n'),
+      //   );
+
+      //   tipSummmary.isTrusted = true;
+      //   tipSummmary.supportHtml = true;
+
+      //   contents.push(tipSummmary);
+      // }
 
       return {
         contents,
