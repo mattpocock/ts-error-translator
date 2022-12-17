@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.7.0
+
+### Minor Changes
+
+- [`7fbe7ca`](https://github.com/mattpocock/ts-error-translator/commit/7fbe7caefa36aef2391c49890ec23e2c8bf4128a) Thanks [@mattpocock](https://github.com/mattpocock)! - Added the ability to see hints on unknown syntax in your TypeScript code.
+
+  <img src="https://raw.githubusercontent.com/mattpocock/ts-error-translator/main/assets/hint-screenshot.png" alt="A TypeScript hint showing in a VSCode document" />
+
+  Currently opt-out.
+
 ## 0.5.3
 
 ### Patch Changes
