@@ -1,5 +1,12 @@
 # @total-typescript/error-translation-engine
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`4421c57`](https://github.com/mattpocock/ts-error-translator/commit/4421c574fd56e59849964542502720ed8418af64)]:
+  - @total-typescript/tips-parser@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes
