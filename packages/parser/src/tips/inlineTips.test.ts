@@ -11,6 +11,21 @@ it('Should figure out as const', () => {
   expect(tips).toEqual(['as-const']);
 });
 
+it('Union type', () => {
+  const fileContents = `
+  type Yeah = string | number;
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toEqual([
+    'type-alias-declaration',
+    'union-type',
+    'basic-types',
+    'basic-types',
+  ]);
+});
+
 it('Templates with as const', () => {
   const fileContents = `
   const yeah = \`\` as const;

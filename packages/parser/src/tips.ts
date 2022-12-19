@@ -95,20 +95,6 @@ export const allTips = [
   keyofIndexedAccess,
   templateLiteral,
   createInlineTip(
-    'union-type',
-    z.object({ loc: SourceLocationSchema }),
-    ({ parse, push }) => {
-      return {
-        TSUnionType(path) {
-          safeParse(() => {
-            const node = parse(path.node);
-            push(node.loc);
-          });
-        },
-      };
-    },
-  ),
-  createInlineTip(
     'as-assertion',
     z.object({
       typeAnnotation: z.object({
