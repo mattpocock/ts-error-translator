@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.3
+
+### Patch Changes
+
+- [`4421c57`](https://github.com/mattpocock/ts-error-translator/commit/4421c574fd56e59849964542502720ed8418af64) Thanks [@mattpocock](https://github.com/mattpocock)! - Fixed a bug where union type would be extracted twice
+
 ## 0.7.0
 
 ### Minor Changes
