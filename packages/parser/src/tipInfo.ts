@@ -46,7 +46,7 @@ export const tipInfo: TipInfo = {
     name: 'Satisfies',
     message:
       'The Satisfies operator lets you validate that a type of an expression matches some type, without changing the resulting type of that expression.',
-    link: 'https://devblogs.microsoft.com/typescript/announcing-typescript-4-9-beta/#the-satisfies-operator',
+    link: 'https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator',
     difficulty: 'not-easy',
   },
   'awaited-utility-type': {
