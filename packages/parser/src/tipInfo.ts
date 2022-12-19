@@ -17,14 +17,14 @@ export type TipInfo = {
 
 export const tipInfo: TipInfo = {
   'as-const': {
-    name: 'const assertions',
-    message: `const assertions let you mark an expression as deeply immutable. This means it gets narrowed to its narrowest possible type.`,
+    name: 'Const assertions',
+    message: `Const assertions let you mark an expression as deeply immutable. This means it gets narrowed to its narrowest possible type.`,
     difficulty: 'not-easy',
     link: 'https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions',
   },
   'as-const-on-object': {
-    name: 'const assertions on objects',
-    message: `const assertions on objects let you mark an object as deeply immutable. This means its attributes get narrowed to their literal types.`,
+    name: 'Const assertions on objects',
+    message: `Const assertions on objects let you mark an object as deeply immutable. This means its attributes get narrowed to their literal types.`,
     difficulty: 'not-easy',
     link: 'https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions',
     deps: 'as-const',
@@ -37,10 +37,17 @@ export const tipInfo: TipInfo = {
     difficulty: 'not-easy',
   },
   'basic-types': {
-    name: 'Basic Types',
-    message: 'string, number and boolean are all basic types.',
+    name: 'Basic Primitive Types',
+    message: 'String, number and boolean are all basic primitive types.',
     link: 'https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean',
     difficulty: 'easy',
+  },
+  satisfies: {
+    name: 'Satisfies',
+    message:
+      'The Satisfies operator lets you validate that a type of an expression matches some type, without changing the resulting type of that expression.',
+    link: 'https://devblogs.microsoft.com/typescript/announcing-typescript-4-9-beta/#the-satisfies-operator',
+    difficulty: 'not-easy',
   },
   'awaited-utility-type': {
     deps: 'passing-generics-to-types',
@@ -66,7 +73,7 @@ export const tipInfo: TipInfo = {
   'readonly-utility-type': {
     deps: 'passing-generics-to-types',
     name: 'Readonly utility type',
-    message: `The Readonly utility type lets you make all the properties of an object readonly.`,
+    message: `The Readonly utility type lets you make all the properties of an object readonly. It's not possible to assign new values to the properties, it will result in a TypeScript warning`,
     link: 'https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype',
     difficulty: 'not-easy',
   },
