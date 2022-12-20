@@ -1,5 +1,13 @@
 # @total-typescript/error-translation-engine
 
+## 1.0.5
+
+### Patch Changes
+
+- [`b0c683d`](https://github.com/mattpocock/ts-error-translator/commit/b0c683d2dae4172876157bd9624ae1c198bf5be6) Thanks [@mattpocock](https://github.com/mattpocock)! - Added bigint type
+
+- [`605ae4a`](https://github.com/mattpocock/ts-error-translator/commit/605ae4aba085c498024d3adca4f3c29d8624e856) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed tips which didn't have messages attached
+
 ## 1.0.4
 
 ### Patch Changes
