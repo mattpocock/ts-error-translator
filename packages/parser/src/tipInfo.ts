@@ -5,7 +5,7 @@ type Difficulty = 'easy' | 'not-easy';
 
 export type TipInfoItem<Type extends Tip['type'] = Tip['type']> = {
   name: string;
-  message?: string;
+  message: string;
   deps?: MaybeArray<Exclude<Tip['type'], Type>>;
   link: string;
   difficulty: Difficulty;
@@ -314,12 +314,12 @@ export const tipInfo: TipInfo = {
     link: 'https://www.typescriptlang.org/docs/handbook/2/conditional-types.html',
     difficulty: 'not-easy',
   },
-  'k-in-keyof': {
-    name: 'keyof in Mapped Types',
-    deps: ['mapped-type'],
-    link: 'https://www.typescriptlang.org/docs/handbook/2/mapped-types.html',
-    difficulty: 'not-easy',
-  },
+  // 'k-in-keyof': {
+  //   name: 'keyof in Mapped Types',
+  //   deps: ['mapped-type'],
+  //   link: 'https://www.typescriptlang.org/docs/handbook/2/mapped-types.html',
+  //   difficulty: 'not-easy',
+  // },
   keyof: {
     name: 'keyof',
     message: `The keyof operator takes a type and returns a union of its keys.`,
@@ -359,12 +359,12 @@ export const tipInfo: TipInfo = {
     link: 'https://www.typescriptlang.org/docs/handbook/2/mapped-types.html',
     difficulty: 'not-easy',
   },
-  'multiple-generic-slots-in-functions': {
-    name: 'Multiple generics in functions',
-    deps: ['generic-slots-in-functions'],
-    link: 'https://www.typescriptlang.org/docs/handbook/2/generics.html',
-    difficulty: 'not-easy',
-  },
+  // 'multiple-generic-slots-in-functions': {
+  //   name: 'Multiple generics in functions',
+  //   deps: ['generic-slots-in-functions'],
+  //   link: 'https://www.typescriptlang.org/docs/handbook/2/generics.html',
+  //   difficulty: 'not-easy',
+  // },
   'remapping-in-mapped-type': {
     name: "Key remapping via 'as'",
     deps: ['mapped-type'],
