@@ -16,6 +16,12 @@ export type TipInfo = {
 };
 
 export const tipInfo: TipInfo = {
+  bigint: {
+    name: 'BigInt type',
+    message: `The bigint type lets you represent integers that are too large to be represented by 'number'.`,
+    link: 'https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-2.html#bigint',
+    difficulty: 'not-easy',
+  },
   'as-const': {
     name: 'const assertions',
     message: `const assertions let you mark an expression as deeply immutable. This means it gets narrowed to its narrowest possible type.`,

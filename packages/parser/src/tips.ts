@@ -271,6 +271,22 @@ export const allTips = [
     },
   ),
   createInlineTip(
+    'bigint',
+    z.object({
+      loc: SourceLocationSchema,
+    }),
+    ({ parse, push }) => {
+      return {
+        TSBigIntKeyword(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
     'any-type',
     z.object({
       loc: SourceLocationSchema,
