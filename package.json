@@ -13,7 +13,8 @@
     "extension:build": "turbo run vscode:build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js"
+    "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js",
+    "parser:dev": "turbo run dev --filter *parser"
   },
   "devDependencies": {
     "husky": ">=6",

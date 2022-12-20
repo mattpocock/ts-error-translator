@@ -12,7 +12,11 @@ it('Should work', () => {
   expect(tips).toEqual([
     'generic-slots-in-functions',
     'multiple-generic-slots-in-functions',
+    't-prefix-in-generic-arguments',
+    't-prefix-in-generic-arguments',
     'generic-slots-in-functions',
     'multiple-generic-slots-in-functions',
+    't-prefix-in-generic-arguments',
+    't-prefix-in-generic-arguments',
   ]);
 });

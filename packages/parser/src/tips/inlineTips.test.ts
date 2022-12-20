@@ -4,11 +4,21 @@ import { getTipsFromFile } from '../getTipsFromFile';
 it('Should figure out as const', () => {
   const fileContents = `
   const yeah = '' as const;
-  `;
+`;
 
   const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
 
   expect(tips).toEqual(['as-const']);
+});
+
+it('t-prefix-in-generic-arguments', () => {
+  const fileContents = `
+  type Yeah<T> = T;
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('t-prefix-in-generic-arguments');
 });
 
 it('Union type', () => {

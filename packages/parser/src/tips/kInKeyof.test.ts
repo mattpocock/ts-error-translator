@@ -13,6 +13,7 @@ it('Should work', () => {
   expect(tips).toEqual([
     'type-alias-declaration',
     'type-alias-with-generics',
+    't-prefix-in-generic-arguments',
     'mapped-type',
     'k-in-keyof',
     'keyof',

@@ -12,7 +12,9 @@ it('Should work', () => {
   expect(tips).toEqual([
     'interface-declaration',
     'interface-with-generics',
+    't-prefix-in-generic-arguments',
     'type-alias-declaration',
     'type-alias-with-generics',
+    't-prefix-in-generic-arguments',
   ]);
 });

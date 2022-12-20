@@ -13,8 +13,12 @@ it('Should work', () => {
     'interface-declaration',
     'interface-with-generics',
     'interface-with-multiple-generics',
+    't-prefix-in-generic-arguments',
+    't-prefix-in-generic-arguments',
     'type-alias-declaration',
     'type-alias-with-generics',
     'type-alias-with-multiple-generics',
+    't-prefix-in-generic-arguments',
+    't-prefix-in-generic-arguments',
   ]);
 });

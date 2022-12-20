@@ -11,6 +11,8 @@ it('Should work', () => {
 
   expect(tips).toEqual([
     'generic-slots-in-functions',
+    't-prefix-in-generic-arguments',
     'generic-slots-in-functions',
+    't-prefix-in-generic-arguments',
   ]);
 });

@@ -271,6 +271,20 @@ export const allTips = [
     },
   ),
   createInlineTip(
+    't-prefix-in-generic-arguments',
+    z.object({ loc: SourceLocationSchema, name: z.string().startsWith('T') }),
+    ({ parse, push }) => {
+      return {
+        TSTypeParameter: (path) => {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
     'bigint',
     z.object({
       loc: SourceLocationSchema,
