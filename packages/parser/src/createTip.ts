@@ -17,8 +17,6 @@ export const createTip = <TTipType extends string>(
   };
 };
 
-const schema = z.object({});
-
 export const createInlineTip = <
   TTipType extends string,
   ZodSchema extends z.ZodType,
