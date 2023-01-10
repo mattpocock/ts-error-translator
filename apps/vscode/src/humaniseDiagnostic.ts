@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import {
   parseErrors,
   fillBodyAndExcerptWithItems,
-} from '@ts-error-messages/engine';
+} from '@total-typescript/error-translation-engine';
 import * as bundleErrors from './bundleErrors.json';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { Options } from './types';

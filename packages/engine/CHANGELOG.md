@@ -1,4 +1,4 @@
-# @ts-error-messages/engine
+# @total-typescript/error-translation-engine
 
 ## 1.0.3
 

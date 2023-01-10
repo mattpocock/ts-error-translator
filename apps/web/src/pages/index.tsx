@@ -2,7 +2,7 @@ import {
   ErrorInfo,
   parseErrors,
   getImprovedMessageFromMarkdown,
-} from '@ts-error-messages/engine';
+} from '@total-typescript/error-translation-engine';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,

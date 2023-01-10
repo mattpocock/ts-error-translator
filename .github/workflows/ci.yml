@@ -8,15 +8,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 14.x
-          cache: 'yarn'
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
 
-      - run: yarn install
-      - run: yarn turbo run lint test vscode:package
-      - uses: actions/upload-artifact@v2
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo run lint test vscode:package
+      - uses: actions/upload-artifact@v3
         with:
           name: VSCode Preview VSIX
           path: 'apps/vscode/*.vsix'
