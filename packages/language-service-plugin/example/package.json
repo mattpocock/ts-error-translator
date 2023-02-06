@@ -1,0 +1,8 @@
+{
+  "name": "@total-typescript/language-service-plugin-example",
+  "version": "0.1.0",
+  "dependencies": {
+    "ts-error-translator-tssplugin": "file:..",
+    "typescript": "^4.8.3"
+  }
+}

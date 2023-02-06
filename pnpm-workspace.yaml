@@ -1,3 +1,4 @@
 packages:
   - 'packages/*'
+  - 'packages/language-service-plugin/*'
   - 'apps/*'

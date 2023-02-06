@@ -1,0 +1,16 @@
+{
+  "name": "ts-error-translator-tssplugin",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./out/index.js",
+  "private": true,
+  "files": ["./out/**"],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.3"
+  }
+}
