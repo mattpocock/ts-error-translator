@@ -1,19 +1,18 @@
 {
   "extends": "tsconfig/base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2019",
+    "module": "ESNext",
+    "target": "ESNext",
     "outDir": "./out",
     "rootDir": "src",
     "strict": true,
     "declaration": true,
-    "sourceMap": true,
-    "skipLibCheck": true
+    "sourceMap": true
   },
   "include": [
-    "src"
+    "src/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules", "out"
   ]
 }

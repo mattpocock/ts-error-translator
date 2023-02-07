@@ -4,13 +4,23 @@
   "license": "MIT",
   "main": "./out/index.js",
   "private": true,
-  "files": ["./out/**"],
+  "files": [
+    "./out/**"
+  ],
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "rollup -c rollup.config.mjs"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^3.14.0",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "@total-typescript/error-translation-engine": "workspace:*"
   }
 }

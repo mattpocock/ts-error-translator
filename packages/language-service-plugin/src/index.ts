@@ -1,10 +1,31 @@
-function init(modules: { typescript: typeof import("typescript/lib/tsserverlibrary") }) {
+import { parseErrors } from '@total-typescript/error-translation-engine';
+
+export default function init(modules: { typescript: typeof import("typescript/lib/tsserverlibrary") }) {
   const ts = modules.typescript;
 
+  function withParsedError(messageText: string): string {
+    const parsed = parseErrors(messageText);
+    const allMessages = parsed.map(err => err.error).join('\n\n');
+    return `${messageText}\n\nIn other words,\n${allMessages}\n`;
+  }
+
   function enrichDiagnostic(diagnostic: ts.Diagnostic): ts.Diagnostic {
-    // diagnostic.code: number
-    // diagnostic.category === ts.DiagnosticCategory (Error, Message, Suggestion, Warning)
-    diagnostic.messageText = `${diagnostic.messageText}\n\nHello from plugin!\n`
+    if (typeof diagnostic.messageText === 'string') {
+      diagnostic.messageText = withParsedError(diagnostic.messageText);
+      return diagnostic;
+    }
+    if (diagnostic.messageText.category === ts.DiagnosticCategory.Error) {
+      const msg = withParsedError(diagnostic.messageText.messageText);
+      diagnostic.messageText.messageText = msg;
+
+      const nextMesgs = diagnostic.messageText.next;
+      if (nextMesgs) {
+        for (let i = 0; i < nextMesgs.length; i++) {
+          let nextMsg = nextMesgs[i];
+          nextMesgs[i].messageText = withParsedError(nextMsg.messageText);
+        }
+      }
+    }
     return diagnostic;
   }
 
@@ -29,4 +50,4 @@ function init(modules: { typescript: typeof import("typescript/lib/tsserverlibra
 
 }
 
-export = init;
+// export = init;
