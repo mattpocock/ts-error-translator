@@ -50,7 +50,7 @@ export const run = async () => {
   }
 
   const files: AbsoluteFilePath[] = await fg.default(
-    path.resolve(os.homedir(), `repos/oss/**/*.{ts,tsx}`),
+    path.resolve(os.homedir(), `repos/oss/cal.com/**/*.{ts,tsx}`),
     {
       ignore: toIgnore,
     },
@@ -60,6 +60,8 @@ export const run = async () => {
   for (const file of files) {
     const fileContents = await readFile(file, 'utf-8');
 
+    const fileContentsSplit = fileContents.split('\n');
+
     try {
       const tips = getTipsFromFile(fileContents, type);
 
@@ -67,7 +69,28 @@ export const run = async () => {
 
       if (filteredTips.length > 0) {
         filteredTips.forEach((tip) => {
-          console.log(`${file}:${tip.loc.start.line}:${tip.loc.start.column}`);
+          let preview = ``;
+
+          let lineIndex = tip.loc.start.line - 2;
+
+          /**
+           * For each line, concatenate to preview
+           */
+
+          while (lineIndex < tip.loc.end.line + 1) {
+            if (typeof fileContentsSplit[lineIndex] === 'undefined') {
+              break;
+            }
+
+            if (fileContentsSplit[lineIndex].trim()) {
+              preview = `${preview}\n${fileContentsSplit[lineIndex]}`;
+            }
+            lineIndex++;
+          }
+
+          console.log(preview);
+
+          console.log('');
         });
       }
     } catch (e) {

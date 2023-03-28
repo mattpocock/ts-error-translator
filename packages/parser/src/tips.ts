@@ -123,6 +123,25 @@ export const allTips = [
     },
   ),
   createInlineTip(
+    'as-any',
+    z.object({
+      typeAnnotation: z.object({
+        loc: SourceLocationSchema,
+        type: z.literal('TSAnyKeyword'),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        TSAsExpression(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            push(node.typeAnnotation.loc);
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
     'null-keyword',
     z.object({ loc: SourceLocationSchema }),
     ({ parse, push }) => {
