@@ -13,21 +13,12 @@ import prompts from 'prompts';
 type AbsoluteFilePath = string;
 
 export const run = async () => {
-  const { type, repos }: { type?: TipType; repos: string[] } = await prompts([
+  const { type }: { type?: TipType } = await prompts([
     {
       message: `What type of tip do you want to search for?`,
       type: 'autocomplete',
       name: 'type',
       choices: tipsAsStrings.map((type) => ({ title: type, value: type })),
-    },
-    {
-      message: `Which repos do you want to search?`,
-      type: 'autocompleteMultiselect',
-      name: 'repos',
-      choices: [
-        { title: 'libraries', value: 'libraries', selected: false },
-        { title: 'apps', value: 'apps', selected: true },
-      ],
     },
   ]);
 
@@ -39,22 +30,13 @@ export const run = async () => {
     '**/DefinitelyTyped/**',
   ];
 
-  if (!repos.includes('libraries')) {
-    toIgnore.push('**/trpc/**');
-    toIgnore.push('**/zod/**');
-    toIgnore.push('**/xstate/**');
-    toIgnore.push('**/query/**');
-    toIgnore.push('**/io-ts/**');
-    toIgnore.push('**/redux/**');
-    toIgnore.push('**/magic-regexp/**');
-  }
-
   const files: AbsoluteFilePath[] = await fg.default(
-    path.resolve(os.homedir(), `repos/oss/cal.com/**/*.{ts,tsx}`),
+    path.resolve(process.env.INIT_CWD || process.cwd(), `./**/*.{ts,tsx}`),
     {
       ignore: toIgnore,
     },
   );
+
   let erroredFileCount = 0;
 
   for (const file of files) {
@@ -88,6 +70,9 @@ export const run = async () => {
             lineIndex++;
           }
 
+          console.log(
+            `${file}:${tip.loc.start.line}:${tip.loc.start.column + 1}`,
+          );
           console.log(preview);
 
           console.log('');
