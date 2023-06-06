@@ -78,7 +78,10 @@ export interface ErrorInfo extends ErrorInfoWithoutImprovedError {
 
 export interface ParseErrorsOpts {}
 
-export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
+export const parseErrorsWithDb = (
+  db: TsErrorMessageDb,
+  message: string,
+): ErrorInfoWithoutImprovedError[] => {
   const errorMessageByKey: Record<string, ErrorInfoWithoutImprovedError> = {};
 
   const keys = Object.keys(db);
