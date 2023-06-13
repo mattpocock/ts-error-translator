@@ -95,6 +95,74 @@ export const allTips = [
   keyofIndexedAccess,
   templateLiteral,
   createInlineTip(
+    'generic-component-declaration',
+    z.object({
+      id: z.object({
+        name: z.string().refine((name) => {
+          return name.charAt(0) === name.charAt(0).toUpperCase();
+        }),
+      }),
+      typeParameters: z.object({
+        type: z.literal('TSTypeParameterDeclaration'),
+        loc: SourceLocationSchema,
+        params: z
+          .array(
+            z.object({
+              name: z.string(),
+            }),
+          )
+          .min(1),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        FunctionDeclaration(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            if (node.typeParameters) {
+              push(node.typeParameters.loc);
+            }
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
+    'generic-component-declaration',
+    z.object({
+      id: z.object({
+        name: z.string().refine((name) => {
+          return name.charAt(0) === name.charAt(0).toUpperCase();
+        }),
+      }),
+      init: z.object({
+        typeParameters: z.object({
+          type: z.literal('TSTypeParameterDeclaration'),
+          loc: SourceLocationSchema,
+          params: z
+            .array(
+              z.object({
+                name: z.string(),
+              }),
+            )
+            .min(1),
+        }),
+      }),
+    }),
+    ({ parse, push }) => {
+      return {
+        VariableDeclarator(path) {
+          safeParse(() => {
+            const node = parse(path.node);
+            if (node.init.typeParameters) {
+              push(node.init.typeParameters.loc);
+            }
+          });
+        },
+      };
+    },
+  ),
+  createInlineTip(
     'as-assertion',
     z.object({
       typeAnnotation: z.object({
@@ -703,7 +771,9 @@ export const allTips = [
   ...utilityTypeTips,
 ];
 
-export const tipsAsStrings = allTips.map((tip) => tip.type);
+export const tipsAsStrings = Array.from(
+  new Set(allTips.map((tip) => tip.type)),
+);
 
 export type TipType = typeof allTips[number]['type'];
 export type Tip = { type: TipType; loc: t.SourceLocation };
