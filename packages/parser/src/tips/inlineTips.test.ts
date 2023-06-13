@@ -21,6 +21,26 @@ it('t-prefix-in-generic-arguments', () => {
   expect(tips).toContain('t-prefix-in-generic-arguments');
 });
 
+it('generic-component-declaration in arrow functions', () => {
+  const fileContents = `
+  const Component = <T>() => {};
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('generic-component-declaration');
+});
+
+it('generic-component-declaration in normal functions', () => {
+  const fileContents = `
+  function Component<T>() {}
+  `;
+
+  const tips = getTipsFromFile(fileContents).map((tip) => tip.type);
+
+  expect(tips).toContain('generic-component-declaration');
+});
+
 it('Union type', () => {
   const fileContents = `
   type Yeah = string | number;
