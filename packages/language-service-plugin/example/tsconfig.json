@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "plugins": [{
+      "name": "ts-error-translator-tssplugin"
+    }]
+  }
+}

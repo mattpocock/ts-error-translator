@@ -12,6 +12,14 @@ Your contributions will eventually help save countless hours for people struggli
 1. Node.js version installed, [latest LTS is recommended](https://nodejs.org/en/about/releases/)
 2. Install pnpm
 
+### Using [devcontainer](https://code.visualstudio.com/docs/devcontainers/create-dev-container)
+
+Devcontainers is an easy way to avoid "works on my machine" situations. Essentially, the development happens in a Docker container.
+
+1. Make sure you've got Docker installed on your machine
+2. Do install the recommended by VSCode extensions
+3. Click "Reopen in Container" button in a popup
+
 ## How to start developing?
 
 Clone the repo and install the needed dependencies for all the packages by following these steps:
@@ -19,7 +27,7 @@ Clone the repo and install the needed dependencies for all the packages by follo
 ```sh
 git clone https://github.com/mattpocock/ts-error-translator.git
 cd ts-error-translator
-pnpm
+pnpm install
 pnpm dev # This will run the next app
 ```
 

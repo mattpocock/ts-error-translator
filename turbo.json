@@ -1,11 +1,13 @@
 {
+  "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "vscode:build": {
       "dependsOn": ["bundle-errors"],
       "cache": false
     },
     "build": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
     },
     "lint": {
       "outputs": []
