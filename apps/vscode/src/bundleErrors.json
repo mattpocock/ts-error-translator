@@ -29,6 +29,11 @@
     "excerpt": "You can only create a single variable in a 'for...in' statement",
     "code": "1091"
   },
+  "1109": {
+    "body": "I am expecting an expression, a code that resolves with a value, in the location where I am pointing at.\n\n### Examples\n\n\n```ts\nimport {} from\n```\n\nI'm expecting an expression after 'from'\n\n```ts\nexport default;\n```\n\nI'm expecting an expression after 'default'\n\n```ts\n1 + ;\n```\n\nI'm expecting an expression after '+'\n\n```ts\n1 >=;   \n```\n\nI'm expecting an expression after '>='\n\n```ts\n< 2;\n```     \n\nI'm expecting an expression before '<'\n\n```ts\nif () {}      \n```\n\nI'm expecting an expression between '()'\n\n```ts\nfor () {}\n```\n\nI'm expecting an expression between '()'",
+    "excerpt": "I am expecting a code that resolves to a value.",
+    "code": "1109"
+  },
   "1117": {
     "body": "I expect objects to have unique property names.\n\nBecause this object has a duplicate property, I don't know how to deal with it:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: false,\n  delicious: true,\n};\n```\n\nI'll be happy again if you remove the duplicate like so:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: true,\n};\n```\n",
     "excerpt": "You can't add the same property multiple times to an object.",
@@ -83,6 +88,11 @@
     "body": "You are assigning to a variable whose type `Foo` matches type `Bar` but they both have a property `{0}` whose type is incompatible with each other. For example:\n\n```ts\ninterface Foo {\n  {0}: string\n}\ninterface Bar {\n  {0}: number\n}\nconst foo: Foo = { {0}: \"\" }\nconst bar: Bar = foo\n```\n\nTypes `Foo` and `Bar` are structurally equal because they have the same properties. However, they are incompatible because the type of property `{0}` is `string` in `Foo` and `number` in `Bar`.\n",
     "excerpt": "Two similar types have a property '{0}' which is different, making them incompatible.",
     "code": "2326"
+  },
+  "2327": {
+    "body": "Types `{1}` and `{2}` have the same property `{0}` but the property `{0}` is prefixed with `?` in type `{1}` which means it may not exist.\n\nFor example, the interface `{1}` declares that there is a property `{0}` which can be a `string` or it should not exist in the object:\n\n```ts\ninterface {1} {\n  {0}?: string;\n}\ninterface {2} {\n  {0}: string\n}\nconst foo: {1} = {}  // OK: '{0}' doesn't exist in type '{1}'\nconst bar: {2} = foo // Error: '{0}' must exist in type '{2}'\n```\n\nConsider removing the prefix `?` from the property `{0}` in type `{1}` or adding the prefix `?` to the property `{0}` in type `{2}`.\n",
+    "excerpt": "Property '{0}' in type '{2}' must exist.",
+    "code": "2327"
   },
   "2339": {
     "body": "TODO\n",
@@ -179,6 +189,11 @@
     "excerpt": "Type '{0}' is not a class.",
     "code": "2761"
   },
+  "2783": {
+    "body": "I think you need to reorder the object property assignments and move the spread first. When spreading, what comes first is 'overridden' by what comes later. For example, if you have assignments like these:\n\n```ts\nconst foo = {\n  bar: 'A',\n};\n\nconst baz = {\n  bar: 'B',\n  ...foo,\n};\n```\n\nYou can change it to be like this:\n\n```ts\nconst baz = {\n  ...foo,\n  bar: 'B',\n};\n```\n",
+    "excerpt": "'{0}' will be overwritten by the spread.",
+    "code": "2783"
+  },
   "5075": {
     "body": "TODO\n",
     "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
@@ -203,6 +218,11 @@
     "body": "You can do one of two following options:\n\n1. (_Recommended_) Either cast the `yield` value using `as`, or strictly declare the type of the variable\n\n```ts\nfunction* watchTasks() {\n  const taskChannel: ActionChannelEffect = yield actionChannel([\n    //no longer has to infer\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n\n2. Specify the return type of your generator function for **all** contained `yield` steps\n\n```ts\nfunction* watchTasks(): Generator<ActionChannelEffect, void> {\n  const taskChannel = yield actionChannel([\n    //can now infer here safely\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n",
     "excerpt": "I don't know enough about your generator function's return type to safely infer here.",
     "code": "7057"
+  },
+  "7061": {
+    "body": "```ts\ntype Keys = 'Foo' | 'Bar';\ntype MyMappedType = {\n  Baz: string; // << static properties\n  [Key in Keys]: string; // << dynamic properties\n}; // 👎\n```\n\nAn interface can only have static properties. You cannot create a mapped type with an interface.\n\n```ts\ntype Keys = 'Foo' | 'Bar';\ninterface MyInterface {\n  [Key in Keys]: string;\n} // 👎\n```\n",
+    "excerpt": "You're trying to create a mapped type with both static and dynamic properties.",
+    "code": "7061"
   },
   "8016": {
     "body": "Type assertions such as `myVar as string` are a TypeScript-only language feature.\n\nIn order to use type assertions, you should convert your JavaScript file to TypeScript.\n",

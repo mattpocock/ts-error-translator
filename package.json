@@ -10,17 +10,20 @@
     "translate": "ts-node -T scripts/translate.ts",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "extension:build": "yarn workspace ts-error-translator compile",
+    "extension:build": "turbo run vscode:build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js"
+    "release": "turbo run publish:vsce publish:ovsx && node ./scripts/tag-extension.js",
+    "parser:dev": "turbo run dev --filter *parser"
   },
   "devDependencies": {
     "husky": ">=6",
     "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "ts-node": "^10.7.0",
-    "turbo": "^1.2.6"
+    "turbo": "^1.2.6",
+    "typescript": "^4.8.3",
+    "@types/node": "^18.7.18"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json}": "prettier --write"

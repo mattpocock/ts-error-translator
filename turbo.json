@@ -21,7 +21,8 @@
       "cache": false
     },
     "vscode:package": {
-      "dependsOn": ["lint", "vscode:build", "test"]
+      "dependsOn": ["vscode:build"],
+      "cache": false
     },
     "publish:vsce": {
       "dependsOn": ["vscode:package"],
@@ -29,7 +30,7 @@
       "cache": false
     },
     "publish:ovsx": {
-      "dependsOn": ["vscode:package"],
+      "dependsOn": ["vscode:package", "publish:vsce"],
       "outputs": [],
       "cache": false
     }

@@ -1,0 +1,14 @@
+{
+  "tip": {
+    "prefix": "tip",
+    "body": [
+      "createInlineTip(",
+      "  '$1',",
+      "  z.object({ loc: SourceLocationSchema }),",
+      "  ({ parse, push }) => {",
+      "    return {};",
+      "  },",
+      "),",
+    ]
+  }
+}
