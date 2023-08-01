@@ -37,7 +37,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "@changesets/changelog-github": "^0.4.4",
-    "@changesets/cli": "^2.22.0"
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2"
   }
 }
