@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.9.0
+
+### Minor Changes
+
+- [`6d17789`](https://github.com/mattpocock/ts-error-translator/commit/6d1778991e8c2703d510bd1d6a4766213505be90) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed the ability to see a full translation on the website. This might be added back in the future when migrated over to TT.
+
+- [#176](https://github.com/mattpocock/ts-error-translator/pull/176) [`fbc8e2d`](https://github.com/mattpocock/ts-error-translator/commit/fbc8e2d61b424eb5e6ea2e895769540a2de039a5) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed ability to remove the TLDR translations. All translations now always show the TLDR.
+
+- [#176](https://github.com/mattpocock/ts-error-translator/pull/176) [`fbc8e2d`](https://github.com/mattpocock/ts-error-translator/commit/fbc8e2d61b424eb5e6ea2e895769540a2de039a5) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed the 'contribute' button, and added a 'request translation' button.
+
+  From Matt - I wanted to ensure that all the translations on the vscode extension were high-quality and of one voice, but I ended up not having enough time to edit the translations that came in.
+
+  I think it's a cleaner flow to let folks simply request translations, and I can provide them - instead of going through multiple review rounds discussing corrections.
+
+- [#174](https://github.com/mattpocock/ts-error-translator/pull/174) [`ee7a736`](https://github.com/mattpocock/ts-error-translator/commit/ee7a7360a78f920e19c45efeb4d59a65973bc55b) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed ability to show full body explanation of error
+
 ## 0.8.0
 
 ### Minor Changes

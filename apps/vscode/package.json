@@ -4,7 +4,7 @@
   "description": "Learn TypeScript in VSCode with a TypeScript error translator and syntax guide.",
   "license": "MIT",
   "author": "Matt Pocock",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "engines": {
     "vscode": "^1.50.0"
