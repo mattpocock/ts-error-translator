@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.9.2
+
+### Patch Changes
+
+- [`cafffd8`](https://github.com/mattpocock/ts-error-translator/commit/cafffd899b5394bac74ddaa99d648afa98875b55) Thanks [@mattpocock](https://github.com/mattpocock)! - Added a link for property does not exist on type.
+
 ## 0.9.1
 
 ### Patch Changes
