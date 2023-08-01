@@ -43,10 +43,15 @@ export const humaniseDiagnostic = (
           error.code
         }\`](https://github.com/mattpocock/ts-error-translator/issues/new?${new URLSearchParams(
           {
-            title: `Translation request for #${error.code}`,
+            title: `Translation request for ${error.code}`,
             assignees: 'mattpocock',
-            body: `**Error**: ${error.parseInfo.rawError}`,
-            labels: 'Translation',
+            body: [
+              `# Error Text`,
+              `${error.parseInfo.rawError}`,
+              `# Supporting Information`,
+              `Please provide other information which led to this error, and any specific questions you have about it:`,
+            ].join('\n\n'),
+            labels: 'translation request',
           } satisfies GHIssueURLParams,
         )})`,
       );
