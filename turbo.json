@@ -17,8 +17,7 @@
       "cache": false
     },
     "bundle-errors": {
-      "outputs": [],
-      "cache": false
+      "outputs": ["src/bundleErrors.json"]
     },
     "vscode:package": {
       "dependsOn": ["vscode:build"],

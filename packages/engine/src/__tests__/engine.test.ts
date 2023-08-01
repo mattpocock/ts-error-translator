@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fillBodyAndExcerptWithItems } from '../getImprovedMessage';
+import { fillBodyWithItems } from '../getImprovedMessage';
 import { parseErrors, parseErrorsWithDb } from '../parseErrors';
 
 describe('parseErrors', () => {
@@ -167,10 +167,10 @@ describe('parseErrors', () => {
   });
 });
 
-describe('fillBodyAndExcerptWithItems', () => {
+describe('fillBodyWithItems', () => {
   it(`Should handle {0} AND '{1}' cases in excerpt`, () => {
-    const result = fillBodyAndExcerptWithItems(`{0} and '{1}'`, ['A', 'B']);
+    const result = fillBodyWithItems(`{0} and '{1}'`, ['A', 'B']);
 
-    expect(result.excerpt).toEqual('`A` and `B`');
+    expect(result.body).toEqual('`A` and `B`');
   });
 });

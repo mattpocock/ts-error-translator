@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {
-  fillBodyAndExcerptWithItems,
+  fillBodyWithItems,
   parseErrors,
 } from '@total-typescript/error-translation-engine';
 import * as bundleErrors from './bundleErrors.json';
@@ -24,19 +24,16 @@ export const humaniseDiagnostic = (
   errorLines.forEach((error) => {
     const errorBodies: string[] = [];
 
-    const fullError = (bundleErrors as Record<string, { excerpt: string }>)[
+    const fullError = (bundleErrors as Record<string, { body: string }>)[
       error.code
     ];
 
     errorBodies.push(['```txt', error.parseInfo.rawError, '```'].join('\n'));
 
     if (fullError) {
-      const { excerpt } = fillBodyAndExcerptWithItems(
-        fullError.excerpt,
-        error.parseInfo.items,
-      );
+      const { body } = fillBodyWithItems(fullError.body, error.parseInfo.items);
 
-      errorBodies.push('---', excerpt);
+      errorBodies.push('---', body);
     } else {
       errorBodies.push(
         `[Request a translation for \`#${

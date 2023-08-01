@@ -12,27 +12,22 @@ export const getImprovedMessageFromMarkdown = (
   try {
     const fileResult = fs.readFileSync(file, 'utf8');
 
-    const parseResult = fm<{ excerpt: string }>(fileResult);
+    const parseResult = fm(fileResult);
 
-    let excerpt = parseResult.attributes.excerpt;
-
-    return fillBodyAndExcerptWithItems(excerpt, items);
+    return fillBodyWithItems(parseResult.body, items);
   } catch (e) {
     console.log(e);
     return null;
   }
 };
 
-export const fillBodyAndExcerptWithItems = (
-  excerpt: string,
-  items: (string | number)[],
-) => {
+export const fillBodyWithItems = (body: string, items: (string | number)[]) => {
   items.forEach((item, index) => {
-    const excerptRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
-    excerpt = excerpt.replace(excerptRegex, '`' + item + '`');
+    const bodyRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
+    body = body.replace(bodyRegex, '`' + item + '`');
   });
 
   return {
-    excerpt,
+    body,
   };
 };
