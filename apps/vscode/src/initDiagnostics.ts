@@ -1,8 +1,5 @@
 import * as vscode from 'vscode';
-import { defaultOptions } from './defaultOptions';
 import { humaniseDiagnostic } from './humaniseDiagnostic';
-
-let options = defaultOptions;
 
 const languages = [
   'typescript',
@@ -22,23 +19,6 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
       contents: vscode.MarkdownString[];
     }[]
   > = {};
-
-  const updateOptions = () => {
-    options = {
-      ...defaultOptions,
-      ...vscode.workspace.getConfiguration('totalTypeScript'),
-    };
-  };
-
-  updateOptions();
-
-  context.subscriptions.push(
-    vscode.workspace.onDidChangeConfiguration((config) => {
-      if (config.affectsConfiguration('totalTypeScript')) {
-        updateOptions();
-      }
-    }),
-  );
 
   const hoverProvider: vscode.HoverProvider = {
     provideHover: (document, position) => {
@@ -76,7 +56,10 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
           contents: vscode.MarkdownString[];
         }[] = [];
         diagnostics.forEach((diagnostic) => {
-          const humanizedVersion = humaniseDiagnostic(diagnostic, options);
+          if (diagnostic.source !== 'ts') {
+            return;
+          }
+          const humanizedVersion = humaniseDiagnostic(diagnostic);
 
           if (humanizedVersion) {
             items.push({

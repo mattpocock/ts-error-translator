@@ -1,37 +1,27 @@
 import * as vscode from 'vscode';
-
 import {
-  parseErrors,
   fillBodyAndExcerptWithItems,
+  parseErrors,
 } from '@total-typescript/error-translation-engine';
 import * as bundleErrors from './bundleErrors.json';
-import { compressToEncodedURIComponent } from 'lz-string';
-import { Options } from './types';
 
-const getMessageTemplate = (options: Options) => {
-  let messageTemplate: 'tldr-only' | 'link-only';
-
-  if (options.showTLDRTranslation) {
-    messageTemplate = 'tldr-only';
-  } else {
-    messageTemplate = 'link-only';
-  }
-
-  return messageTemplate;
+type GHIssueURLParams = {
+  title: string;
+  body: string;
+  labels: string;
+  assignees: 'mattpocock';
 };
 
 export const humaniseDiagnostic = (
   diagnostic: vscode.Diagnostic,
-  options: Options,
 ): vscode.MarkdownString[] => {
-  if (diagnostic.source !== 'ts') {
-    return [];
-  }
-  const errors = parseErrors(diagnostic.message);
+  const errorLines = parseErrors(diagnostic.message);
 
   const markdownStrings: vscode.MarkdownString[] = [];
 
-  errors.forEach((error) => {
+  markdownStrings.push(new vscode.MarkdownString('## Translation'));
+
+  errorLines.forEach((error) => {
     const errorBodies: string[] = [];
 
     const fullError = (bundleErrors as Record<string, { excerpt: string }>)[
@@ -46,23 +36,19 @@ export const humaniseDiagnostic = (
         error.parseInfo.items,
       );
 
-      const messageTemplate = getMessageTemplate(options);
-
-      const linkToTranslation = `[See full translation](https://ts-error-translator.vercel.app/?error=${compressToEncodedURIComponent(
-        diagnostic.message,
-      )})`;
-
-      switch (messageTemplate) {
-        case 'link-only':
-          errorBodies.push(linkToTranslation);
-          break;
-        case 'tldr-only':
-          errorBodies.push(`**Translation**: ${excerpt}`, linkToTranslation);
-          break;
-      }
+      errorBodies.push('---', excerpt);
     } else {
       errorBodies.push(
-        `[Contribute a translation for \`#${error.code}\`](https://github.com/mattpocock/ts-error-translator/blob/main/CONTRIBUTING.md)`,
+        `[Request a translation for \`#${
+          error.code
+        }\`](https://github.com/mattpocock/ts-error-translator/issues/new?${new URLSearchParams(
+          {
+            title: `Translation request for #${error.code}`,
+            assignees: 'mattpocock',
+            body: `**Error**: ${error.parseInfo.rawError}`,
+            labels: 'Translation',
+          } satisfies GHIssueURLParams,
+        )})`,
       );
     }
 
