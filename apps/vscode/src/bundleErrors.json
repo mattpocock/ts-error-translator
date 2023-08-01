@@ -76,7 +76,7 @@
     "code": "2327"
   },
   "2339": {
-    "body": "You're trying to access '{0}' on an object that doesn't contain it.\n",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it. [Learn more.](https://totaltypescript.com)\n",
     "code": "2339"
   },
   "2344": {
