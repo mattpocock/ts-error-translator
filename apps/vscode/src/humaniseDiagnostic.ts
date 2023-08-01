@@ -1,9 +1,21 @@
+import { parseErrors } from '@total-typescript/error-translation-engine';
 import * as vscode from 'vscode';
-import {
-  fillBodyWithItems,
-  parseErrors,
-} from '@total-typescript/error-translation-engine';
 import * as bundleErrors from './bundleErrors.json';
+import { formatTypeBlock } from './format/formatTypeBlock';
+import { formatDiagnosticMessage } from './format/formatDiagnosticMessage';
+
+// TODO
+export const fillBodyWithItems = (body: string, items: (string | number)[]) => {
+  items.forEach((item, index) => {
+    const bodyRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
+    console.log(item);
+    body = body.replace(bodyRegex, formatTypeBlock('', String(item).trim()));
+  });
+
+  return {
+    body,
+  };
+};
 
 type GHIssueURLParams = {
   title: string;
@@ -28,13 +40,13 @@ export const humaniseDiagnostic = (
       error.code
     ];
 
-    errorBodies.push(['```txt', error.parseInfo.rawError, '```'].join('\n'));
-
     if (fullError) {
       const { body } = fillBodyWithItems(fullError.body, error.parseInfo.items);
 
-      errorBodies.push('---', body);
+      errorBodies.push(body);
     } else {
+      console.log(error.parseInfo.rawError);
+      errorBodies.push(formatDiagnosticMessage(error.parseInfo.rawError));
       errorBodies.push(
         `[Request a translation for \`#${
           error.code
@@ -54,7 +66,12 @@ export const humaniseDiagnostic = (
       );
     }
 
-    markdownStrings.push(new vscode.MarkdownString(errorBodies.join('\n\n')));
+    const formattedString = new vscode.MarkdownString(errorBodies.join('\n\n'));
+
+    formattedString.isTrusted = true;
+    formattedString.supportHtml = true;
+
+    markdownStrings.push(formattedString);
   });
 
   return markdownStrings;
