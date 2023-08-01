@@ -14,30 +14,25 @@ export const getImprovedMessageFromMarkdown = (
 
     const parseResult = fm<{ excerpt: string }>(fileResult);
 
-    let body = parseResult.body;
     let excerpt = parseResult.attributes.excerpt;
 
-    return fillBodyAndExcerptWithItems(body, excerpt, items);
+    return fillExcerptWithItems(excerpt, items);
   } catch (e) {
     console.log(e);
     return null;
   }
 };
 
-export const fillBodyAndExcerptWithItems = (
-  body: string,
+export const fillExcerptWithItems = (
   excerpt: string,
   items: (string | number)[],
 ) => {
   items.forEach((item, index) => {
-    const bodyRegex = new RegExp(`\\\{${index}\\\}`, 'g');
-    body = body.replace(bodyRegex, item.toString());
     const excerptRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
     excerpt = excerpt.replace(excerptRegex, '`' + item + '`');
   });
 
   return {
-    body,
     excerpt,
   };
 };

@@ -43,16 +43,6 @@
     "configuration": {
       "title": "Total TypeScript",
       "properties": {
-        "totalTypeScript.showFullTranslation": {
-          "type": "boolean",
-          "default": false,
-          "description": "Show the full translation of the error"
-        },
-        "totalTypeScript.showTLDRTranslation": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show the TL;DR translation of the error"
-        },
         "totalTypeScript.hideAllTips": {
           "type": "boolean",
           "default": null
@@ -84,6 +74,7 @@
   },
   "devDependencies": {
     "@total-typescript/error-translation-engine": "workspace:*",
+    "@total-typescript/error-hint-engine": "workspace:*",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "14.x",

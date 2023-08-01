@@ -1,0 +1,21 @@
+{
+  "name": "@total-typescript/error-hint-engine",
+  "version": "1.0.3",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "private": true,
+  "scripts": {
+    "dev": "vitest",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.3",
+    "vitest": "^0.10.0",
+    "esbuild": "^0.14.38",
+    "tsconfig": "workspace:*"
+  }
+}
