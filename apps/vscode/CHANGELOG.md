@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.9.1
+
+### Patch Changes
+
+- [`95cc3b2`](https://github.com/mattpocock/ts-error-translator/commit/95cc3b29c2daac086d6eb17178c65d652afa9154) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed a now-redundant option from the options registered with VSCode.
+
 ## 0.9.0
 
 ### Minor Changes
