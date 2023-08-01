@@ -60,7 +60,7 @@
     "code": "2314"
   },
   "2322": {
-    "body": "I was expecting a type matching A, but instead you passed B.\n",
+    "body": "I was expecting a type matching '{0}', but instead you passed '{1}'.\n",
     "code": "2322"
   },
   "2324": {
@@ -134,6 +134,10 @@
   "2590": {
     "body": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.\n",
     "code": "2590"
+  },
+  "2739": {
+    "body": "Type '{0}' is missing the following properties from type '{1}': {2}",
+    "code": "2739"
   },
   "2741": {
     "body": "You haven't passed all the required properties to '{2}' - '{1}' is missing the '{0}' property\n",
