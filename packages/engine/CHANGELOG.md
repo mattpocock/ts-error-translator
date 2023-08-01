@@ -1,5 +1,11 @@
 # @total-typescript/error-translation-engine
 
+## 1.1.0
+
+### Minor Changes
+
+- [#174](https://github.com/mattpocock/ts-error-translator/pull/174) [`ee7a736`](https://github.com/mattpocock/ts-error-translator/commit/ee7a7360a78f920e19c45efeb4d59a65973bc55b) Thanks [@mattpocock](https://github.com/mattpocock)! - Removed ability to show full body explanation of error
+
 ## 1.0.3
 
 ### Patch Changes
