@@ -48,7 +48,7 @@
     "code": "1313"
   },
   "2304": {
-    "body": "I can't find the variable you're trying to access.\n",
+    "body": "I can't find the variable you're trying to access, '{0}', in the current scope.\n\n\n",
     "code": "2304"
   },
   "2307": {
@@ -60,7 +60,7 @@
     "code": "2314"
   },
   "2322": {
-    "body": "I was expecting a type matching '{0}', but instead you passed '{1}'.\n",
+    "body": "I was expecting a type matching '{1}' but instead you passed '{0}'.\n",
     "code": "2322"
   },
   "2324": {

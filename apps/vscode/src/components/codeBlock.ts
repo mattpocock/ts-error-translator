@@ -10,13 +10,17 @@ import { spanBreak } from "./spanBreak";
  */
 const codeBlock = (code: string, language: string) =>
   spanBreak(d/*html*/ `
+  <span class="codicon codicon-none" style="background-color:var(--vscode-textCodeBlock-background);">
+
     \`\`\`${language}
     ${code}
     \`\`\`
+
+  </span>
 `);
 
 export const inlineCodeBlock = (code: string, language: string) =>
-  codeBlock(`${code}`, language);
+  codeBlock(` ${code} `, language);
 
 export const multiLineCodeBlock = (code: string, language: string) => {
   const codeLines = code.split("\n");

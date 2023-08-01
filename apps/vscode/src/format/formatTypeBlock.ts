@@ -7,11 +7,12 @@ import { addMissingParentheses } from "./addMissingParentheses";
 import { prettify } from "./prettify";
 
 export function formatTypeBlock(
+  prefix: string,
   type: string,
 ) {
   // Return a simple code block if it's just a parenthesis
   if (type.match(/^(\[\]|\{\})$/)) {
-    return unStyledCodeBlock(type);
+    return `${prefix} ${unStyledCodeBlock(type)}`;
   }
 
   if (
@@ -20,15 +21,15 @@ export function formatTypeBlock(
       /^((void|null|undefined|any|number|string|bigint|symbol|readonly|typeof)(\[\])?)$/
     )
   ) {
-    return `${inlineCodeBlock(type, "type")}`;
+    return `${prefix} ${inlineCodeBlock(type, "type")}`;
   }
 
   const prettyType = prettifyType(type);
 
   if (prettyType.includes("\n")) {
-    return `${multiLineCodeBlock(prettyType, "type")}`;
+    return `${prefix}: ${multiLineCodeBlock(prettyType, "type")}`;
   } else {
-    return `${inlineCodeBlock(prettyType, "type")}`;
+    return `${prefix} ${inlineCodeBlock(prettyType, "type")}`;
   }
 }
 /**

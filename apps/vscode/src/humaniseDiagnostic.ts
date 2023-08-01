@@ -8,7 +8,8 @@ import { formatDiagnosticMessage } from './format/formatDiagnosticMessage';
 export const fillBodyWithItems = (body: string, items: (string | number)[]) => {
   items.forEach((item, index) => {
     const bodyRegex = new RegExp(`'?\\\{${index}\\\}'?`, 'g');
-    body = body.replace(bodyRegex, formatTypeBlock(String(item).trim()));
+    console.log(item);
+    body = body.replace(bodyRegex, formatTypeBlock('', String(item).trim()));
   });
 
   return {
