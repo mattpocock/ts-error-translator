@@ -20,7 +20,7 @@
   "devDependencies": {
     "husky": ">=6",
     "lint-staged": ">=10",
-    "prettier": "^2.5.1",
+    "prettier": "^3.0.0",
     "ts-node": "^10.7.0",
     "turbo": "^1.2.6",
     "typescript": "^4.8.3",

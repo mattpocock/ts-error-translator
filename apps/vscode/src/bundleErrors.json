@@ -169,11 +169,6 @@
     "excerpt": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.",
     "code": "2590"
   },
-  "2693": {
-    "body": "I think you meant to assign a type to your declaration. So instead of,\n\n```ts\nclass Person {\n  name: string;\n}\n```\n\nyou wrote this,\n\n```ts\nclass Person {\n  name = string;\n}\n```\n",
-    "excerpt": "I was expecting A as a type declaration but it is being used as a value here.",
-    "code": "2693"
-  },
   "2741": {
     "body": "I can help enforce that objects have all the right properties. In this case, I'm looking at this object:\n\n```\n{2}\n```\n",
     "excerpt": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
