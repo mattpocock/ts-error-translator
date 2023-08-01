@@ -1,242 +1,194 @@
 {
   "1002": {
-    "body": "To fix this error, check if:\n\n- you have opening and closing quotes (single or double) for your string literal\n- you have escaped your string literal correctly (by prefixing it with `/`)\n- your string literal isn't split across multiple lines\n\n### Examples\n\nYou can't split a string across multiple lines like this in JavaScript:\n\n```js\nconst longString = 'This is a very long string which needs\n                  to wrap across multiple lines because\n                  otherwise my code is unreadable.';\n// 👎\n```\n\nInstead, use template literals, which are supported in ECMAScript 2015 environments:\n\n```js\nconst longString = `This is a very long string which needs\n                  to wrap across multiple lines because\n                  otherwise my code is unreadable.`;\n// ✅\n```\n",
-    "excerpt": "You've started a string (via a single or double quote) but haven't ended it.",
+    "body": "You've started a string (via a single or double quote) but haven't ended it.",
     "code": "1002"
   },
   "1003": {
-    "body": "You are using a keyword that expects to be followed by a **variable, type, interface, class, function,** or **property** name but none was provided in the location were I'm pointing at.\n\nThe following examples are invalid:\n\n```ts\nfunction () {}\ntype Foo = (typeof);\nNumber.;\n```\n\nProviding a valid name (identifier) in the location where I'm pointing at fixes the issue:\n\n```ts\nfunction bar() {}        // function name added after 'function'\ntype Foo = (typeof bar); // variable name added after 'typeof'\nNumber.MAX_SAFE_INTEGER; // property name added after '.'\n```\n",
-    "excerpt": "I was expecting a name but none was provided.",
+    "body": "I was expecting a name but none was provided.",
     "code": "1003"
   },
   "1006": {
-    "body": "You can't use `/// <reference path=\"...\" />` for referencing the file itself.\n",
-    "excerpt": "You've got a triple-slash reference inside a file that's referencing itself.",
+    "body": "You've got a triple-slash reference inside a file that's referencing itself.",
     "code": "1006"
   },
   "1009": {
-    "body": "You should remove the trailing comma where I'm pointing - otherwise, I won't be able to understand your code.\n",
-    "excerpt": "You've added a trailing comma when you're not supposed to add it",
+    "body": "You've added a trailing comma when you're not supposed to add it",
     "code": "1009"
   },
   "1014": {
-    "body": "Rest parameters tell me to group all remaining variables together, like this:\n\n```ts\nfunction doStuff(fruit: string, ...numbers: number[]){\n\t// stuff\n}\n\ndoStuff('banana', 1, 2, 3)\n```\n\nI get confused if they're not at the very end of the list, because I won't know how many to group together. I'll find this confusing:\n\n```ts\nfunction doStuff(...numbers: number[], fruit: string){\n  // stuff\n}\n\ndoStuff(1, 2, 3, 'banana')\n```\n",
-    "excerpt": "A parameter in a function that starts with `...` must be the last one in the list.",
+    "body": "A parameter in a function that starts with `...` must be the last one in the list.",
     "code": "1014"
   },
   "1091": {
-    "body": "I don't know what to do with multiple variables:\n\n```ts\nfor (let var1, var2 in list){\n  // do stuff\n}\n```\n\nBut I'll be happy if you just use one:\n\n```ts\nfor (let property in list){\n  // do stuff\n}\n```\n",
-    "excerpt": "You can only create a single variable in a 'for...in' statement",
+    "body": "You can only create a single variable in a 'for...in' statement",
     "code": "1091"
   },
   "1109": {
-    "body": "I am expecting an expression, a code that resolves with a value, in the location where I am pointing at.\n\n### Examples\n\n\n```ts\nimport {} from\n```\n\nI'm expecting an expression after 'from'\n\n```ts\nexport default;\n```\n\nI'm expecting an expression after 'default'\n\n```ts\n1 + ;\n```\n\nI'm expecting an expression after '+'\n\n```ts\n1 >=;   \n```\n\nI'm expecting an expression after '>='\n\n```ts\n< 2;\n```     \n\nI'm expecting an expression before '<'\n\n```ts\nif () {}      \n```\n\nI'm expecting an expression between '()'\n\n```ts\nfor () {}\n```\n\nI'm expecting an expression between '()'",
-    "excerpt": "I am expecting a code that resolves to a value.",
+    "body": "I am expecting a code that resolves to a value.",
     "code": "1109"
   },
   "1117": {
-    "body": "I expect objects to have unique property names.\n\nBecause this object has a duplicate property, I don't know how to deal with it:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: false,\n  delicious: true,\n};\n```\n\nI'll be happy again if you remove the duplicate like so:\n\n```ts\nconst dish = {\n  name: \"Mom's spaghetti\",\n  chef: 'Eminem',\n  delicious: true,\n};\n```\n",
-    "excerpt": "You can't add the same property multiple times to an object.",
+    "body": "You can't add the same property multiple times to an object.",
     "code": "1117"
   },
   "1155": {
-    "body": "I don't expect `const` variables to ever change after they're created. \nTherefore, I don't think it makes sense to create one without an initial value.\n\nThis confuses me:\n\n```ts\nconst name: string;\n```\n\nBut this is cool:\n\n```ts\nconst name: string = \"Jared\";\n```\n\n",
-    "excerpt": "A `const` must be given a value when it's declared.",
+    "body": "A `const` must be given a value when it's declared.",
     "code": "1155"
   },
   "1163": {
-    "body": "To use yield you should turn your function into a generator by adding an asterisk (*) next to the function name. For instance:\n\n```ts\nconst squaredNum = function* (num: number) {\n   yield num * num;\n};\n```\n",
-    "excerpt": "The `yield` keyword can only be used inside a generator function",
+    "body": "The `yield` keyword can only be used inside a generator function",
     "code": "1163"
   },
   "1208": {
-    "body": "- If you only use TypeScript to produce JavaScript code from TypeScript code you can set the compilerOptions.isolatedModules to false in tsconfig.json\n- For more information about 'isolatedModules' you can see [here](https://www.typescriptlang.org/tsconfig#isolatedModules)",
-    "excerpt": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.",
+    "body": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.",
     "code": "1208"
   },
   "1313": {
-    "body": "I don't know what to do with something like this:\n\n```ts\nif (;){\n  // do stuff\n}\n```\n\nBut it would make much more sense if you added a condition inside the parentheses:\n\n```ts\nif (name===\"Georgia\"){\n // do stuff\n}\n```\n",
-    "excerpt": "An if statement shouldn't be empty",
+    "body": "An if statement shouldn't be empty",
     "code": "1313"
   },
   "2304": {
-    "body": "I tried to find\n\n```\n{0}\n```\n\nin the document, but I couldn't see it anywhere. Are you sure you imported/declared it?\n",
-    "excerpt": "I can't find the variable you're trying to access.",
+    "body": "I can't find the variable you're trying to access.",
     "code": "2304"
   },
   "2307": {
-    "body": "TODO\n",
-    "excerpt": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.",
+    "body": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.",
     "code": "2307"
   },
   "2314": {
-    "body": "TODO\n",
-    "excerpt": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.",
+    "body": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.",
     "code": "2314"
   },
   "2322": {
-    "body": "You can assign variables types to give me hints about what kind of types you want to allow in that variable. For instance:\n\n```ts\nconst num: number = 0;\n```\n\nThis tells me that `num` will always be a `number`.\n\nBut sometimes, you'll break that pact you made with me. For instance:\n\n```ts\nconst num: number = 'some string';\n```\n\nIn your case, you said that this type was the only thing assignable to that variable:\n\n```\n{1}\n```\n\nAnd you passed me this instead:\n\n```\n{0}\n```\n",
-    "excerpt": "I was expecting a type matching A, but instead you passed B.",
+    "body": "I was expecting a type matching A, but instead you passed B.",
     "code": "2322"
   },
   "2324": {
-    "body": "",
-    "excerpt": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
+    "body": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
     "code": "2324"
   },
   "2326": {
-    "body": "You are assigning to a variable whose type `Foo` matches type `Bar` but they both have a property `{0}` whose type is incompatible with each other. For example:\n\n```ts\ninterface Foo {\n  {0}: string\n}\ninterface Bar {\n  {0}: number\n}\nconst foo: Foo = { {0}: \"\" }\nconst bar: Bar = foo\n```\n\nTypes `Foo` and `Bar` are structurally equal because they have the same properties. However, they are incompatible because the type of property `{0}` is `string` in `Foo` and `number` in `Bar`.\n",
-    "excerpt": "Two similar types have a property '{0}' which is different, making them incompatible.",
+    "body": "Two similar types have a property '{0}' which is different, making them incompatible.",
     "code": "2326"
   },
   "2327": {
-    "body": "Types `{1}` and `{2}` have the same property `{0}` but the property `{0}` is prefixed with `?` in type `{1}` which means it may not exist.\n\nFor example, the interface `{1}` declares that there is a property `{0}` which can be a `string` or it should not exist in the object:\n\n```ts\ninterface {1} {\n  {0}?: string;\n}\ninterface {2} {\n  {0}: string\n}\nconst foo: {1} = {}  // OK: '{0}' doesn't exist in type '{1}'\nconst bar: {2} = foo // Error: '{0}' must exist in type '{2}'\n```\n\nConsider removing the prefix `?` from the property `{0}` in type `{1}` or adding the prefix `?` to the property `{0}` in type `{2}`.\n",
-    "excerpt": "Property '{0}' in type '{2}' must exist.",
+    "body": "Property '{0}' in type '{2}' must exist.",
     "code": "2327"
   },
   "2339": {
-    "body": "TODO\n",
-    "excerpt": "You're trying to access '{0}' on an object that doesn't contain it.",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it.",
     "code": "2339"
   },
   "2344": {
-    "body": "TODO\n",
-    "excerpt": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.",
+    "body": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.",
     "code": "2344"
   },
   "2345": {
-    "body": "I was expecting\n\n```\n{1}\n```\n\nbut instead, I received\n\n```\n{0}\n```\n",
-    "excerpt": "I was expecting '{1}', but you passed '{0}'",
+    "body": "I was expecting '{1}', but you passed '{0}'",
     "code": "2345"
   },
   "2349": {
-    "body": "You're trying to call something that doesn't appear to be a function. A version of this error might be:\n\n```ts\nconst a = '';\na();\n```\n",
-    "excerpt": "I can't call this expression because I can't call it like a function.",
+    "body": "I can't call this expression because I can't call it like a function.",
     "code": "2349"
   },
   "2352": {
-    "body": "It looks like you're trying to use `as` to 'cast' one type into another. Your first type:\n\n```\n{0}\n```\n\ndoesn't match up with\n\n```\n{1}\n```\n\nbecause there isn't what I call 'sufficient overlap' between them. I.e. they don't look enough like each other.\n\nIf you really meant to do this, you should cast `{0}` to `unknown` first. For example, if I wanted to cast `string` to `string[]`, I'd need to write this code:\n\n```ts twoslash\nconst a = 'wow' as unknown as string[];\n```\n",
-    "excerpt": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
+    "body": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
     "code": "2352"
   },
   "2353": {
-    "body": "This object:\n\n```\n{1}\n```\n\nDoesn't contain this property:\n\n```\n{0}\n```\n\nSo don't pass it!\n",
-    "excerpt": "You can't pass property '{0}' to object '{1}'.",
+    "body": "You can't pass property '{0}' to object '{1}'.",
     "code": "2353"
   },
   "2355": {
-    "body": "```ts\n// 👎\nconst fun = (): string => {\n  doSomething();\n  // We aren't returning a string! So this will result in an error.\n};\n```\n\n```js\n// ✅\nconst fun = (): string => {\n  doSomething();\n  return 'done';\n};\n```\n",
-    "excerpt": "You set the function return type but it is not returning anything.",
+    "body": "You set the function return type but it is not returning anything.",
     "code": "2355"
   },
   "2393": {
-    "body": "You should try renaming your function or if you want to implement different function signatures you can explore [Function Overloads](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads).\n",
-    "excerpt": "You've already declared a function with the same name.",
+    "body": "You've already declared a function with the same name.",
     "code": "2393"
   },
   "2414": {
-    "body": "Instead of naming your classes based on TypeScript types...\n\n```ts\nclass {0} {\n}\n```\n\n...you should name your classes to something which is not a TypeScript type. Check out all the types in the docs on [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).\n",
-    "excerpt": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
+    "body": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
     "code": "2414"
   },
   "2451": {
-    "body": "",
-    "excerpt": "'{0}' has already been declared - you can't declare it again.",
+    "body": "'{0}' has already been declared - you can't declare it again.",
     "code": "2451"
   },
   "2551": {
-    "body": "TODO\n",
-    "excerpt": "You're trying to access '{0}' on an object that doesn't contain it. Did you mean '{2}'?",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it. Did you mean '{2}'?",
     "code": "2551"
   },
   "2552": {
-    "body": "This means that you are trying to reference a variable or method which I can't find in this scope. It might be a typo.\n\nDouble check that you have spelled it correctly. You might be looking for {1}?\n",
-    "excerpt": "You are trying to reference a function or variable which I can't find in the current scope.",
+    "body": "You are trying to reference a function or variable which I can't find in the current scope.",
     "code": "2552"
   },
   "2554": {
-    "body": "TODO\n",
-    "excerpt": "The function you're trying to call needs {0} arguments, but you're passing {1}.",
+    "body": "The function you're trying to call needs {0} arguments, but you're passing {1}.",
     "code": "2554"
   },
   "2571": {
-    "body": "You need to narrow down the type of the variable before accessing its properties or assigning it to a different typed variable. For example:\n\n```ts\nconst foo: unknown = \"bar\";\n\nif (typeof foo === \"string\") { // Now I know 'foo' is of type 'string',\n  const baz: string = foo;     // I can assign it to a typed variable\n  foo.toUpperCase();           // and access its properties\n}\n",
-    "excerpt": "I don't know what type this object is.",
+    "body": "I don't know what type this object is.",
     "code": "2571"
   },
   "2590": {
-    "body": "",
-    "excerpt": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.",
+    "body": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.",
     "code": "2590"
   },
   "2741": {
-    "body": "I can help enforce that objects have all the right properties. In this case, I'm looking at this object:\n\n```\n{2}\n```\n",
-    "excerpt": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
+    "body": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
     "code": "2741"
   },
   "2749": {
-    "body": "You've passed in...\n\n```\n{0}\n```\n\n...into a slot where I'm expecting to see a type.\n",
-    "excerpt": "You're trying to use a JavaScript variable where you should be passing a type.",
+    "body": "You're trying to use a JavaScript variable where you should be passing a type.",
     "code": "2749"
   },
   "2761": {
-    "body": "You cannot use the `new` keyword because type `{0}` is neither a class nor a function constructor. For example:\n\n```ts\ninterface Foo {\n  bar: string;\n}\nfunction test(MyFoo: Foo) {\n  const instance = new MyFoo(\"\");\n}\n```\n\nHere using the `new` keyword is a mistake because the type of `myFoo` parameter is `Foo` which describes an object type. The following examples are valid cases I'd accept:\n\n```ts\nclass Foo { }\ninterface Bar {\n  new(): Record<string, any>\n}\n\nfunction test(MyFoo: typeof Foo, MyBar: Bar) {\n  const instanceOfFoo = new MyFoo()\n  const instanceOfBar = new MyBar()\n}\n```\n",
-    "excerpt": "Type '{0}' is not a class.",
+    "body": "Type '{0}' is not a class.",
     "code": "2761"
   },
   "2783": {
-    "body": "I think you need to reorder the object property assignments and move the spread first. When spreading, what comes first is 'overridden' by what comes later. For example, if you have assignments like these:\n\n```ts\nconst foo = {\n  bar: 'A',\n};\n\nconst baz = {\n  bar: 'B',\n  ...foo,\n};\n```\n\nYou can change it to be like this:\n\n```ts\nconst baz = {\n  ...foo,\n  bar: 'B',\n};\n```\n",
-    "excerpt": "'{0}' will be overwritten by the spread.",
+    "body": "'{0}' will be overwritten by the spread.",
     "code": "2783"
   },
   "5075": {
-    "body": "TODO\n",
-    "excerpt": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
+    "body": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
     "code": "5075"
   },
   "6133": {
-    "body": "",
-    "excerpt": "I noticed that '{0}' has been declared, but it's never used in the code.",
+    "body": "I noticed that '{0}' has been declared, but it's never used in the code.",
     "code": "6133"
   },
   "6142": {
-    "body": "TODO\n",
-    "excerpt": "You can't import `.jsx` or `.tsx` files until you set `jsx` in your `tsconfig.json`.",
+    "body": "You can't import `.jsx` or `.tsx` files until you set `jsx` in your `tsconfig.json`.",
     "code": "6142"
   },
   "7006": {
-    "body": "This is one of my most commonly-delivered errors! You've likely declared a function, for instance:\n\n```ts\nfunction myFunction({0}) {\n  // Something in here...\n}\n```\n\nBut right now, I don't know what type `{0}` is supposed to be - so I've defaulted it to `{1}`.\n\nThe reason this is showing as an error is because you've got `\"strict\": true` in your TS Config.\n",
-    "excerpt": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
+    "body": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
     "code": "7006"
   },
   "7057": {
-    "body": "You can do one of two following options:\n\n1. (_Recommended_) Either cast the `yield` value using `as`, or strictly declare the type of the variable\n\n```ts\nfunction* watchTasks() {\n  const taskChannel: ActionChannelEffect = yield actionChannel([\n    //no longer has to infer\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n\n2. Specify the return type of your generator function for **all** contained `yield` steps\n\n```ts\nfunction* watchTasks(): Generator<ActionChannelEffect, void> {\n  const taskChannel = yield actionChannel([\n    //can now infer here safely\n    'task-submit',\n    'task-remove',\n  ]);\n  //...\n}\n```\n",
-    "excerpt": "I don't know enough about your generator function's return type to safely infer here.",
+    "body": "I don't know enough about your generator function's return type to safely infer here.",
     "code": "7057"
   },
   "7061": {
-    "body": "```ts\ntype Keys = 'Foo' | 'Bar';\ntype MyMappedType = {\n  Baz: string; // << static properties\n  [Key in Keys]: string; // << dynamic properties\n}; // 👎\n```\n\nAn interface can only have static properties. You cannot create a mapped type with an interface.\n\n```ts\ntype Keys = 'Foo' | 'Bar';\ninterface MyInterface {\n  [Key in Keys]: string;\n} // 👎\n```\n",
-    "excerpt": "You're trying to create a mapped type with both static and dynamic properties.",
+    "body": "You're trying to create a mapped type with both static and dynamic properties.",
     "code": "7061"
   },
   "8016": {
-    "body": "Type assertions such as `myVar as string` are a TypeScript-only language feature.\n\nIn order to use type assertions, you should convert your JavaScript file to TypeScript.\n",
-    "excerpt": "You can't use type assertions because this isn't a TypeScript file",
+    "body": "You can't use type assertions because this isn't a TypeScript file",
     "code": "8016"
   },
   "17004": {
-    "body": "TODO\n",
-    "excerpt": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.",
+    "body": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.",
     "code": "17004"
   },
   "18004": {
-    "body": "",
-    "excerpt": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
+    "body": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
     "code": "18004"
   },
   "95050": {
-    "body": "Some of your code is stranded with no way of being executed.\n\nFor example:\n\n```ts\nfunction printAndReturn(text: string){\n  return; \n  console.log(text);\n}\n```\n\nThis function will stop when it returns on the first line, so text will never be printed.\n\n\n",
-    "excerpt": "I've spotted a bit of code that will never be run.",
+    "body": "I've spotted a bit of code that will never be run.",
     "code": "95050"
   }
 }
