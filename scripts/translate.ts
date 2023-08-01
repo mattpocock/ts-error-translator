@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import { logger } from './utils/logger';
 import tsErrorMessages from '../packages/engine/src/tsErrorMessages.json';
 
@@ -8,10 +7,9 @@ const errorCode = process.argv[2];
 const getTemplate = (original: string) =>
   `---
 original: "${original}"
-excerpt: "Simplified version of the error message"
 ---
 
-More details, reproducible examples for the error and how the error should be fixed.
+Simplified version of the error message
 
 `.trim();
 
@@ -30,7 +28,7 @@ if (!errorCode) {
       return String(tsErrorMessages[key].code) === errorCode;
     });
 
-    fs.writeFileSync(errorPath, getTemplate(originalError));
+    fs.writeFileSync(errorPath, getTemplate(originalError!));
 
     logger.success('\nTemplate has been written Successfuly!');
     logger.info(`Check: ${errorPath}`);
