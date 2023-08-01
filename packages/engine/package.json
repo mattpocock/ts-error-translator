@@ -6,6 +6,7 @@
   "types": "./src/index.ts",
   "private": true,
   "scripts": {
+    "dev": "vitest",
     "test": "vitest run"
   },
   "dependencies": {

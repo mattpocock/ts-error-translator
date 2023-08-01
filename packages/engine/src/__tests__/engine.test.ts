@@ -169,7 +169,7 @@ describe('parseErrors', () => {
 
 describe('fillBodyAndExcerptWithItems', () => {
   it(`Should handle {0} AND '{1}' cases in excerpt`, () => {
-    const result = fillBodyAndExcerptWithItems('', `{0} and '{1}'`, ['A', 'B']);
+    const result = fillBodyAndExcerptWithItems(`{0} and '{1}'`, ['A', 'B']);
 
     expect(result.excerpt).toEqual('`A` and `B`');
   });

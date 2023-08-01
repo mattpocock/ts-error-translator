@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "ci": "turbo run lint test vscode:package",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "translate": "ts-node -T scripts/translate.ts",

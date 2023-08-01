@@ -9,24 +9,12 @@ import { compressToEncodedURIComponent } from 'lz-string';
 import { Options } from './types';
 
 const getMessageTemplate = (options: Options) => {
-  let messageTemplate:
-    | 'body-and-tldr'
-    | 'tldr-only'
-    | 'body-only'
-    | 'link-only';
+  let messageTemplate: 'tldr-only' | 'link-only';
 
-  if (options.showFullTranslation) {
-    if (options.showTLDRTranslation) {
-      messageTemplate = 'body-and-tldr';
-    } else {
-      messageTemplate = 'body-only';
-    }
+  if (options.showTLDRTranslation) {
+    messageTemplate = 'tldr-only';
   } else {
-    if (options.showTLDRTranslation) {
-      messageTemplate = 'tldr-only';
-    } else {
-      messageTemplate = 'link-only';
-    }
+    messageTemplate = 'link-only';
   }
 
   return messageTemplate;
@@ -43,18 +31,17 @@ export const humaniseDiagnostic = (
 
   const markdownStrings: vscode.MarkdownString[] = [];
 
-  errors.forEach((error, index, array) => {
+  errors.forEach((error) => {
     const errorBodies: string[] = [];
 
-    const fullError = (
-      bundleErrors as Record<string, { body: string; excerpt: string }>
-    )[error.code];
+    const fullError = (bundleErrors as Record<string, { excerpt: string }>)[
+      error.code
+    ];
 
     errorBodies.push(['```txt', error.parseInfo.rawError, '```'].join('\n'));
 
     if (fullError) {
-      const { excerpt, body } = fillBodyAndExcerptWithItems(
-        fullError.body,
+      const { excerpt } = fillBodyAndExcerptWithItems(
         fullError.excerpt,
         error.parseInfo.items,
       );
@@ -66,18 +53,6 @@ export const humaniseDiagnostic = (
       )})`;
 
       switch (messageTemplate) {
-        case 'body-and-tldr':
-          {
-            errorBodies.push(
-              `**Translation**: ${excerpt}`,
-              body,
-              linkToTranslation,
-            );
-          }
-          break;
-        case 'body-only':
-          errorBodies.push(linkToTranslation, body);
-          break;
         case 'link-only':
           errorBodies.push(linkToTranslation);
           break;

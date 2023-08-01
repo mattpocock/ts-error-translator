@@ -18,7 +18,7 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm turbo run lint test vscode:package
+      - run: pnpm run ci
       - uses: actions/upload-artifact@v3
         with:
           name: VSCode Preview VSIX

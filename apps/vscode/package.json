@@ -43,11 +43,6 @@
     "configuration": {
       "title": "Total TypeScript",
       "properties": {
-        "totalTypeScript.showFullTranslation": {
-          "type": "boolean",
-          "default": false,
-          "description": "Show the full translation of the error"
-        },
         "totalTypeScript.showTLDRTranslation": {
           "type": "boolean",
           "default": true,
