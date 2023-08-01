@@ -15,14 +15,12 @@ const bundleErrors = async () => {
   for (const file of allFiles) {
     const fileResult = await fs.readFile(file.fullPath, 'utf8');
     try {
-      const parseResult = fm<{ excerpt: string }>(fileResult);
+      const parseResult = fm(fileResult);
 
       let body = parseResult.body;
-      let excerpt = parseResult.attributes.excerpt;
 
       json[file.code] = {
         body,
-        excerpt,
         code: file.code,
       };
     } catch (e: any) {

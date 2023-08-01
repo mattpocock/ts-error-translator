@@ -1,194 +1,194 @@
 {
   "1002": {
-    "body": "You've started a string (via a single or double quote) but haven't ended it.",
+    "body": "You've started a string (via a single or double quote) but haven't ended it.\n",
     "code": "1002"
   },
   "1003": {
-    "body": "I was expecting a name but none was provided.",
+    "body": "I was expecting a name but none was provided.\n",
     "code": "1003"
   },
   "1006": {
-    "body": "You've got a triple-slash reference inside a file that's referencing itself.",
+    "body": "You've got a triple-slash reference inside a file that's referencing itself.\n",
     "code": "1006"
   },
   "1009": {
-    "body": "You've added a trailing comma when you're not supposed to add it",
+    "body": "You've added a trailing comma when you're not supposed to add it.\n",
     "code": "1009"
   },
   "1014": {
-    "body": "A parameter in a function that starts with `...` must be the last one in the list.",
+    "body": "A parameter in a function that starts with `...` must be the last one in the list.\n",
     "code": "1014"
   },
   "1091": {
-    "body": "You can only create a single variable in a 'for...in' statement",
+    "body": "You can only create a single variable in a 'for...in' statement\n",
     "code": "1091"
   },
   "1109": {
-    "body": "I am expecting a code that resolves to a value.",
+    "body": "I am expecting a code that resolves to a value.\n",
     "code": "1109"
   },
   "1117": {
-    "body": "You can't add the same property multiple times to an object.",
+    "body": "You can't add the same property multiple times to an object.\n",
     "code": "1117"
   },
   "1155": {
-    "body": "A `const` must be given a value when it's declared.",
+    "body": "A `const` must be given a value when it's declared.\n",
     "code": "1155"
   },
   "1163": {
-    "body": "The `yield` keyword can only be used inside a generator function",
+    "body": "The `yield` keyword can only be used inside a generator function\n",
     "code": "1163"
   },
   "1208": {
-    "body": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.",
+    "body": "You have set the 'isolatedModules' flag. Therefore all implementation files must be modules (which means it has some form of import/export). Add an import, export, or an empty 'export {}' statement to make it a module.\n",
     "code": "1208"
   },
   "1313": {
-    "body": "An if statement shouldn't be empty",
+    "body": "An if statement shouldn't be empty\n",
     "code": "1313"
   },
   "2304": {
-    "body": "I can't find the variable you're trying to access.",
+    "body": "I can't find the variable you're trying to access.\n",
     "code": "2304"
   },
   "2307": {
-    "body": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.",
+    "body": "This could be one of two things - either '{0}' doesn't exist on your file system, or I can't find any type declarations for it.\n",
     "code": "2307"
   },
   "2314": {
-    "body": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.",
+    "body": "It looks like '{0}' requires '{1}' type arguments, which means you need to pass them in via a generic.\n",
     "code": "2314"
   },
   "2322": {
-    "body": "I was expecting a type matching A, but instead you passed B.",
+    "body": "I was expecting a type matching A, but instead you passed B.\n",
     "code": "2322"
   },
   "2324": {
-    "body": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'",
+    "body": "You haven't passed all the required properties to '{1}' - you've missed out '{0}'\n",
     "code": "2324"
   },
   "2326": {
-    "body": "Two similar types have a property '{0}' which is different, making them incompatible.",
+    "body": "Two similar types have a property '{0}' which is different, making them incompatible.\n",
     "code": "2326"
   },
   "2327": {
-    "body": "Property '{0}' in type '{2}' must exist.",
+    "body": "Property '{0}' in type '{2}' must exist.\n",
     "code": "2327"
   },
   "2339": {
-    "body": "You're trying to access '{0}' on an object that doesn't contain it.",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it.\n",
     "code": "2339"
   },
   "2344": {
-    "body": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.",
+    "body": "You're trying to pass in '{0}' into a slot where I can see only '{1}' can be passed.\n",
     "code": "2344"
   },
   "2345": {
-    "body": "I was expecting '{1}', but you passed '{0}'",
+    "body": "I was expecting '{1}', but you passed '{0}'.\n",
     "code": "2345"
   },
   "2349": {
-    "body": "I can't call this expression because I can't call it like a function.",
+    "body": "I can't call this expression because I can't call it like a function.\n",
     "code": "2349"
   },
   "2352": {
-    "body": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.",
+    "body": "You can't use 'as' to convert '{0}' into a '{1}' - they don't share enough in common.\n",
     "code": "2352"
   },
   "2353": {
-    "body": "You can't pass property '{0}' to object '{1}'.",
+    "body": "You can't pass property '{0}' to object '{1}'.\n",
     "code": "2353"
   },
   "2355": {
-    "body": "You set the function return type but it is not returning anything.",
+    "body": "You set the function return type but it is not returning anything.\n",
     "code": "2355"
   },
   "2393": {
-    "body": "You've already declared a function with the same name.",
+    "body": "You've already declared a function with the same name.\n",
     "code": "2393"
   },
   "2414": {
-    "body": "You can't give a class the name of '{0}' because it's protected by TypeScript.",
+    "body": "You can't give a class the name of '{0}' because it's protected by TypeScript.\n",
     "code": "2414"
   },
   "2451": {
-    "body": "'{0}' has already been declared - you can't declare it again.",
+    "body": "'{0}' has already been declared - you can't declare it again.\n",
     "code": "2451"
   },
   "2551": {
-    "body": "You're trying to access '{0}' on an object that doesn't contain it. Did you mean '{2}'?",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it. Did you mean '{2}'?\n",
     "code": "2551"
   },
   "2552": {
-    "body": "You are trying to reference a function or variable which I can't find in the current scope.",
+    "body": "You are trying to reference a function or variable which I can't find in the current scope.\n",
     "code": "2552"
   },
   "2554": {
-    "body": "The function you're trying to call needs {0} arguments, but you're passing {1}.",
+    "body": "The function you're trying to call needs {0} arguments, but you're passing {1}.\n",
     "code": "2554"
   },
   "2571": {
-    "body": "I don't know what type this object is.",
+    "body": "I don't know what type this object is.\n",
     "code": "2571"
   },
   "2590": {
-    "body": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.",
+    "body": "You've created a union type that's too complex for me to handle! 🤯 I can only represent 100,000 combinations in the same union, and you've gone over that limit.\n",
     "code": "2590"
   },
   "2741": {
-    "body": "You haven't passed all the required properties to '{2}' -  '{1}' is missing the '{0}' property",
+    "body": "You haven't passed all the required properties to '{2}' - '{1}' is missing the '{0}' property\n",
     "code": "2741"
   },
   "2749": {
-    "body": "You're trying to use a JavaScript variable where you should be passing a type.",
+    "body": "You're trying to use a JavaScript variable where you should be passing a type.\n",
     "code": "2749"
   },
   "2761": {
-    "body": "Type '{0}' is not a class.",
+    "body": "Type '{0}' is not a class.\n",
     "code": "2761"
   },
   "2783": {
-    "body": "'{0}' will be overwritten by the spread.",
+    "body": "'{0}' will be overwritten by the spread.\n",
     "code": "2783"
   },
   "5075": {
-    "body": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.",
+    "body": "You're passing a type '{0}' into a slot which is too narrow. It could be as wide as anything assignable to '{2}'.\n",
     "code": "5075"
   },
   "6133": {
-    "body": "I noticed that '{0}' has been declared, but it's never used in the code.",
+    "body": "I noticed that '{0}' has been declared, but it's never used in the code.\n",
     "code": "6133"
   },
   "6142": {
-    "body": "You can't import `.jsx` or `.tsx` files until you set `jsx` in your `tsconfig.json`.",
+    "body": "You can't import `.jsx` or `.tsx` files until you set `jsx` in your `tsconfig.json`.\n",
     "code": "6142"
   },
   "7006": {
-    "body": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.",
+    "body": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.\n",
     "code": "7006"
   },
   "7057": {
-    "body": "I don't know enough about your generator function's return type to safely infer here.",
+    "body": "I don't know enough about your generator function's return type to safely infer here.\n",
     "code": "7057"
   },
   "7061": {
-    "body": "You're trying to create a mapped type with both static and dynamic properties.",
+    "body": "You're trying to create a mapped type with both static and dynamic properties.\n",
     "code": "7061"
   },
   "8016": {
-    "body": "You can't use type assertions because this isn't a TypeScript file",
+    "body": "You can't use type assertions because this isn't a TypeScript file\n",
     "code": "8016"
   },
   "17004": {
-    "body": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.",
+    "body": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.\n",
     "code": "17004"
   },
   "18004": {
-    "body": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.",
+    "body": "You're trying to pass '{0}' as a key AND value to this object using a shorthand. You'll need to declare '{0}' as a variable first.\n",
     "code": "18004"
   },
   "95050": {
-    "body": "I've spotted a bit of code that will never be run.",
+    "body": "I've spotted a bit of code that will never be run.\n",
     "code": "95050"
   }
 }
