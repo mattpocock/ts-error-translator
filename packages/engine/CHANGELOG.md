@@ -1,5 +1,11 @@
 # @total-typescript/error-translation-engine
 
+## 1.1.2
+
+### Patch Changes
+
+- [`1d09c62`](https://github.com/mattpocock/ts-error-translator/commit/1d09c6277d85afcef6cc363479928467795add56) Thanks [@mattpocock](https://github.com/mattpocock)! - Added new translations and updated old ones with links.
+
 ## 1.1.1
 
 ### Patch Changes
