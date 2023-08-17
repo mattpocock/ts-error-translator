@@ -60,7 +60,7 @@
     "code": "2314"
   },
   "2322": {
-    "body": "I was expecting a type matching A, but instead you passed B.\n",
+    "body": "I was expecting a type matching '{1}', but instead you passed '{0}'.\n",
     "code": "2322"
   },
   "2324": {
@@ -76,7 +76,7 @@
     "code": "2327"
   },
   "2339": {
-    "body": "You're trying to access '{0}' on an object that doesn't contain it. [Learn more.](https://totaltypescript.com)\n",
+    "body": "You're trying to access '{0}' on an object that doesn't contain it. [Learn more](https://totaltypescript.com/concepts/property-does-not-exist-on-type).\n",
     "code": "2339"
   },
   "2344": {
@@ -96,7 +96,7 @@
     "code": "2352"
   },
   "2353": {
-    "body": "You can't pass property '{0}' to object '{1}'.\n",
+    "body": "You can't pass property '{0}' to type '{1}'.\n",
     "code": "2353"
   },
   "2355": {
@@ -112,7 +112,7 @@
     "code": "2414"
   },
   "2451": {
-    "body": "'{0}' has already been declared - you can't declare it again.\n",
+    "body": "'{0}' has already been declared - you can't declare it again. [Learn more](https://www.totaltypescript.com/cannot-redeclare-block-scoped-variable).\n",
     "code": "2451"
   },
   "2551": {
@@ -128,7 +128,7 @@
     "code": "2554"
   },
   "2571": {
-    "body": "I don't know what type this object is.\n",
+    "body": "I don't know what type this object is, so I've defaulted it to 'unknown'. [Learn more](https://www.totaltypescript.com/concepts/object-is-of-type-unknown).\n",
     "code": "2571"
   },
   "2590": {
@@ -136,7 +136,7 @@
     "code": "2590"
   },
   "2741": {
-    "body": "You haven't passed all the required properties to '{2}' - '{1}' is missing the '{0}' property\n",
+    "body": "You haven't passed all the required properties to '{2}' - '{1}' is missing the '{0}' property.\n",
     "code": "2741"
   },
   "2749": {
@@ -164,7 +164,7 @@
     "code": "6142"
   },
   "7006": {
-    "body": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your tsconfig file says I should throw an error here.\n",
+    "body": "I don't know what type '{0}' is supposed to be, so I've defaulted it to '{1}'. Your `tsconfig.json` file says I should throw an error here. [Learn more](https://www.totaltypescript.com/tutorials/beginners-typescript/beginner-s-typescript-section/implicit-any-type-error).\n",
     "code": "7006"
   },
   "7057": {
@@ -176,11 +176,11 @@
     "code": "7061"
   },
   "8016": {
-    "body": "You can't use type assertions because this isn't a TypeScript file\n",
+    "body": "You can't use type assertions because this isn't a TypeScript file.\n",
     "code": "8016"
   },
   "17004": {
-    "body": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`.\n",
+    "body": "You can't use JSX yet because you haven't added `jsx` to your `tsconfig.json`. [Learn more](https://www.totaltypescript.com/cannot-use-jsx-unless-the-jsx-flag-is-provided).\n",
     "code": "17004"
   },
   "18004": {

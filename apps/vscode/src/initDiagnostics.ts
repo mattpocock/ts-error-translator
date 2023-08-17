@@ -11,14 +11,14 @@ const languages = [
   'astro',
 ];
 
+type UriStoreMember = {
+  range: vscode.Range;
+  severity: vscode.DiagnosticSeverity;
+  contents: vscode.MarkdownString[];
+};
+
 export const initDiagnostics = (context: vscode.ExtensionContext) => {
-  const uriStore: Record<
-    vscode.Uri['path'],
-    {
-      range: vscode.Range;
-      contents: vscode.MarkdownString[];
-    }[]
-  > = {};
+  const uriStore: Record<vscode.Uri['path'], UriStoreMember[]> = {};
 
   const hoverProvider: vscode.HoverProvider = {
     provideHover: (document, position) => {
@@ -28,9 +28,13 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
         return null;
       }
 
-      const itemsInRange = itemsInUriStore.filter((item) => {
-        return item.range.contains(position);
-      });
+      const itemsInRange = itemsInUriStore
+        // Only show errors
+        .filter((item) => item.severity === vscode.DiagnosticSeverity.Error)
+        .filter((item) => {
+          return item.range.contains(position);
+        });
+
       return itemsInRange[0];
     },
   };
@@ -51,20 +55,20 @@ export const initDiagnostics = (context: vscode.ExtensionContext) => {
       e.uris.forEach((uri) => {
         const diagnostics = vscode.languages.getDiagnostics(uri);
 
-        const items: {
-          range: vscode.Range;
-          contents: vscode.MarkdownString[];
-        }[] = [];
+        const items: UriStoreMember[] = [];
+
         diagnostics.forEach((diagnostic) => {
           if (diagnostic.source !== 'ts') {
             return;
           }
+
           const humanizedVersion = humaniseDiagnostic(diagnostic);
 
           if (humanizedVersion) {
             items.push({
               range: diagnostic.range,
               contents: humanizedVersion,
+              severity: diagnostic.severity,
             });
           }
         });
