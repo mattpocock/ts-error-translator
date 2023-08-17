@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.10.0
+
+### Minor Changes
+
+- [`2279946`](https://github.com/mattpocock/ts-error-translator/commit/2279946a233c64d7f4c7fa7aa131ecba690ddedf) Thanks [@mattpocock](https://github.com/mattpocock)! - Made it so the error translator only translates errors, not low-priority messages like unused variables.
+
+### Patch Changes
+
+- [`1d09c62`](https://github.com/mattpocock/ts-error-translator/commit/1d09c6277d85afcef6cc363479928467795add56) Thanks [@mattpocock](https://github.com/mattpocock)! - Added new translations and updated old ones with links.
+
 ## 0.9.2
 
 ### Patch Changes
