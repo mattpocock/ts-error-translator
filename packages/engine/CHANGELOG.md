@@ -1,5 +1,11 @@
 # @total-typescript/error-translation-engine
 
+## 1.1.3
+
+### Patch Changes
+
+- [`bd9ff4b`](https://github.com/mattpocock/ts-error-translator/commit/bd9ff4bbce29eae48535a5bfed03628c681d296f) Thanks [@mattpocock](https://github.com/mattpocock)! - Added 19 more translations.
+
 ## 1.1.2
 
 ### Patch Changes
