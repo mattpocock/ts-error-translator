@@ -4862,7 +4862,7 @@
     "code": 6243
   },
 
-  "Modules": {
+  "Cannot access ambient const enums when 'isolatedModules' is enabled.": {
     "category": "Message",
     "code": 6244
   },
