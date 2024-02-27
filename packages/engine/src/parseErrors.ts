@@ -89,8 +89,8 @@ export const parseErrorsWithDb = (db: TsErrorMessageDb, message: string) => {
 
     if (match) {
       match.forEach((matchElem) => {
-        const startIndex = message.indexOf(matchElem);
-        const endIndex = startIndex ?? 0 + matchElem.length;
+        const startIndex = message.indexOf(matchElem) ?? 0;
+        const endIndex = startIndex + matchElem.length;
         const key = `${startIndex}_${endIndex}`;
 
         const items = associateMatchedParameters(

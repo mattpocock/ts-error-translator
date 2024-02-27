@@ -1,3 +1,4 @@
+import { on } from 'events';
 import { describe, expect, it } from 'vitest';
 import { fillBodyWithItems } from '../getImprovedMessage';
 import { parseErrors, parseErrorsWithDb } from '../parseErrors';
@@ -27,7 +28,7 @@ describe('parseErrors', () => {
           "code": 2707,
           "error": "Generic type '{0}' requires between {1} and {2} type arguments.",
           "parseInfo": {
-            "endIndex": 7,
+            "endIndex": 65,
             "items": [
               "T",
               "5",
@@ -41,7 +42,7 @@ describe('parseErrors', () => {
           "code": 2739,
           "error": "Type '{0}' is missing the following properties from type '{1}': {2}",
           "parseInfo": {
-            "endIndex": 72,
+            "endIndex": 142,
             "items": [
               "B",
               "A",
@@ -55,7 +56,7 @@ describe('parseErrors', () => {
           "code": 2749,
           "error": "'{0}' refers to a value, but is being used as a type here. Did you mean 'typeof {0}'?",
           "parseInfo": {
-            "endIndex": 149,
+            "endIndex": 230,
             "items": [
               "T",
             ],
@@ -164,6 +165,20 @@ describe('parseErrors', () => {
     );
 
     expect(result[0].parseInfo.items).toEqual([]);
+  });
+
+  it('should properly calculate the endIndex as the startIndex + the length of the match', () => {
+    const input = `Type '{ foo: number; }' is not assignable to type '{ foo: string; }'.
+     Types of property 'foo' are incompatible.
+       Type 'number' is not assignable to type 'string'.`;
+
+    const errors = parseErrors(input);
+    expect(errors.length).toEqual(3);
+    const thirdError = errors[2];
+    const { startIndex } = thirdError.parseInfo;
+    const { endIndex } = thirdError.parseInfo;
+    expect(startIndex).toEqual(124);
+    expect(endIndex).toEqual(startIndex + thirdError.parseInfo.rawError.length);
   });
 });
 
