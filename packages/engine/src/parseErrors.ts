@@ -48,7 +48,7 @@ function associateMatchedParameters(
 
   for (let i = 0; i < matchedParams.length; i++) {
     const parameter = parameters[i];
-    if (!params.parameter) {
+    if (!params[parameter]) {
       params[parameter] = matchedParams[i] ?? '';
     }
   }
