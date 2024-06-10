@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.11.0
+
+### Minor Changes
+
+- [`efecb9b`](https://github.com/mattpocock/ts-error-translator/commit/efecb9b234408eacd30020c1f275708577cdd12a) Thanks [@mattpocock](https://github.com/mattpocock)! - Made the tips direct to the book content instead of the docs.
+
 ## 0.10.1
 
 ### Patch Changes
