@@ -9,6 +9,7 @@ import { defaultOptions } from './defaultOptions';
 import { initDiagnostics } from './initDiagnostics';
 import { showBeginnerQuestion } from './showBeginnerQuestion';
 import { showTipsQuestion } from './showTipsQuestion';
+import { initTotalTypeScriptCommands } from './totalTypeScriptCommands';
 
 const languages = [
   'typescript',
@@ -80,6 +81,7 @@ const isTipComplete = (tipType: Tip['type']) => {
 
 export async function activate(context: vscode.ExtensionContext) {
   initDiagnostics(context);
+  await initTotalTypeScriptCommands(context);
 
   const updateHiddenTips = () => {
     updateOptions();
